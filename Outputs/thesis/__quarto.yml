@@ -1,0 +1,47 @@
+project:
+  type: anu-thesis
+  output-dir: docs
+
+book:
+   title: "{{< var title >}}"
+   subtitle: "{{< var subtitle >}}"
+   author: "{{< var author >}}"
+   date: today
+   output-file: "thesis"
+   downloads: pdf
+   repo-url: https://github.com/anuopensci/quarto-anu-thesis
+   repo-actions: [edit, issue]
+   #cover-image: images/example-html.png
+   #cover-image-alt: "This is a cover image."
+   chapters:
+     - index.qmd
+     - abstract.qmd
+     - disclaimer.qmd # omit this if honours or masters by coursework
+     - acknowledgements.qmd
+     - chapter1.qmd
+     - chapter2.qmd
+     - references.qmd
+   appendices:
+     - tools.qmd
+   page-footer: "Copyright © 2024, Your Name"
+
+bibliography: ref.bib
+
+comments:
+  hypothesis: true
+degree: "{{< var degree >}}"
+school: "{{< var school >}}"
+date-start: "{{< var date-start >}}"
+date-end: "{{< var date-end >}}"
+titlepage-supervisor: true
+supervisor:
+  - Prof. Jane Smith
+  - Dr. John Smith
+
+format:
+  anu-thesis-html: default
+  anu-thesis-pdf:
+    keep-tex: false
+    #classoption: twoside
+
+engine: knitr

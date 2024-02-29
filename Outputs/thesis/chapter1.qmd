@@ -1,0 +1,14 @@
+# Introduction {#sec-intro}
+
+(Summary)
+
+Factor analysis model is a mathematical model which tries to use fewer underlying factors to explain the correlation between a large set of observed variables(Mardia et al.,1995). Suppose we have a p-dimensional random vector $y\in \mathbf{R^p}$ with mean $E[y]=\mu$ and variance $Var[y]=\Sigma$. We can establish a d-order factor analysis model for $y$ if it can be written in the form $$y=\Lambda u+\mu+\epsilon$$, where $\Lambda \in \mathbf{R}^{p \times d}$ is called \emph{loading matrix}, we call $u \in \mathbf{R}^{d}$ as \emph{common vectors} and $\epsilon \in \mathbf{R}^{p}$ is \emph{unique factors}. To make the model well-defined, we may assume $$E[u]=\mathbf{0}, Var[u]=\mathbf{I}, E[\epsilon]=\mathbf{0} \text{ and covariance } Var[\epsilon]=\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})$$ and also $$Cov[u,\epsilon]=\mathbf{0}$$ thus this model implies a straightforward constraint $$Var[y]=\Lambda\Lambda^T+\Psi$$
+
+A two-step procedure is used to establish an interpretable model: First is to estimate parameters, i.e.$\Lambda$ and $\Psi$ in the model sparsely, and then utilize rotation techniques to make the model easy to understand(Hirose, 2015).
+Traditionally, sparsity can be achieved via LASSO penalty of the likelihood function theoretically but in fact, it may produce biased and overdense models(Hirose,2015). Further, penalization methods using some nonconvex penalties give a more sparse one than LASSO, such as the SCAD(Fan and Li, 2001), the MC+(Zhang, 2010) and the EM algorithm with coordinate descent(Hirose, 2015).
+
+
+In a generalized linear latent variable model(GLLVM), just like what we do in a generalized linear model(GLM), we use the link function and add a linear term to fit the mean of $y$. Specifically, if we have a set of $n$ observed data ${x_i,y_i}:i=1,2,...n, y_i\in \mathbf{R^p} \text{ and } x_i\in \mathbf{R^q}$, where any elements in $y_i$, say $y_{ij}$ are independently observed from the exponential family of distributions with mean $\mu_{ij}$ and dispersion $\psi_{ij}$, i.e. $$y_{ij}\sim \text{ IID } f(y_{ij};\theta_{ij},\psi_{ij})=\exp\{\frac{y_{ij}\theta_{ij}-b(\theta_{ij})}{\psi_{ij}}+c(y_{ij},\psi_{ij})\}$$
+Then the GLLVM of $y_{ij}$ can be given as $$\eta_{ij}:=g(E[y_{ij}])=g(\mu_{ij})=x_i^T\beta_j+u_i^T\lambda_j+\epsilon_{ij},$$
+(Hui et al., 2018)where $g(.)$ is the link, $x_i^T\beta_j$ is the linear term with $q$ predictors, $u_i^T\lambda_j$ is the latent term with $d$ latent variables, $\epsilon_i=(\epsilon_{i1},...,\epsilon_{ip})\sim N(\mathbf{0},\Psi)$. We assume the latent variables come from a d-dimensional multivariate standard normal distribution, $u_i \sim N(\mathbf{0},I_d)$. Just like in the factor analysis model, the conditional variance of $\eta_i$ is given by $Var[\eta_i|x_i]=\Lambda\Lambda^T+\Psi$
+

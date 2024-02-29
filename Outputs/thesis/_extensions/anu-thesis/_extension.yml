@@ -1,0 +1,72 @@
+title: ANU Thesis
+author: Emi Tanaka
+version: 1.0.0
+quarto-required: ">=1.4.5"
+
+
+
+contributes:
+  project:
+    project:
+      type: book
+    book:
+      page-navigation: true
+      favicon: "assets/ANU_Favicon_Inversed_Gold.png"
+      margin-header: |
+        ![](images/ANU_Primary_Vertical_GoldBlack.png){.logo}
+      sidebar:
+        contents: auto
+        search: true
+        style: docked
+        background: light
+    format: anu-thesis-html
+  formats:
+    common:
+      filters:
+       - latex-environment
+      environments: flushright
+      date-format: "Do MMMM YYYY"
+      toc: true
+      published-title: "Date"
+      number-sections: true
+    html:
+      theme: [custom.scss]
+      css: assets/css/all.css
+      html-math-method: katex
+      template-partials:
+       - assets/title-block.html
+    pdf:
+      #include-before-body: before-body.tex
+      #include-in-header: header.tex
+      toc: true
+      number-sections: true
+      number-depth: 2
+      papersize: a4
+      documentclass: book
+      classoption: ["oneside", "openany", "12pt", "onecolumn"]
+      lof: true
+      lot: true
+      linestretch: 1.2
+      mainfont: "Public Sans"
+      geometry:
+      - top=30mm
+      - left=25mm
+      - right=25mm
+      - bottom=30mm
+      titlepage-geometry:
+      - top=3in
+      - bottom=1in
+      - right=1in
+      - left=1in
+      # shift-heading-level-by: -1
+      anulogo: "assets/latex/ANU_Primary_Horizontal_GoldBlack.eps"
+      # format-resources:
+      #  - assets/latex/anuthesis.sty
+      cite-method: natbib
+      template-partials:
+      - assets/latex/before-title.tex
+      - assets/latex/before-body.tex
+      - _titlepage.tex
+      - assets/latex/toc.tex
+
+
