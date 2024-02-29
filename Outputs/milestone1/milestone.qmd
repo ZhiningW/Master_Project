@@ -1,0 +1,22 @@
+---
+title: "Your project title"
+author: "Your name"
+supervisors:
+  - "Dr. Emi Tanaka"
+  - "Your other supervisor"
+date: today
+format: 
+  pdf: 
+    documentclass: amsart
+    fontsize: 12pt
+    template-partials:
+      - partials/before-body.tex
+      - partials/after-body.tex
+    include-in-header:
+      text: |
+        \usepackage{fullpage}
+        \usepackage{enumitem}
+---
+
+
+Test
