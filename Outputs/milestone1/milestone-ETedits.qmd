@@ -1,0 +1,124 @@
+---
+title: "Your project title"
+author: "Zhining Wang"
+supervisors:
+  - "Dr. Emi Tanaka"
+  - "Dr. Qinian Jin (co-supervisor)"
+date: today
+format: 
+  pdf: 
+    documentclass: amsart
+    fontsize: 12pt
+    template-partials:
+      - partials/before-body.tex
+      - partials/after-body.tex
+    include-in-header:
+      text: |
+        \usepackage{fullpage}
+        \usepackage{enumitem}
+        \usepackage{dsfont}
+bibliography: ref.bib
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+
+
+
+# What is factor analysis and why is it important?
+
+Factor analysis is a mathematical model which tries to use fewer
+underlying factors to explain the correlation between a large set of
+observed variables(Mardia et al.,1995). It provides a useful tool for
+exploring the covariance structure among observable variables [@hiroseSparseEstimationNonconcave2015]. One of the major assumptions that factor analytic model stands on
+is that it is impossible for us to observe those underlying factors
+directly. This assumption is especially suited to subjects like
+psychology where we cannot observe exactly some concept like how
+intelligent our subjects are(Mardia et al.,1995).
+
+Suppose we have a observable random vector $\mathbf{y}\in \mathds{R}^p$
+with mean $\mathds{E}[\mathbf{y}]=\mu$ and variance
+$\mathds{V}[\mathbf{y}]=\Sigma$. Then a d-order factor analysis model
+for $\mathbf{y}$ can be given by \begin{equation}
+\mathbf{y}=\Lambda \mathbf{f}+\mu+\epsilon,
+\end{equation} where $\Lambda \in \mathds{R}^{p \times d}$ is called
+\emph{loading matrix}, we call $\mathbf{f} \in \mathds{R}^{d}$ as
+\emph{common vectors} and $\epsilon \in \mathds{R}^{p}$ is
+\emph{unique factors}. To make the model well-defined, we may assume
+$$\mathds{E}[\mathbf{f}]=\mathbf{0}_d, \mathds{V}[\mathbf{f}]=\mathbf{I}_{d\times d}, \mathds{E}[\epsilon]=\mathbf{0}_p, \mathds{V}[\epsilon]=:\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})$$
+and also the independence between any elements from $\mathbf{f}$ and
+$\epsilon$ separately, i.e.
+$$\mathbf{Cov}[\mathbf{f}_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,d\} \text{ and } j \in \{1,2,\dots,p\}$$
+Straightforwardly, the covariance of observable vector $\mathbf{y}$ can
+be modelled by\
+\begin{equation}
+\mathds{V}[\mathbf{y}]=\Lambda\Lambda^T+\Psi
+\end{equation}
+
+# Indeterminacy of the loading matrix
+
+One can easily see that if our factor analytic model is given by (1),
+then it can also be modelled as
+$$\mathbf{y}=(\Lambda\mathbf{M})(\mathbf{M}^T\mathbf{f}) +\mu+\epsilon$$
+where the matrix $\mathbf{M}$ is orthogonal and simultaneously the
+variance of $\mathbf{y}$ given by (2) still holds, since
+$$\mathds{V}[\mathbf{y}]=(\Lambda\mathbf{M}\mathbf{M}^T)\mathds{V}[\mathbf{f}](\Lambda\mathbf{M}\mathbf{M}^T)^T+\Psi=\Lambda\Lambda^T+\Psi.$$
+Therefore a rotated loading matrix $\Lambda\mathbf{M}$ is still a valid
+loading matrix for a factor analytic model.
+
+# Traditional Estimation of parameters in factor analytic models 
+We denote the set of parameters by $\beta := \{\Lambda,\Psi\}$.
+Traditionally, a two-step procedure is used to construct a factor
+analytic models: estimated parameters by Maximum likelihood estimation
+(aka, MLE) and then use rotation techniques to find an interpretable
+model.  
+
+## Maximum Likelihood Estimation 
+Suppose we have $N$ independent and identically distributed observations
+$\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_N$ from a p-dimensional
+multi-variate normal distribution $N_p(\mu,\Sigma)$ and by our
+hypothesis, we have $\Sigma=\Lambda\Lambda^T+\Psi$. Then the likelihood
+function is given by
+$$L(\Lambda,\Psi)=\Pi^N_{i=1}[(2\pi)^{-\frac{p}{2}}\det(\Sigma)^{-\frac{1}{2}}\exp(-\frac{1}{2}(x_i-\mu)^T\Sigma^{-1}(x_i-\mu))]$$
+Many algorithms are developed to get the root of the equation
+$$ \frac{\partial l}{\partial \Lambda}=0 \text{ and } \frac{\partial l}{\partial \Psi}=0$$ where $l$ is the log-likelihood given by $l(\Lambda,\Psi):=log(L(\Lambda,Psi))$  
+
+## Rotation Techniques
+After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method(Hirose, 2015).
+
+
+# Penalized Likelihood method
+The biggest challenge traditional two-step method facing is unsuitability(Hirose, 2015). Just like in regression models, MLE may lead to overfitness and rotatin techniques may not produce sparse enough loading matrix. In some simulation studies, the two-step method generated bad loading matrix even if the true loading matrix is sparse.(Hirose, 2015) Our research later will focus on penalized likelihood method such like LASSO penalty(Ning,2011 and Choi, 2010) and may include some non-convex penalty like MC+(Zhang, 2010).
+
+
+
+## Reference 
+
+ET: convert all these to bibtex
+
+
+Hirose, Kei, and Michio Yamamoto. "Sparse estimation via nonconcave penalized likelihood in factor analysis model." Statistics and Computing 25 (2015): 863-875.  
+Ning, Lipeng, and Tryphon T. Georgiou. "Sparse factor analysis via likelihood and ℓ 1-regularization." 2011 50th ieee conference on decision and control and european control conference. IEEE, 2011.  
+Choi, Jang, Gary Oehlert, and Hui Zou. "A penalized maximum likelihood approach to sparse factor analysis." Statistics and its Interface 3.4 (2010): 429-436.  
+Zhang, Cun-Hui. "Nearly unbiased variable selection under minimax concave penalty." (2010): 894-942.  
+Mardia et al."Multivariate Analysis" Chapter 9  
+
+
+## Appendix
+
+
+| Notation | Description |
+| ---: | --------------------- |
+| $A^T$ | the transpose of the matrix (or vector) $A$ |
+| $\mathds{R}^{p}$ | the space of all p-dimensional real column vectors like $[a_1,a_2,\dots,a_p]^T$ |
+| $\mathds{R}^{p\times q}$ | the space of all real matrices with size $p\times q$ - $\mathds{E}[\cdot]$ as the expectation, or mean of a random variable |
+| $\mathds{V}[\cdot]$ | the variance, or covariance of a random variable |
+| $\mathbf{Cov}[\cdot , \cdot]$ | the covariance of two random variables |
+| $\mathbf{0}_{p}$ and $\mathbf{0}_{p\times q}$ | the p-dimensional $0$ vector or $0$ matrix in size $p\times q$ respectively |
+| $\mathbf{I}_p$ | the identity matrix in size $p\times p$ |
+
+: List of notations used in this report. {#tbl-notation}
+
+
+## References
