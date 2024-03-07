@@ -16,7 +16,6 @@ format:
       text: |
         \usepackage{fullpage}
         \usepackage{enumitem}
-        \usepackage{dsfont}
 bibliography: ref.bib
 editor: 
   markdown: 
@@ -28,6 +27,8 @@ editor:
 
 # What is factor analysis and why is it important?
 
+Notation is presented in @tbl-notation.
+
 Factor analysis is a mathematical model which tries to use fewer
 underlying factors to explain the correlation between a large set of
 observed variables(Mardia et al.,1995). It provides a useful tool for
@@ -37,23 +38,23 @@ directly. This assumption is especially suited to subjects like
 psychology where we cannot observe exactly some concept like how
 intelligent our subjects are(Mardia et al.,1995).
 
-Suppose we have a observable random vector $\mathbf{y}\in \mathds{R}^p$
-with mean $\mathds{E}[\mathbf{y}]=\mu$ and variance
-$\mathds{V}[\mathbf{y}]=\Sigma$. Then a d-order factor analysis model
+Suppose we have a observable random vector $\mathbf{y}\in \mathbb{R}^p$
+with mean $\mathbb{E}[\mathbf{y}]=\mu$ and variance
+$\mathbb{V}[\mathbf{y}]=\Sigma$. Then a d-order factor analysis model
 for $\mathbf{y}$ can be given by \begin{equation}
 \mathbf{y}=\Lambda \mathbf{f}+\mu+\epsilon,
-\end{equation} where $\Lambda \in \mathds{R}^{p \times d}$ is called
-\emph{loading matrix}, we call $\mathbf{f} \in \mathds{R}^{d}$ as
-\emph{common vectors} and $\epsilon \in \mathds{R}^{p}$ is
+\end{equation} where $\Lambda \in \mathbb{R}^{p \times d}$ is called
+\emph{loading matrix}, we call $\mathbf{f} \in \mathbb{R}^{d}$ as
+\emph{common vectors} and $\epsilon \in \mathbb{R}^{p}$ is
 \emph{unique factors}. To make the model well-defined, we may assume
-$$\mathds{E}[\mathbf{f}]=\mathbf{0}_d, \mathds{V}[\mathbf{f}]=\mathbf{I}_{d\times d}, \mathds{E}[\epsilon]=\mathbf{0}_p, \mathds{V}[\epsilon]=:\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})$$
+$$\mathbb{E}[\mathbf{f}]=\mathbf{0}_d, \mathbb{V}[\mathbf{f}]=\mathbf{I}_{d\times d}, \mathbb{E}[\epsilon]=\mathbf{0}_p, \mathbb{V}[\epsilon]=:\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})$$
 and also the independence between any elements from $\mathbf{f}$ and
 $\epsilon$ separately, i.e.
 $$\mathbf{Cov}[\mathbf{f}_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,d\} \text{ and } j \in \{1,2,\dots,p\}$$
 Straightforwardly, the covariance of observable vector $\mathbf{y}$ can
 be modelled by\
 \begin{equation}
-\mathds{V}[\mathbf{y}]=\Lambda\Lambda^T+\Psi
+\mathbb{V}[\mathbf{y}]=\Lambda\Lambda^T+\Psi
 \end{equation}
 
 # Indeterminacy of the loading matrix
@@ -63,12 +64,12 @@ then it can also be modelled as
 $$\mathbf{y}=(\Lambda\mathbf{M})(\mathbf{M}^T\mathbf{f}) +\mu+\epsilon$$
 where the matrix $\mathbf{M}$ is orthogonal and simultaneously the
 variance of $\mathbf{y}$ given by (2) still holds, since
-$$\mathds{V}[\mathbf{y}]=(\Lambda\mathbf{M}\mathbf{M}^T)\mathds{V}[\mathbf{f}](\Lambda\mathbf{M}\mathbf{M}^T)^T+\Psi=\Lambda\Lambda^T+\Psi.$$
+$$\mathbb{V}[\mathbf{y}]=(\Lambda\mathbf{M}\mathbf{M}^T)\mathbb{V}[\mathbf{f}](\Lambda\mathbf{M}\mathbf{M}^T)^T+\Psi=\Lambda\Lambda^T+\Psi.$$
 Therefore a rotated loading matrix $\Lambda\mathbf{M}$ is still a valid
 loading matrix for a factor analytic model.
 
 # Traditional Estimation of parameters in factor analytic models 
-We denote the set of parameters by $\beta := \{\Lambda,\Psi\}$.
+We denote the set of parameters by $\beta := \{\text{vec}(\Lambda),\text{vec}(\Psi)\}$ where $\text{vec}()$ is the vectorisation of the input.
 Traditionally, a two-step procedure is used to construct a factor
 analytic models: estimated parameters by Maximum likelihood estimation
 (aka, MLE) and then use rotation techniques to find an interpretable
@@ -78,14 +79,14 @@ model.
 Suppose we have $N$ independent and identically distributed observations
 $\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_N$ from a p-dimensional
 multi-variate normal distribution $N_p(\mu,\Sigma)$ and by our
-hypothesis, we have $\Sigma=\Lambda\Lambda^T+\Psi$. Then the likelihood
+hypothesis, we have $\Sigma=\Lambda\Lambda^\top+\Psi$. Then the likelihood
 function is given by
-$$L(\Lambda,\Psi)=\Pi^N_{i=1}[(2\pi)^{-\frac{p}{2}}\det(\Sigma)^{-\frac{1}{2}}\exp(-\frac{1}{2}(x_i-\mu)^T\Sigma^{-1}(x_i-\mu))]$$
+$$L(\Lambda,\Psi)=\Pi^N_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\Sigma)^{-\frac{1}{2}}\exp(-\frac{1}{2}(x_i-\mu)^T\Sigma^{-1}(x_i-\mu))\right].$$
 Many algorithms are developed to get the root of the equation
-$$ \frac{\partial l}{\partial \Lambda}=0 \text{ and } \frac{\partial l}{\partial \Psi}=0$$ where $l$ is the log-likelihood given by $l(\Lambda,\Psi):=log(L(\Lambda,Psi))$  
+$$ \frac{\partial l}{\partial \Lambda}=0 \text{ and } \frac{\partial l}{\partial \Psi}=0$$ where $l$ is the log-likelihood given by $l(\Lambda,\Psi):=\log(L(\Lambda,\Psi))$.  
 
 ## Rotation Techniques
-After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method(Hirose, 2015).
+After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method [@hiroseSparseEstimationNonconcave2015].
 
 
 # Penalized Likelihood method
@@ -104,6 +105,9 @@ Choi, Jang, Gary Oehlert, and Hui Zou. "A penalized maximum likelihood approach 
 Zhang, Cun-Hui. "Nearly unbiased variable selection under minimax concave penalty." (2010): 894-942.  
 Mardia et al."Multivariate Analysis" Chapter 9  
 
+# Plan
+
+My plan is to ...
 
 ## Appendix
 
@@ -111,9 +115,9 @@ Mardia et al."Multivariate Analysis" Chapter 9
 | Notation | Description |
 | ---: | --------------------- |
 | $A^T$ | the transpose of the matrix (or vector) $A$ |
-| $\mathds{R}^{p}$ | the space of all p-dimensional real column vectors like $[a_1,a_2,\dots,a_p]^T$ |
-| $\mathds{R}^{p\times q}$ | the space of all real matrices with size $p\times q$ - $\mathds{E}[\cdot]$ as the expectation, or mean of a random variable |
-| $\mathds{V}[\cdot]$ | the variance, or covariance of a random variable |
+| $\mathbb{R}^{p}$ | the space of all p-dimensional real column vectors like $[a_1,a_2,\dots,a_p]^T$ |
+| $\mathbb{R}^{p\times q}$ | the space of all real matrices with size $p\times q$ - $\mathbb{E}[\cdot]$ as the expectation, or mean of a random variable |
+| $\mathbb{V}[\cdot]$ | the variance, or covariance of a random variable |
 | $\mathbf{Cov}[\cdot , \cdot]$ | the covariance of two random variables |
 | $\mathbf{0}_{p}$ and $\mathbf{0}_{p\times q}$ | the p-dimensional $0$ vector or $0$ matrix in size $p\times q$ respectively |
 | $\mathbf{I}_p$ | the identity matrix in size $p\times p$ |
@@ -121,4 +125,4 @@ Mardia et al."Multivariate Analysis" Chapter 9
 : List of notations used in this report. {#tbl-notation}
 
 
-## References
+# References
