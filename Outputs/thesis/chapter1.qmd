@@ -1,14 +1,135 @@
-# Introduction {#sec-intro}
+---
+title: "Model Selection in Factor Analysis"
+author: "Zhining Wang"
+supervisors:
+  - "Dr. Emi Tanaka"
+  - "Dr. Qinian Jin (co-supervisor)"
+bibliography: ref.bib
+---
 
-(Summary)
+Notation is presented in @tbl-notation.
 
-Factor analysis model is a mathematical model which tries to use fewer underlying factors to explain the correlation between a large set of observed variables(Mardia et al.,1995). Suppose we have a p-dimensional random vector $y\in \mathbf{R^p}$ with mean $E[y]=\mu$ and variance $Var[y]=\Sigma$. We can establish a d-order factor analysis model for $y$ if it can be written in the form $$y=\Lambda u+\mu+\epsilon$$, where $\Lambda \in \mathbf{R}^{p \times d}$ is called \emph{loading matrix}, we call $u \in \mathbf{R}^{d}$ as \emph{common vectors} and $\epsilon \in \mathbf{R}^{p}$ is \emph{unique factors}. To make the model well-defined, we may assume $$E[u]=\mathbf{0}, Var[u]=\mathbf{I}, E[\epsilon]=\mathbf{0} \text{ and covariance } Var[\epsilon]=\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})$$ and also $$Cov[u,\epsilon]=\mathbf{0}$$ thus this model implies a straightforward constraint $$Var[y]=\Lambda\Lambda^T+\Psi$$
+# What is factor analysis and why is it important?
 
-A two-step procedure is used to establish an interpretable model: First is to estimate parameters, i.e.$\Lambda$ and $\Psi$ in the model sparsely, and then utilize rotation techniques to make the model easy to understand(Hirose, 2015).
-Traditionally, sparsity can be achieved via LASSO penalty of the likelihood function theoretically but in fact, it may produce biased and overdense models(Hirose,2015). Further, penalization methods using some nonconvex penalties give a more sparse one than LASSO, such as the SCAD(Fan and Li, 2001), the MC+(Zhang, 2010) and the EM algorithm with coordinate descent(Hirose, 2015).
+Factor analysis is a mathematical model which tries to use fewer
+underlying factors to explain the correlation between a large set of
+observed variables[@mardiaMultivariateAnalysis1979]. It provides a useful tool for
+exploring the covariance structure among observable variables [@hiroseSparseEstimationNonconcave2015]. One of the major assumptions that factor analytic model stands on
+is that it is impossible for us to observe those underlying factors
+directly. This assumption is especially suited to subjects like
+psychology where we cannot observe exactly some concept like how
+intelligent our subjects are[@mardiaMultivariateAnalysis1979].
+
+Suppose we have a observable random vector $\mathbf{y}\in \mathbb{R}^p$
+with mean $\mathbb{E}[\mathbf{y}]=\mu$ and variance
+$\mathbb{V}[\mathbf{y}]=\Sigma$. Then a d-order factor analysis model
+for $\mathbf{y}$ can be given by \begin{equation}
+\mathbf{y}=\Lambda \mathbf{f}+\mu+\epsilon,
+\end{equation} where $\Lambda \in \mathbb{R}^{p \times d}$ is called
+\emph{loading matrix}, we call $\mathbf{f} \in \mathbb{R}^{d}$ as
+\emph{common vectors} and $\epsilon \in \mathbb{R}^{p}$ is
+\emph{unique factors}. To make the model well-defined, we may assume
+$$\mathbb{E}[\mathbf{f}]=\mathbf{0}_d, \mathbb{V}[\mathbf{f}]=\mathbf{I}_{d\times d}, \mathbb{E}[\epsilon]=\mathbf{0}_p, \mathbb{V}[\epsilon]=:\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})$$
+and also the independence between any elements from $\mathbf{f}$ and
+$\epsilon$ separately, i.e.
+$$\mathbf{Cov}[\mathbf{f}_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,d\} \text{ and } j \in \{1,2,\dots,p\}$$
+Straightforwardly, the covariance of observable vector $\mathbf{y}$ can
+be modelled by\
+\begin{equation}
+\mathbb{V}[\mathbf{y}]=\Lambda\Lambda^\top+\Psi
+\end{equation}
+
+# Indeterminacy of the loading matrix
+
+One can easily see that if our factor analytic model is given by (1),
+then it can also be modelled as
+$$\mathbf{y}=(\Lambda\mathbf{M})(\mathbf{M}^\top\mathbf{f}) +\mu+\epsilon$$
+where the matrix $\mathbf{M}$ is orthogonal and simultaneously the
+variance of $\mathbf{y}$ given by (2) still holds, since
+$$\mathbb{V}[\mathbf{y}]=(\Lambda\mathbf{M}\mathbf{M}^\top)\mathbb{V}[\mathbf{f}](\Lambda\mathbf{M}\mathbf{M}^\top)^\top+\Psi=\Lambda\Lambda^\top+\Psi.$$
+Therefore a rotated loading matrix $\Lambda\mathbf{M}$ is still a valid
+loading matrix for a factor analytic model. Sometimes we resolve this problem by making the loading matrix to satisfy some constraints like [@mardiaMultivariateAnalysis1979]
+$$\Lambda^\top \Psi^{-1} \Lambda \text{ is diagonal.}$$
+
+# Traditional Estimation of Parameters in Factor Analytic Models 
+We denote the set of parameters by $\beta := \{\text{vec}(\Lambda),\text{vec}(\Psi)\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input.
+Traditionally, a two-step procedure is used to construct a factor
+analytic model: estimate parameters by maximum likelihood estimation
+(aka, MLE) and then use rotation techniques to find an interpretable
+model.  
+
+## Maximum Likelihood Estimation 
+Suppose we have $N$ independent and identically distributed observations
+$\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_N$ from a p-dimensional
+multi-variate normal distribution $N_p(\mu,\Sigma)$ and by our
+hypothesis, we have $\Sigma=\Lambda\Lambda^\top+\Psi$. Then the likelihood
+function is given by
+$$L(\Lambda,\Psi)=\prod^N_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\Sigma)^{-\frac{1}{2}}\exp(-\frac{1}{2}(\mathbf{y}_i-\mu)^\top\Sigma^{-1}(\mathbf{y}_i-\mu))\right].$$
+and hence the log-likelihood is given by
+\begin{align*}
+l(\Lambda,\Psi)=& \sum^N_{i=2}[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\Sigma))-\frac{1}{2}(\mathbf{y}_i-\mu)^\top\Sigma^{-1}(\mathbf{y}_i-\mu)]\\
+&= -\frac{N}{2}[p\log(2\pi)+\log(\det(\Sigma))+\text{tr}(\Sigma^{-1}S)].
+\end{align*}
+To get the MLE of parameters, we seek the roots of equation system
+\begin{cases}
+\frac{\partial}{\partial \Lambda}l(\Lambda,\Psi)=0 \\
+\frac{\partial}{\partial \Psi}l(\Lambda,\Psi)=0.
+\end{cases}
+However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like EM algorithm developed by Rubin[@Rubin1982EMAlgorithms]. 
 
 
-In a generalized linear latent variable model(GLLVM), just like what we do in a generalized linear model(GLM), we use the link function and add a linear term to fit the mean of $y$. Specifically, if we have a set of $n$ observed data ${x_i,y_i}:i=1,2,...n, y_i\in \mathbf{R^p} \text{ and } x_i\in \mathbf{R^q}$, where any elements in $y_i$, say $y_{ij}$ are independently observed from the exponential family of distributions with mean $\mu_{ij}$ and dispersion $\psi_{ij}$, i.e. $$y_{ij}\sim \text{ IID } f(y_{ij};\theta_{ij},\psi_{ij})=\exp\{\frac{y_{ij}\theta_{ij}-b(\theta_{ij})}{\psi_{ij}}+c(y_{ij},\psi_{ij})\}$$
-Then the GLLVM of $y_{ij}$ can be given as $$\eta_{ij}:=g(E[y_{ij}])=g(\mu_{ij})=x_i^T\beta_j+u_i^T\lambda_j+\epsilon_{ij},$$
-(Hui et al., 2018)where $g(.)$ is the link, $x_i^T\beta_j$ is the linear term with $q$ predictors, $u_i^T\lambda_j$ is the latent term with $d$ latent variables, $\epsilon_i=(\epsilon_{i1},...,\epsilon_{ip})\sim N(\mathbf{0},\Psi)$. We assume the latent variables come from a d-dimensional multivariate standard normal distribution, $u_i \sim N(\mathbf{0},I_d)$. Just like in the factor analysis model, the conditional variance of $\eta_i$ is given by $Var[\eta_i|x_i]=\Lambda\Lambda^T+\Psi$
+## Rotation techniques
+After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method [@hiroseSparseEstimationNonconcave2015].
 
+Suppose $Q(\Lambda)$ is an criterion for $\Lambda$ in the rotation procedure, and we may express it as $Q(\Lambda):= \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})$ where $P(\cdot)$ is some loss function[@hiroseSparseEstimationNonconcave2015]. Specifically, if we set $P(\cdot)=|\cdot|$, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as [@Jennrich2004Rotation]
+\begin{align*}
+&\min_\Lambda \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})\\
+&\text{subject to } \Lambda=\Lambda_0\mathbf{M} \text{ and } \mathbf{M}^\top\mathbf{M}=\mathbf{I}_d,
+\end{align*}
+where $\Lambda_0$ is an initial guess. Since we execute this technique after obtaining the MLE of parameters, therefore what we want is 
+\begin{align*}
+&\min_\Lambda \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})\\
+&\text{subject to } \Lambda=\hat{\Lambda}_{\text{MLE}}\mathbf{M} \text{ and } \mathbf{M}^\top\mathbf{M}=\mathbf{I}_d,
+\end{align*}
+where $\hat{\Lambda}_{\text{MLE}}$ is the maximum likelihood estimator.
+
+## Discussion about two-step method
+The traditional two-step method faces significant shortcomings, primarily its unsuitability[@hiroseSparseEstimationNonconcave2015]. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. 
+
+I am considering if a simulation study is needed for a clearer view.
+
+The absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model[@mardiaMultivariateAnalysis1979]. We have
+\begin{align*}
+  &&&H_k: k \text{ common factors are sufficient to describe the data } \\
+  \longleftrightarrow &&&H_a: \text{ Otherwise}.
+\end{align*}
+The test statistics is given by $\text{TS}=nF(\hat{\Lambda},\hat{\Psi})$ which has an asymptotic $\chi^2_s$ distribution with $s=\frac{1}{2}(p-d)^2-(p+d)$ by the property of MLE. Typically, the test is conducted at a $5\%$ significant level. We can start the procedure from a very small $k$, say, $k=1$ or $k=2$ and then increase $k$ until the null hypothesis is not rejected.
+
+
+
+# Penalized Likelihood Method
+Our research later will focus on penalized likelihood method such like LASSO penalty[@ning2011sparsefactoranalysisl1regularization] [@choi2010penalizedmaximumlikelihoodapproach] and may include some non-convex penalty like MC+[@zhang2010variableselectionminimaxconcave].
+
+
+
+
+
+## Appendix
+
+
+| Notation | Description |
+| ---: | --------------------- |
+| $A^\top$ | the transpose of the matrix (or vector) $A$ |
+| $\mathbb{R}^{p}$ | the space of all p-dimensional real column vectors like $[a_1,a_2,\dots,a_p]^\top$ |
+| $\mathbb{R}^{p\times q}$ | the space of all real matrices with size $p\times q$| 
+| $\mathbb{E}[\cdot]$| the expectation, or mean of a random variable |
+| $\mathbb{V}[\cdot]$ | the variance, or covariance of a random variable |
+| $\mathbf{Cov}[\cdot , \cdot]$ | the covariance of two random variables |
+| $\mathbf{0}_{p}$ and $\mathbf{0}_{p\times q}$ | the p-dimensional $0$ vector or $0$ matrix in size $p\times q$ respectively |
+| $\mathbf{I}_p$ | the identity matrix in size $p\times p$ |
+| $\det(\cdot)$ | the determinant of a matrix |
+
+: List of notations used in this report. {#tbl-notation}
+
+
+# References
