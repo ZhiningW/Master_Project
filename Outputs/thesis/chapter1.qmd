@@ -5,39 +5,55 @@ supervisors:
   - "Dr. Emi Tanaka"
   - "Dr. Qinian Jin (co-supervisor)"
 bibliography: ref.bib
+date: today
+format: 
+  html: default
+  pdf:
+    fontsize: 12pt
+    include-in-header:
+      text: |
+        \usepackage{fullpage}
+        \usepackage{enumitem}
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 Notation is presented in @tbl-notation.
 
-# What is factor analysis and why is it important?
+# Introduction
+
+## What is factor analysis and why is it important?
 
 Factor analysis is a mathematical model which tries to use fewer
 underlying factors to explain the correlation between a large set of
-observed variables[@mardiaMultivariateAnalysis1979]. It provides a useful tool for
+observed variables [@mardiaMultivariateAnalysis1979]. It provides a useful tool for
 exploring the covariance structure among observable variables [@hiroseSparseEstimationNonconcave2015]. One of the major assumptions that factor analytic model stands on
 is that it is impossible for us to observe those underlying factors
 directly. This assumption is especially suited to subjects like
 psychology where we cannot observe exactly some concept like how
-intelligent our subjects are[@mardiaMultivariateAnalysis1979].
+intelligent our subjects are [@mardiaMultivariateAnalysis1979].
 
 Suppose we have a observable random vector $\mathbf{y}\in \mathbb{R}^p$
 with mean $\mathbb{E}[\mathbf{y}]=\mu$ and variance
-$\mathbb{V}[\mathbf{y}]=\Sigma$. Then a d-order factor analysis model
+$\mathbb{V}[\mathbf{y}]=\Sigma$. Then a $k$-order factor analysis model
 for $\mathbf{y}$ can be given by \begin{equation}
 \mathbf{y}=\Lambda \mathbf{f}+\mu+\epsilon,
-\end{equation} where $\Lambda \in \mathbb{R}^{p \times d}$ is called
-\emph{loading matrix}, we call $\mathbf{f} \in \mathbb{R}^{d}$ as
-\emph{common vectors} and $\epsilon \in \mathbb{R}^{p}$ is
-\emph{unique factors}. To make the model well-defined, we may assume
-$$\mathbb{E}[\mathbf{f}]=\mathbf{0}_d, \mathbb{V}[\mathbf{f}]=\mathbf{I}_{d\times d}, \mathbb{E}[\epsilon]=\mathbf{0}_p, \mathbb{V}[\epsilon]=:\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})$$
+\end{equation} where $\Lambda \in \mathbb{R}^{p \times k}$ is called
+_loading matrix_, we call $\mathbf{f} \in \mathbb{R}^{k}$ as
+_common factors_ and $\epsilon \in \mathbb{R}^{p}$ is
+_unique factors_. To make the model well-defined, we may assume
+$$\mathbb{E}[\mathbf{f}]=\mathbf{0}_k, \mathbb{V}[\mathbf{f}]=\mathbf{I}_{k\times k}, \mathbb{E}[\epsilon]=\mathbf{0}_p, \mathbb{V}[\epsilon]=:\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})$$
 and also the independence between any elements from $\mathbf{f}$ and
 $\epsilon$ separately, i.e.
-$$\mathbf{Cov}[\mathbf{f}_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,d\} \text{ and } j \in \{1,2,\dots,p\}$$
+$$Cov[\mathbf{f}_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,k\} \text{ and } j \in \{1,2,\dots,p\}$$
 Straightforwardly, the covariance of observable vector $\mathbf{y}$ can
 be modelled by\
 \begin{equation}
 \mathbb{V}[\mathbf{y}]=\Lambda\Lambda^\top+\Psi
 \end{equation}
+If we assemble the $n$ observation, $\{\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_n\}$, into a matrix $\mathbf{Y}\in \mathbb{R}^{n\times p}$. The model can be rewritten as 
+$$\mathbf{Y}=\mathbf{F}\Lambda^\top+\mu+\epsilon$$ where common factors matrix $\mathbf{F}\in \mathbb{R}^{n\times k}$.
 
 # Indeterminacy of the loading matrix
 
@@ -59,18 +75,18 @@ analytic model: estimate parameters by maximum likelihood estimation
 model.  
 
 ## Maximum Likelihood Estimation 
-Suppose we have $N$ independent and identically distributed observations
+Suppose we have $n$ independent and identically distributed observations
 $\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_N$ from a p-dimensional
 multi-variate normal distribution $N_p(\mu,\Sigma)$ and by our
 hypothesis, we have $\Sigma=\Lambda\Lambda^\top+\Psi$. Then the likelihood
 function is given by
-$$L(\Lambda,\Psi)=\prod^N_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\Sigma)^{-\frac{1}{2}}\exp(-\frac{1}{2}(\mathbf{y}_i-\mu)^\top\Sigma^{-1}(\mathbf{y}_i-\mu))\right].$$
+$$L(\Lambda,\Psi)=\prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\Sigma)^{-\frac{1}{2}}\exp(-\frac{1}{2}(\mathbf{y}_i-\mu)^\top\Sigma^{-1}(\mathbf{y}_i-\mu))\right].$$
 and hence the log-likelihood is given by
 \begin{align*}
-l(\Lambda,\Psi)=& \sum^N_{i=2}[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\Sigma))-\frac{1}{2}(\mathbf{y}_i-\mu)^\top\Sigma^{-1}(\mathbf{y}_i-\mu)]\\
-&= -\frac{N}{2}[p\log(2\pi)+\log(\det(\Sigma))+\text{tr}(\Sigma^{-1}S)].
+l(\Lambda,\Psi)=& \sum^n_{i=1}[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\Sigma))-\frac{1}{2}(\mathbf{y}_i-\mu)^\top\Sigma^{-1}(\mathbf{y}_i-\mu)]\\
+&= -\frac{n}{2}[p\log(2\pi)+\log(\det(\Sigma))+\text{tr}(\Sigma^{-1}S)],
 \end{align*}
-To get the MLE of parameters, we seek the roots of equation system
+where $S$ is the sample covariance defined as $S:=\frac{1}{n}\sum^n_{i=1}(\mathbf{y}_i-\mu)(\mathbf{y}_i-\mu)^\top$. To get the MLE of parameters, we seek the roots of equation system
 \begin{cases}
 \frac{\partial}{\partial \Lambda}l(\Lambda,\Psi)=0 \\
 \frac{\partial}{\partial \Psi}l(\Lambda,\Psi)=0.
@@ -83,36 +99,92 @@ After estimation, we want to rotate the loading matrix to possess a sparse matri
 
 Suppose $Q(\Lambda)$ is an criterion for $\Lambda$ in the rotation procedure, and we may express it as $Q(\Lambda):= \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})$ where $P(\cdot)$ is some loss function[@hiroseSparseEstimationNonconcave2015]. Specifically, if we set $P(\cdot)=|\cdot|$, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as [@Jennrich2004Rotation]
 \begin{align*}
-&\min_\Lambda \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})\\
-&\text{subject to } \Lambda=\Lambda_0\mathbf{M} \text{ and } \mathbf{M}^\top\mathbf{M}=\mathbf{I}_d,
+&\min_\Lambda \sum^p_{i=1}\sum^k_{j=1}P(\lambda_{ij})\\
+&\text{subject to } \Lambda=\Lambda_0\mathbf{M} \text{ and } \mathbf{M}^\top\mathbf{M}=\mathbf{I}_k,
 \end{align*}
 where $\Lambda_0$ is an initial guess. Since we execute this technique after obtaining the MLE of parameters, therefore what we want is 
 \begin{align*}
-&\min_\Lambda \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})\\
-&\text{subject to } \Lambda=\hat{\Lambda}_{\text{MLE}}\mathbf{M} \text{ and } \mathbf{M}^\top\mathbf{M}=\mathbf{I}_d,
+&\min_\Lambda \sum^p_{i=1}\sum^k_{j=1}P(\lambda_{ij})\\
+&\text{subject to } \Lambda=\hat{\Lambda}_{\text{MLE}}\mathbf{M} \text{ and } \mathbf{M}^\top\mathbf{M}=\mathbf{I}_k,
 \end{align*}
 where $\hat{\Lambda}_{\text{MLE}}$ is the maximum likelihood estimator.
 
 ## Discussion about two-step method
-The traditional two-step method faces significant shortcomings, primarily its unsuitability[@hiroseSparseEstimationNonconcave2015]. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. 
+The traditional two-step method faces significant shortcomings, primarily its unsuitability[@hiroseSparseEstimationNonconcave2015]. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by
+$$
+\Lambda=
+\begin{bmatrix}
+0.8 & 0 \\
+0 & 0.8 \\
+0 & 0\\
+0 & 0\\
+0 & 0\\
+\end{bmatrix}.
+$$
+We generate $\mathbf{Y}\in \mathbb{R}^{{100}\times 5}$ using common factor $\mathbf{f}\in \mathbb{R}^{{100}\times 2}$ where each factor is generated randomly from standard normal distribution $N(0,1)$. We utilize the R-function factanal() to produce the loading matrix via MLE and then call varimax() to rotate our loading matrix. What we finally get is
+$$
+\hat{\Lambda}=
+\begin{bmatrix}
+-0.158 & 0.985\\
+0 & 0\\
+0.997 & 0\\
+0.207 & 0\\
+0 & 0\\
+\end{bmatrix},
+$$
+which is neither precise nor sparse.
 
-I am considering if a simulation study is needed for a clearer view.
+Simulation code:
+```
+set.seed(123)
+n <- 100 # Number of observations
+p <- 5   # Number of features
 
-The absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model[@mardiaMultivariateAnalysis1979]. We have
+factor1 <- rnorm(n, 0, 1) # set factors
+factor2 <- rnorm(n, 0, 1)
+
+X <- matrix(NA, nrow=n, ncol=p)
+X[,1] <- 0.8*factor1 + rnorm(n, 0, 1)  # Strong loading
+X[,2] <- 0.8*factor2 + rnorm(n, 0, 1)  # Strong loading
+X[,3] <- rnorm(n, 0, 1)  # Noise, no strong loading on any factor
+X[,4] <- rnorm(n, 0, 1)  
+X[,5] <- rnorm(n, 0, 1) 
+
+fa_result <- factanal(factors = 2, covmat = cor(X))
+rotated_fa <- varimax(fa_result$loadings)
+
+```
+
+
+
+
+Another problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model[@mardiaMultivariateAnalysis1979]. We have
 \begin{align*}
   &&&H_k: k \text{ common factors are sufficient to describe the data } \\
   \longleftrightarrow &&&H_a: \text{ Otherwise}.
 \end{align*}
-The test statistics is given by $\text{TS}=nF(\hat{\Lambda},\hat{\Psi})$ which has an asymptotic $\chi^2_s$ distribution with $s=\frac{1}{2}(p-d)^2-(p+d)$ by the property of MLE. Typically, the test is conducted at a $5\%$ significant level. We can start the procedure from a very small $k$, say, $k=1$ or $k=2$ and then increase $k$ until the null hypothesis is not rejected.
+The test statistics is given by $\text{TS}=nF(\hat{\Lambda},\hat{\Psi})$ which has an asymptotic $\chi^2_s$ distribution with $s=\frac{1}{2}(p-k)^2-(p+k)$ by the property of MLE. Typically, the test is conducted at a $5\%$ significant level. We can start the procedure from a very small $k$, say, $k=1$ or $k=2$ and then increase $k$ until the null hypothesis is not rejected.
 
 
 
 # Penalized Likelihood Method
-Our research later will focus on penalized likelihood method such like LASSO penalty[@ning2011sparsefactoranalysisl1regularization] [@choi2010penalizedmaximumlikelihoodapproach] and may include some non-convex penalty like MC+[@zhang2010variableselectionminimaxconcave].
+Penalized likelihood method can be viewed as a generalization of two-step method mentioned above[@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
+$$
+ \max_{\Lambda,\Psi}l_p := l(\Lambda,\Psi)-\rho\sum^p_{i=1}\sum^k_{j=1}P(|\lambda_{ij}|).
+$$
+where we call $l_p$ as the penalized likelihood, $\rho$ is called regularization parameter and we can treat $P(\cdot)$ as a penalized function. There are many types of penalized functions developed, such as LASSO ($P(\cdot)=|\cdot|$) and MC+ ($P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)$)[@hiroseSparseEstimationNonconcave2015]. In this article, we will mainly focus on the LASSO penalty.
 
+## LASSO penalty and LASSO estimator
 
+Again, recall that the LASSO penalized likelihood is given by
+$$l_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\Sigma))+\text{tr}(\Sigma^{-1}S)]-\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|$$
+and the LASSO estimator, denoted as $(\Lambda^*,\Psi^*)$, can be obtained via
+\begin{align*}
+(\Lambda^*,\Psi^*) &= \text{arg}\max_{\Lambda,\Psi} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\Sigma))+\text{tr}(\Sigma^{-1}S)]-\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|\\
+&=\text{arg}\min_{\Lambda,\Psi} \quad \log(\det(\Sigma))+\text{tr}(\Sigma^{-1}S)+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|.
+\end{align*}
 
-
+An E-M algorithm can be applied for evaluating the LASSO estimator.
 
 ## Appendix
 
