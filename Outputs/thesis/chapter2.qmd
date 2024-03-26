@@ -1,4 +1,39 @@
-# Method {#sec-method}
+---
+bibliography: ref.bib
+date: today
+format: 
+  html: default
+  pdf:
+    fontsize: 12pt
+    include-in-header:
+      text: |
+        \usepackage{fullpage}
+        \usepackage{enumitem}
+editor: 
+  markdown: 
+    wrap: 72
+---
+# The EM Algorithm {#sec-EM}
 
+## A brief introduction about the EM algorithm
 
-This report underscores the transformative impact of reproducible research on the scientific landscape, promoting a commitment to openness and accountability for the benefit of the entire research community.
+The Expectation-Maximization (EM) algorithm is a widely used iterative method to compute the maximum likelihood estimation, especially when we have some unobserved data[@Ng2012EMAlgorithm]. As we mentioned, the key of maximum likelihood estimation is solving equation
+\begin{equation}
+\frac{\partial}{\partial \beta}l=0.
+\end{equation}
+However, challenges often arise from the complex nature of the log-likelihood function, especially with data that is grouped, censored, or truncated. To navigate these difficulties, the EM algorithm introduces an ingenious approach by conceptualizing an equivalent statistical problem that incorporates both observed and unobserved data. Here, _augmented data_(or complete) refers to the integration of this unobserved component, enhancing the algorithm's ability to iteratively estimate through two distinct phases: the Expectation step (E-step) and the Maximization step (M-step). The iteration between these steps facilitates the efficient of parameter estimates, making the EM algorithm an essential tool for handling incomplete datasets effectively.
+
+## The E-step and M-step
+
+Let $\boldsymbol{x}$ denote the vector containing complete data, $\boldsymbol{y}$ denote the observed incomplete data and $\boldsymbol{z}$ denote the vector containing the missing data. Here 'missing data' is not necessarily missing, even if it does not at first appear to be missed, we can formulating it to be as such to facilitate the computation (we may see this later)[@Ng2012EMAlgorithm].
+
+Now denote $g_c(\boldsymbol{x};\boldsymbol{\Psi})$ as the probability density function (p.d.f.) of the random vector $\boldsymbol{X}$ corresponding to $\boldsymbol{x}$. Then the complete-data log-likelihood function when complete data is fully observed can be given by 
+$$\log L_c(\boldsymbol{\Psi})=\log g_c(\boldsymbol{x};\boldsymbol{\Psi}).$$
+The EM algorithm approaches the problem of solving the incomplete-data likelihood equation indirectly by proceeding iteratively in terms of $\log L_c(\boldsymbol{\Psi})$. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given $\boldsymbol{y}$ and current fit for $\boldsymbol{\Psi}$.
+
+On the $(k+1)^th$ iteration, we have
+\begin{align*}
+&\text{E-step: Compute } Q(\boldsymbol{\Psi};\boldsymbol{\Psi}^{(k)}):=\mathbb{E}[\log L_c(\boldsymbol{\Psi})|y]\\
+&\text{M-step: Update }\boldsymbol{\Psi}^{(k+1)} \text{ as }\boldsymbol{{\Psi}}^{(k+1)}:=\text{arg}\max_\boldsymbol{\Psi} Q(\boldsymbol{\Psi};\boldsymbol{\Psi}^{(k)})
+\end{align*}
+
