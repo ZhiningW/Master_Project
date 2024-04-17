@@ -92,14 +92,7 @@ After estimation, we want to rotate the loading matrix to possess a sparse matri
 The biggest challenge traditional two-step method facing is unsuitability[@hiroseSparseEstimationNonconcave2015]. Just like in regression models, MLE may lead to overfitness and rotatin techniques may not produce sparse enough loading matrix. In some simulation studies, the two-step method generated bad loading matrix even if the true loading matrix is sparse.[@hiroseSparseEstimationNonconcave2015] Our research later will focus on penalized likelihood method such like LASSO penalty[@ning2011sparsefactoranalysisl1regularization] [@choi2010penalizedmaximumlikelihoodapproach] and may include some non-convex penalty like MC+[@zhang2010variableselectionminimaxconcave].
 
 
-# Plan
 
-My plan is to   
-1. Conduct a detailed examination of the traditional two-step approach, with a particular focus on rotation techniques.  
-2. Explore how does the penalized likelihood method work for order-selection and overcome the defects traditional two-step approach are facing.  
-3. Explore the implementation of the LASSO penalty in a factor analytic model to enhance model selection and sparsity.  
-4. Simulation study   
-5. If possible, I may explore linear latent variable models, i.e. the model given by (1) will additionally have a linear term $\beta X$ to fit the mean $\mu$.  
 
 
 ## Appendix

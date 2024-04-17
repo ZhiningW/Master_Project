@@ -1,0 +1,405 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  12pt,
+]{amsart}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\usepackage{fullpage}
+\usepackage{enumitem}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Model Selection in Factor Analysis},
+  pdfauthor={Zhining Wang},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Model Selection in Factor Analysis}
+\author{Zhining Wang}
+\date{2024-03-13}
+
+\begin{document}
+\maketitle
+
+Notation is presented in Table~\ref{tbl-notation}.
+
+\section{What is factor analysis and why is it
+important?}\label{what-is-factor-analysis-and-why-is-it-important}
+
+Factor analysis is a mathematical model which tries to use fewer
+underlying factors to explain the correlation between a large set of
+observed variables(Mardia, Kent, and Bibby 1979). It provides a useful
+tool for exploring the covariance structure among observable variables
+(Hirose and Yamamoto 2015). One of the major assumptions that factor
+analytic model stands on is that it is impossible for us to observe
+those underlying factors directly. This assumption is especially suited
+to subjects like psychology where we cannot observe exactly some concept
+like how intelligent our subjects are(Mardia, Kent, and Bibby 1979).
+
+Suppose we have a observable random vector
+\(\mathbf{y}\in \mathbb{R}^p\) with mean \(\mathbb{E}[\mathbf{y}]=\mu\)
+and variance \(\mathbb{V}[\mathbf{y}]=\Sigma\). Then a d-order factor
+analysis model for \(\mathbf{y}\) can be given by \begin{equation}
+\mathbf{y}=\Lambda \mathbf{f}+\mu+\epsilon,
+\end{equation} where \(\Lambda \in \mathbb{R}^{p \times d}\) is called
+\emph{loading matrix}, we call \(\mathbf{f} \in \mathbb{R}^{d}\) as
+\emph{common vectors} and \(\epsilon \in \mathbb{R}^{p}\) is
+\emph{unique factors}. To make the model well-defined, we may assume
+\[\mathbb{E}[\mathbf{f}]=\mathbf{0}_d, \mathbb{V}[\mathbf{f}]=\mathbf{I}_{d\times d}, \mathbb{E}[\epsilon]=\mathbf{0}_p, \mathbb{V}[\epsilon]=:\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})\]
+and also the independence between any elements from \(\mathbf{f}\) and
+\(\epsilon\) separately, i.e.
+\[\mathbf{Cov}[\mathbf{f}_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,d\} \text{ and } j \in \{1,2,\dots,p\}\]
+Straightforwardly, the covariance of observable vector \(\mathbf{y}\)
+can be modelled by\\
+\begin{equation}
+\mathbb{V}[\mathbf{y}]=\Lambda\Lambda^\top+\Psi
+\end{equation}
+
+\section{Indeterminacy of the loading
+matrix}\label{indeterminacy-of-the-loading-matrix}
+
+One can easily see that if our factor analytic model is given by (1),
+then it can also be modelled as
+\[\mathbf{y}=(\Lambda\mathbf{M})(\mathbf{M}^\top\mathbf{f}) +\mu+\epsilon\]
+where the matrix \(\mathbf{M}\) is orthogonal and simultaneously the
+variance of \(\mathbf{y}\) given by (2) still holds, since
+\[\mathbb{V}[\mathbf{y}]=(\Lambda\mathbf{M}\mathbf{M}^\top)\mathbb{V}[\mathbf{f}](\Lambda\mathbf{M}\mathbf{M}^\top)^\top+\Psi=\Lambda\Lambda^\top+\Psi.\]
+Therefore a rotated loading matrix \(\Lambda\mathbf{M}\) is still a
+valid loading matrix for a factor analytic model. Sometimes we resolve
+this problem by making the loading matrix to satisfy some constraints
+like (Mardia, Kent, and Bibby 1979)
+\[\Lambda^\top \Psi^{-1} \Lambda \text{ is diagonal.}\]
+
+\section{Traditional Estimation of Parameters in Factor Analytic
+Models}\label{traditional-estimation-of-parameters-in-factor-analytic-models}
+
+We denote the set of parameters by
+\(\beta := \{\text{vec}(\Lambda),\text{vec}(\Psi)\}\) where
+\(\text{vec}(\cdot)\) is the vectorisation of the input. Traditionally,
+a two-step procedure is used to construct a factor analytic model:
+estimate parameters by maximum likelihood estimation (aka, MLE) and then
+use rotation techniques to find an interpretable model.
+
+\subsection{Maximum Likelihood
+Estimation}\label{maximum-likelihood-estimation}
+
+Suppose we have \(N\) independent and identically distributed
+observations \(\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_N\) from a
+p-dimensional multi-variate normal distribution \(N_p(\mu,\Sigma)\) and
+by our hypothesis, we have \(\Sigma=\Lambda\Lambda^\top+\Psi\). Then the
+likelihood function is given by
+\[L(\Lambda,\Psi)=\prod^N_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\Sigma)^{-\frac{1}{2}}\exp(-\frac{1}{2}(\mathbf{y}_i-\mu)^\top\Sigma^{-1}(\mathbf{y}_i-\mu))\right].\]
+and hence the log-likelihood is given by \begin{align*}
+l(\Lambda,\Psi)=& \sum^N_{i=2}[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\Sigma))-\frac{1}{2}(\mathbf{y}_i-\mu)^\top\Sigma^{-1}(\mathbf{y}_i-\mu)]\\
+&= -\frac{N}{2}[p\log(2\pi)+\log(\det(\Sigma))+\text{tr}(\Sigma^{-1}S)].
+\end{align*} To get the MLE of parameters, we seek the roots of equation
+system
+
+\begin{cases}
+\frac{\partial}{\partial \Lambda}l(\Lambda,\Psi)=0 \\
+\frac{\partial}{\partial \Psi}l(\Lambda,\Psi)=0.
+\end{cases}
+
+However, there is no closed form of the roots. Many iterative algorithms
+are developed to get the roots of the equation, like EM algorithm
+developed by Rubin(Rubin and Thayer 1982).
+
+\subsection{Rotation techniques}\label{rotation-techniques}
+
+After estimation, we want to rotate the loading matrix to possess a
+sparse matrix in order to interpret the observable variables by
+underlying factors better. Also there are many method to achieve
+rotation as well such as the varimax method and the promax method
+(Hirose and Yamamoto 2015).
+
+Suppose \(Q(\Lambda)\) is an criterion for \(\Lambda\) in the rotation
+procedure, and we may express it as
+\(Q(\Lambda):= \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})\) where
+\(P(\cdot)\) is some loss function(Hirose and Yamamoto 2015).
+Specifically, if we set \(P(\cdot)=|\cdot|\), we have LASSO to generate
+a theoretically sparse loading matrix. If we rewrite this in a
+optimization problem, it can be given as (Jennrich 2004) \begin{align*}
+&\min_\Lambda \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})\\
+&\text{subject to } \Lambda=\Lambda_0\mathbf{M} \text{ and } \mathbf{M}^\top\mathbf{M}=\mathbf{I}_d,
+\end{align*} where \(\Lambda_0\) is an initial guess. Since we execute
+this technique after obtaining the MLE of parameters, therefore what we
+want is \begin{align*}
+&\min_\Lambda \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})\\
+&\text{subject to } \Lambda=\hat{\Lambda}_{\text{MLE}}\mathbf{M} \text{ and } \mathbf{M}^\top\mathbf{M}=\mathbf{I}_d,
+\end{align*} where \(\hat{\Lambda}_{\text{MLE}}\) is the maximum
+likelihood estimator.
+
+\subsection{Discussion about two-step
+method}\label{discussion-about-two-step-method}
+
+The traditional two-step method faces significant shortcomings,
+primarily its unsuitability(Hirose and Yamamoto 2015). Similar to
+challenges in regression models, MLE can result in overfitting, and
+rotation techniques might not yield a sufficiently sparse loading
+matrix.
+
+I am considering if a simulation study is needed for a clearer view.
+
+The absence of model selection complicates efficient modeling by making
+it difficult to determine the precise number of underlying factors, that
+is, the order of the factor analytic model. A usual but troublesome
+method is conducting a hypothesis test for the model(Mardia, Kent, and
+Bibby 1979). We have \begin{align*}
+  &&&H_k: k \text{ common factors are sufficient to describe the data } \\
+  \longleftrightarrow &&&H_a: \text{ Otherwise}.
+\end{align*} The test statistics is given by
+\(\text{TS}=nF(\hat{\Lambda},\hat{\Psi})\) which has an asymptotic
+\(\chi^2_s\) distribution with \(s=\frac{1}{2}(p-d)^2-(p+d)\) by the
+property of MLE. Typically, the test is conducted at a \(5\%\)
+significant level. We can start the procedure from a very small \(k\),
+say, \(k=1\) or \(k=2\) and then increase \(k\) until the null
+hypothesis is not rejected.
+
+\section{Penalized Likelihood Method}\label{penalized-likelihood-method}
+
+Our research later will focus on penalized likelihood method such like
+LASSO penalty(Ning and Georgiou 2011) (Choi, Oehlert, and Zou 2010) and
+may include some non-convex penalty like MC+(Zhang 2010).
+
+\subsection{Appendix}\label{appendix}
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1600}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.8400}}@{}}
+\caption{List of notations used in this
+report.}\label{tbl-notation}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+Notation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+Notation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(A^\top\) & the transpose of the matrix (or vector) \(A\) \\
+\(\mathbb{R}^{p}\) & the space of all p-dimensional real column vectors
+like \([a_1,a_2,\dots,a_p]^\top\) \\
+\(\mathbb{R}^{p\times q}\) & the space of all real matrices with size
+\(p\times q\) \\
+\(\mathbb{E}[\cdot]\) & the expectation, or mean of a random variable \\
+\(\mathbb{V}[\cdot]\) & the variance, or covariance of a random
+variable \\
+\(\mathbf{Cov}[\cdot , \cdot]\) & the covariance of two random
+variables \\
+\(\mathbf{0}_{p}\) and \(\mathbf{0}_{p\times q}\) & the p-dimensional
+\(0\) vector or \(0\) matrix in size \(p\times q\) respectively \\
+\(\mathbf{I}_p\) & the identity matrix in size \(p\times p\) \\
+\(\det(\cdot)\) & the determinant of a matrix \\
+\end{longtable}
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-choi2010penalizedmaximumlikelihoodapproach}
+Choi, Jang, Gary Oehlert, and Hui Zou. 2010. {``A Penalized Maximum
+Likelihood Approach to Sparse Factor Analysis.''} \emph{Statistics and
+Its Interface} 3 (4): 429--36.
+
+\bibitem[\citeproctext]{ref-hiroseSparseEstimationNonconcave2015}
+Hirose, Kei, and Michio Yamamoto. 2015. {``Sparse Estimation via
+Nonconcave Penalized Likelihood in Factor Analysis Model.''}
+\emph{Statistics and Computing} 25 (5): 863--75.
+\url{https://doi.org/10.1007/s11222-014-9458-0}.
+
+\bibitem[\citeproctext]{ref-Jennrich2004Rotation}
+Jennrich, R. I. 2004. {``Rotation to Simple Loadings Using Component
+Loss Functions: The Orthogonal Case.''} \emph{Psychometrika} 69:
+257--73.
+
+\bibitem[\citeproctext]{ref-mardiaMultivariateAnalysis1979}
+Mardia, K. V., J. T. Kent, and J. M. Bibby. 1979. \emph{Multivariate
+Analysis}. Probability and Mathematical Statistics. London ; New York:
+Academic Press.
+
+\bibitem[\citeproctext]{ref-ning2011sparsefactoranalysisl1regularization}
+Ning, Lipeng, and Tryphon T. Georgiou. 2011. {``Sparse Factor Analysis
+via Likelihood and \(\ell_1\)-Regularization.''} In \emph{2011 50th IEEE
+Conference on Decision and Control and European Control Conference}.
+IEEE.
+
+\bibitem[\citeproctext]{ref-Rubin1982EMAlgorithms}
+Rubin, Donald B., and Dorothy T. Thayer. 1982. {``EM Algorithms for ML
+Factor Analysis.''} \emph{Psychometrika} 47: 69--76.
+
+\bibitem[\citeproctext]{ref-zhang2010variableselectionminimaxconcave}
+Zhang, Cun-Hui. 2010. {``Nearly Unbiased Variable Selection Under
+Minimax Concave Penalty.''} \emph{Journal Name Here}, 894--942.
+
+\end{CSLReferences}
+
+
+
+\end{document}
