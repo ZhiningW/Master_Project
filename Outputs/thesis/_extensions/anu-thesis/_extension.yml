@@ -27,6 +27,7 @@ contributes:
       environments: flushright
       date-format: "Do MMMM YYYY"
       toc: true
+      toc-depth: 3
       published-title: "Date"
       number-sections: true
     html:
