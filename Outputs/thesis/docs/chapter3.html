@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Model Selection in Factor Analysis - Abstract</title>
+<title>Model Selection in Factor Analysis - 3&nbsp; The EM Algorithm in LASSO Factor Analytic Models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./disclaimer.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./references.html" rel="next">
+<link href="./chapter2.html" rel="prev">
 <link href="site_libs/quarto-contrib/quarto-project/anu-thesis/assets/ANU_Favicon_Inversed_Gold.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -76,6 +76,35 @@ ul.task-list li input[type="checkbox"] {
   });
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -88,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./abstract.html">Abstract</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The EM Algorithm in LASSO Factor Analytic Models</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -125,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./abstract.html" class="sidebar-item-text sidebar-link active">
+  <a href="./abstract.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Abstract</span></a>
   </div>
 </li>
@@ -155,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter3.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapter3.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The EM Algorithm in LASSO Factor Analytic Models</span></span></a>
   </div>
 </li>
@@ -190,14 +219,24 @@ ul.task-list li input[type="checkbox"] {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
 <p><img src="images/ANU_Primary_Vertical_GoldBlack.png" class="logo img-fluid"></p>
 </div></div>
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#model-setup" id="toc-model-setup" class="nav-link active" data-scroll-target="#model-setup"><span class="header-section-number">3.1</span> Model Setup</a></li>
+  <li><a href="#the-em-algorithm" id="toc-the-em-algorithm" class="nav-link" data-scroll-target="#the-em-algorithm"><span class="header-section-number">3.2</span> The EM Algorithm</a>
+  <ul class="collapse">
+  <li><a href="#e-step" id="toc-e-step" class="nav-link" data-scroll-target="#e-step"><span class="header-section-number">3.2.1</span> E-Step</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/anuopensci/quarto-anu-thesis/edit/main/chapter3.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anuopensci/quarto-anu-thesis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Abstract</h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The EM Algorithm in LASSO Factor Analytic Models</span></h1>
 </div>
 
 
@@ -214,8 +253,59 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="model-setup" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="model-setup"><span class="header-section-number">3.1</span> Model Setup</h2>
+<p>Suppose we have the <span class="math inline">\(n\)</span> centralized observations, <span class="math inline">\(\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}\)</span>, where <span class="math inline">\(\boldsymbol{y}_j\in \mathbb{R}^p\)</span> for <span class="math inline">\(j=1,2,\dots,n\)</span>. For each of the observation <span class="math inline">\(\boldsymbol{y}_j\)</span>, the common factor and unique factor are <span class="math inline">\(\boldsymbol{f}_j\)</span> and <span class="math inline">\(\boldsymbol{\epsilon}_j\)</span> respectively. Denote the response matrix as <span class="math inline">\(\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top\)</span>, the common factor matrix as <span class="math inline">\(\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top\)</span>, and the unique factor matrix as <span class="math inline">\(\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top\)</span>. Then the model can be written as <span class="math inline">\(\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\mu}+\boldsymbol{\hat\epsilon}.\)</span> Moreover, <span class="math inline">\(\boldsymbol{\mu}\)</span> vanishes because of centralization and denote <span class="math inline">\(\boldsymbol{\theta}:=\boldsymbol{\Lambda}^\top\)</span>, we have our model <span class="math display">\[
+\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\theta}+\boldsymbol{\hat\epsilon}.
+\]</span> We also assume</p>
+<ol type="1">
+<li><p><span class="math inline">\(\boldsymbol{\epsilon}_j\)</span> follows a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\boldsymbol{\Psi}\)</span>, where <span class="math inline">\(\boldsymbol{\Psi}\)</span> is a diagonal matrix defined by <span class="math inline">\(\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})\)</span>.</p></li>
+<li><p><span class="math inline">\(\boldsymbol{f}_j\)</span> follows a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\boldsymbol{I}_k\)</span> for <span class="math inline">\(j=1,2,\dots,n\)</span>.</p></li>
+<li><p><span class="math inline">\(\boldsymbol{y}_j\)</span> follows a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\boldsymbol{\theta}\boldsymbol{\theta}^\top+\boldsymbol{\Psi}\)</span> for <span class="math inline">\(j=1,2,\dots,n\)</span>. Those <span class="math inline">\(\boldsymbol{y}_j\)</span> are pairwisely independent.</p></li>
+</ol>
+</section>
+<section id="the-em-algorithm" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="the-em-algorithm"><span class="header-section-number">3.2</span> The EM Algorithm</h2>
+<p>We treat the common factor matrix <span class="math inline">\(\boldsymbol{F}\)</span> as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of <span class="math inline">\((\boldsymbol{Y},\boldsymbol{F})\)</span> given <span class="math inline">\(\boldsymbol{Y}\)</span> and <span class="math inline">\((\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)})\)</span>, where <span class="math inline">\((\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)})\)</span> is the parameter we got in the <span class="math inline">\(k\)</span>-th iteration (<span class="math inline">\(k&gt;1\)</span>) and <span class="math inline">\((\boldsymbol{\theta}_{(0)},\boldsymbol{\Psi}_{(0)})\)</span> is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get <span class="math inline">\((\boldsymbol{\theta}_{(k+1)},\boldsymbol{\Psi}_{(k+1)})\)</span>.</p>
+<section id="e-step" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="e-step"><span class="header-section-number">3.2.1</span> E-Step</h3>
+<p>First, the joint likelihood of <span class="math inline">\((\boldsymbol{Y},\boldsymbol{F})\)</span>, denoted as <span class="math inline">\(L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})\)</span>, is given by</p>
+<span class="math display">\[\begin{align*}
+L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})=&amp;\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i)\\
+=&amp;\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\\
+=&amp;\prod_{i=1}^nN(\boldsymbol{y}_i;\boldsymbol{\Lambda}\boldsymbol{f}_i,\boldsymbol{\Psi})N(\boldsymbol{f}_i;\boldsymbol{0}_k,\boldsymbol{I}_k)\\
+=&amp;\prod_{i=1}^n[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Psi})^{-\frac{1}{2}}\exp\{-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}\\
+&amp;(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\}][(2\pi)^{-\frac{k}{2}}\det({\boldsymbol{I}_k})^{-\frac{1}{2}}\exp\{-\frac{1}{2}\boldsymbol{f}_i^\top\boldsymbol{I}_k^{-1}\boldsymbol{f}_i\}]\\
+= &amp;(2\pi)^{-\frac{n}{2}(p+k)}(\prod_{i=1}^p\psi_{jj})^{-\frac{n}{2}}\exp\{-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(\boldsymbol{Y}_{ij}-\boldsymbol{F}(i,)\boldsymbol{\theta}(,j))^2}{\psi_{jj}}\}\\
+&amp;\exp\{-\frac{1}{2}\sum_{i=1}^n\boldsymbol{F}(i,)\boldsymbol{F}(i,)^\top\}.
+\end{align*}\]</span>
+<p>Furthermore, the log-likelihood, denoted as <span class="math inline">\(l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})\)</span>, is given by</p>
+<span class="math display">\[\begin{equation}
+l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})=-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(\boldsymbol{Y}_{ij}-\boldsymbol{F}(i,)\boldsymbol{\theta}(,j))^2}{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\boldsymbol{F}(i,)\boldsymbol{F}(i,)^\top+\text{constant}.
+\label{ll}
+\end{equation}\]</span>
+<p>Now let us deduce the conditional expectation to <span class="math inline">\(\boldsymbol{F}\)</span> given <span class="math inline">\(\boldsymbol{Y},\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)}\)</span>, denoted as <span class="math inline">\(El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})\)</span>. In <span class="math inline">\(\ref{ll}\)</span>, the first term is independent on <span class="math inline">\(\boldsymbol{F}\)</span>, hence stay the same under conditional expectation. The last term is independent on <span class="math inline">\((\boldsymbol{\theta},\boldsymbol{\Psi})\)</span>, therefore we can regard it as a constant in <span class="math inline">\(El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})\)</span>. We only need to consider the term inside the sum in the second term, more specifically, the numerator, we have</p>
+<p><span class="math display">\[
+(\boldsymbol{Y}_{ij}-\boldsymbol{F}(i,)\boldsymbol{\theta}(,j))^2 = \boldsymbol{Y}_{ij}^2 - 2 \boldsymbol{Y}_{ij}\boldsymbol{F}(i,)\boldsymbol{\theta}(,j)+\boldsymbol{\theta}(,j)^\top \boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)\boldsymbol{\theta}(,j)
+\]</span></p>
+<p>Without ambiguity, denote <span class="math inline">\(\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]\)</span> to be the conditional expectation <span class="math inline">\(\mathbb{E}[\boldsymbol{F}(i,)|\boldsymbol{Y},\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)}]\)</span> for simplification. Then the conditional expectation <span class="math inline">\(El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})\)</span> is given by <span class="math display">\[\begin{align*}
+El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})=&amp;\text{constant}-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\\
+&amp;\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{Y}_{ij}^2 - 2 \boldsymbol{Y}_{ij}\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]\boldsymbol{\theta}(,j)+\boldsymbol{\theta}(,j)^\top \mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]\boldsymbol{\theta}(,j)}{\psi_{jj}}\\
+\end{align*}\]</span></p>
+<p>To deal with <span class="math inline">\(\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]\)</span> and <span class="math inline">\(\mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]\)</span>, we only need to know the mean and variance of conditional distribution <span class="math inline">\(\boldsymbol{F}(i,)|\boldsymbol{Y},\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)}\)</span>, where the latter one is denoted as <span class="math inline">\(\mathbb{V}[\boldsymbol{F}(i,)|_{(k)}]\)</span>. This is because we can always treat <span class="math inline">\(\mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]\)</span> as</p>
+<p><span class="math display">\[
+\mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]= \mathbb{V}[\boldsymbol{F}(i,)|_{(k)}]+ \mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]^\top\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}].
+\]</span></p>
+<p>We have</p>
+<p><em>Theorem</em>: If <span class="math inline">\(\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_\boldsymbol{\alpha},\boldsymbol{\Sigma_\boldsymbol{\alpha}})\)</span> and <span class="math inline">\(\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_\boldsymbol{\beta},\boldsymbol{\Sigma}_\boldsymbol{\beta})\)</span>, then we have <span class="math inline">\(\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})\)</span>, where <span class="math display">\[\begin{align*}
+&amp; \boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}=\boldsymbol{\mu}_\boldsymbol{\alpha}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{\beta}\\
+&amp; \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_\boldsymbol{\alpha}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
+
+\end{align*}\]</span></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -629,13 +719,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./chapter2.html" class="pagination-link" aria-label="The EM Algorithm">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The EM Algorithm</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./disclaimer.html" class="pagination-link" aria-label="Disclaimer">
-        <span class="nav-page-text">Disclaimer</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -647,7 +737,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright © 2024, Zhining Wang</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/anuopensci/quarto-anu-thesis/edit/main/abstract.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anuopensci/quarto-anu-thesis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/anuopensci/quarto-anu-thesis/edit/main/chapter3.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anuopensci/quarto-anu-thesis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

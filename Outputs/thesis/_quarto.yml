@@ -4,7 +4,7 @@ project:
 
 book:
    title: "{{< var title >}}"
-   subtitle: "{{< var subtitle >}}"
+   #subtitle: "{{< var subtitle >}}"
    author: "{{< var author >}}"
    date: today
    output-file: "thesis"
@@ -20,11 +20,13 @@ book:
      - acknowledgements.qmd
      - chapter1.qmd
      - chapter2.qmd
+     - chapter3.qmd
      - references.qmd
    appendices:
      - tools.qmd
-   page-footer: "Copyright © 2024, Your Name"
+   page-footer: "Copyright © 2024, Zhining Wang"
 
+toc-depth: 3
 bibliography: ref.bib
 
 comments:
@@ -35,8 +37,8 @@ date-start: "{{< var date-start >}}"
 date-end: "{{< var date-end >}}"
 titlepage-supervisor: true
 supervisor:
-  - Prof. Jane Smith
-  - Dr. John Smith
+  - Dr. Emi Tanaka
+  - Dr. Qinian Jin 
 
 format:
   anu-thesis-html: default

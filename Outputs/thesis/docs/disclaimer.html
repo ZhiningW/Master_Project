@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>chapter1</title>
+<title>Model Selection in Factor Analysis - Disclaimer</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,68 +23,213 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="chapter1_files/libs/clipboard/clipboard.min.js"></script>
-<script src="chapter1_files/libs/quarto-html/quarto.js"></script>
-<script src="chapter1_files/libs/quarto-html/popper.min.js"></script>
-<script src="chapter1_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="chapter1_files/libs/quarto-html/anchor.min.js"></script>
-<link href="chapter1_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="chapter1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="chapter1_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="chapter1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="chapter1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./acknowledgements.html" rel="next">
+<link href="./abstract.html" rel="prev">
+<link href="site_libs/quarto-contrib/quarto-project/anu-thesis/assets/ANU_Favicon_Inversed_Gold.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
-}
-window.Quarto = {
-  typesetMath
-};
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
 </script>
+
 
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar docked">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./disclaimer.html">Disclaimer</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Model Selection in Factor Analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/anuopensci/quarto-anu-thesis" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./thesis.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./abstract.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Abstract</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./disclaimer.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Disclaimer</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Model Selection in Factor Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chapter2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The EM Algorithm</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tools.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tools</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
+<p><img src="images/ANU_Primary_Vertical_GoldBlack.png" class="logo img-fluid"></p>
+</div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#publications" id="toc-publications" class="nav-link active" data-scroll-target="#publications">Publications</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/anuopensci/quarto-anu-thesis/edit/main/disclaimer.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anuopensci/quarto-anu-thesis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Disclaimer</h1>
+</div>
 
 
 
-<section id="sec-intro" class="level1">
-<h1>Introduction</h1>
-<p>(Summary)</p>
-<p>Factor analysis model is a mathematical model which tries to use fewer underlying factors to explain the correlation between a large set of observed variables(Mardia et al.,1995). Suppose we have a p-dimensional random vector <span class="math inline">\(y\in \mathbf{R^p}\)</span> with mean <span class="math inline">\(E[y]=\mu\)</span> and variance <span class="math inline">\(Var[y]=\Sigma\)</span>. We can establish a d-order factor analysis model for <span class="math inline">\(y\)</span> if it can be written in the form <span class="math display">\[y=\Lambda u+\mu+\epsilon\]</span>, where <span class="math inline">\(\Lambda \in \mathbf{R}^{p \times d}\)</span> is called , we call <span class="math inline">\(u \in \mathbf{R}^{d}\)</span> as and <span class="math inline">\(\epsilon \in \mathbf{R}^{p}\)</span> is . To make the model well-defined, we may assume <span class="math display">\[E[u]=\mathbf{0}, Var[u]=\mathbf{I}, E[\epsilon]=\mathbf{0} \text{ and covariance } Var[\epsilon]=\Psi=\text{diag}(\psi_{11},\dots,\psi_{pp})\]</span> and also <span class="math display">\[Cov[u,\epsilon]=\mathbf{0}\]</span> thus this model implies a straightforward constraint <span class="math display">\[Var[y]=\Lambda\Lambda^T+\Psi\]</span></p>
-<p>A two-step procedure is used to establish an interpretable model: First is to estimate parameters, i.e.<span class="math inline">\(\Lambda\)</span> and <span class="math inline">\(\Psi\)</span> in the model sparsely, and then utilize rotation techniques to make the model easy to understand(Hirose, 2015). Traditionally, sparsity can be achieved via LASSO penalty of the likelihood function theoretically but in fact, it may produce biased and overdense models(Hirose,2015). Further, penalization methods using some nonconvex penalties give a more sparse one than LASSO, such as the SCAD(Fan and Li, 2001), the MC+(Zhang, 2010) and the EM algorithm with coordinate descent(Hirose, 2015).</p>
-<p>In a generalized linear latent variable model(GLLVM), just like what we do in a generalized linear model(GLM), we use the link function and add a linear term to fit the mean of <span class="math inline">\(y\)</span>. Specifically, if we have a set of <span class="math inline">\(n\)</span> observed data <span class="math inline">\({x_i,y_i}:i=1,2,...n, y_i\in \mathbf{R^p} \text{ and } x_i\in \mathbf{R^q}\)</span>, where any elements in <span class="math inline">\(y_i\)</span>, say <span class="math inline">\(y_{ij}\)</span> are independently observed from the exponential family of distributions with mean <span class="math inline">\(\mu_{ij}\)</span> and dispersion <span class="math inline">\(\psi_{ij}\)</span>, i.e.&nbsp;<span class="math display">\[y_{ij}\sim \text{ IID } f(y_{ij};\theta_{ij},\psi_{ij})=\exp\{\frac{y_{ij}\theta_{ij}-b(\theta_{ij})}{\psi_{ij}}+c(y_{ij},\psi_{ij})\}\]</span> Then the GLLVM of <span class="math inline">\(y_{ij}\)</span> can be given as <span class="math display">\[\eta_{ij}:=g(E[y_{ij}])=g(\mu_{ij})=x_i^T\beta_j+u_i^T\lambda_j+\epsilon_{ij},\]</span> (Hui et al., 2018)where <span class="math inline">\(g(.)\)</span> is the link, <span class="math inline">\(x_i^T\beta_j\)</span> is the linear term with <span class="math inline">\(q\)</span> predictors, <span class="math inline">\(u_i^T\lambda_j\)</span> is the latent term with <span class="math inline">\(d\)</span> latent variables, <span class="math inline">\(\epsilon_i=(\epsilon_{i1},...,\epsilon_{ip})\sim N(\mathbf{0},\Psi)\)</span>. We assume the latent variables come from a d-dimensional multivariate standard normal distribution, <span class="math inline">\(u_i \sim N(\mathbf{0},I_d)\)</span>. Just like in the factor analysis model, the conditional variance of <span class="math inline">\(\eta_i\)</span> is given by <span class="math inline">\(Var[\eta_i|x_i]=\Lambda\Lambda^T+\Psi\)</span></p>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This thesis is composed of my original work, and contains no material previously published or written by another person except where due reference has been made in the text. I have clearly stated the contribution by others to jointly-authored works that I have included in my thesis.</p>
+<p>I have clearly stated the contribution of others to my thesis as a whole, including statistical assistance, study design, data analysis, significant technical procedures, professional editorial advice, financial support and any other original research work used or reported in my thesis. The content of my thesis is the result of work I have carried out since the commencement of my higher degree by research candidature and does not include a substantial part of work that has been submitted to qualify for the award of any other degree or diploma in any university or other tertiary institution. I have clearly stated which parts of my thesis, if any, have been submitted to qualify for another award.</p>
+<div class="flushright">
+<p><em>Zhining Wang</em><br>
+<em>2024-04-17</em></p>
+</div>
+<section id="publications" class="level1 unnumbered">
+<h1 class="unnumbered">Publications</h1>
+<p>Accepted or in-press publication in this thesis.</p>
+<p>Submitted manuscripts included in this thesis.</p>
+<p>Other publications during candidature.</p>
+
+
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -164,6 +309,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -198,7 +361,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -472,7 +639,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./abstract.html" class="pagination-link" aria-label="Abstract">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Abstract</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./acknowledgements.html" class="pagination-link" aria-label="Acknowledgements">
+        <span class="nav-page-text">Acknowledgements</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright © 2024, Zhining Wang</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/anuopensci/quarto-anu-thesis/edit/main/disclaimer.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anuopensci/quarto-anu-thesis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 

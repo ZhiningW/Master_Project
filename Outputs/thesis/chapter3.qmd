@@ -1,42 +1,26 @@
----
-title: "The EM Algorithm in LASSO Factor Analytic Models"
-editor: visual
-bibliography: ref.bib
-date: today
-format: 
-  html: default
-  pdf:
-    fontsize: 12pt
-    include-in-header:
-      text: |
-        \usepackage{fullpage}
-        \usepackage{enumitem}
-        \newtheorem{theorem}{Theorem}
----
-# Model Setup
-Suppose we have the $n$ centralized observations, $\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}$, where $\boldsymbol{y}_j\in \mathbb{R}^p$ for $j=1,2,\dots,n$. For each of the observation $\boldsymbol{y}_j$, the common factor and unique factor are $\boldsymbol{f}_j$ and $\boldsymbol{\epsilon}_j$ respectively. Denote the response matrix as $\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top$, the common factor matrix as $\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top$, and the unique factor matrix as 
-$\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top$.
-Then the model can be written as 
-$\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\mu}+\boldsymbol{\hat\epsilon}.$ Moreover, $\boldsymbol{\mu}$ vanishes because of centralization and denote $\boldsymbol{\theta}:=\boldsymbol{\Lambda}^\top$, we have our model
-$$
+# The EM Algorithm in LASSO Factor Analytic Models
+
+## Model Setup
+
+Suppose we have the $n$ centralized observations, $\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}$, where $\boldsymbol{y}_j\in \mathbb{R}^p$ for $j=1,2,\dots,n$. For each of the observation $\boldsymbol{y}_j$, the common factor and unique factor are $\boldsymbol{f}_j$ and $\boldsymbol{\epsilon}_j$ respectively. Denote the response matrix as $\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top$, the common factor matrix as $\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top$, and the unique factor matrix as $\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top$. Then the model can be written as $\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\mu}+\boldsymbol{\hat\epsilon}.$ Moreover, $\boldsymbol{\mu}$ vanishes because of centralization and denote $\boldsymbol{\theta}:=\boldsymbol{\Lambda}^\top$, we have our model $$
 \boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\theta}+\boldsymbol{\hat\epsilon}.
-$$
-We also assume 
+$$ We also assume
 
-  1. $\boldsymbol{\epsilon}_j$ follows a normal distribution with mean $0$ and variance 
-$\boldsymbol{\Psi}$, where $\boldsymbol{\Psi}$ is a diagonal matrix defined by $\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})$.
-  
-  2. $\boldsymbol{f}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{I}_k$ for $j=1,2,\dots,n$.
-  
-  3. $\boldsymbol{y}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{\theta}\boldsymbol{\theta}^\top+\boldsymbol{\Psi}$ for $j=1,2,\dots,n$. Those $\boldsymbol{y}_j$ are pairwisely independent.
-  
+1.  $\boldsymbol{\epsilon}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{\Psi}$, where $\boldsymbol{\Psi}$ is a diagonal matrix defined by $\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})$.
 
-# The EM Algorithm 
+2.  $\boldsymbol{f}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{I}_k$ for $j=1,2,\dots,n$.
+
+3.  $\boldsymbol{y}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{\theta}\boldsymbol{\theta}^\top+\boldsymbol{\Psi}$ for $j=1,2,\dots,n$. Those $\boldsymbol{y}_j$ are pairwisely independent.
+
+## The EM Algorithm
+
 We treat the common factor matrix $\boldsymbol{F}$ as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of $(\boldsymbol{Y},\boldsymbol{F})$ given $\boldsymbol{Y}$ and $(\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)})$, where $(\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)})$ is the parameter we got in the $k$-th iteration ($k>1$) and $(\boldsymbol{\theta}_{(0)},\boldsymbol{\Psi}_{(0)})$ is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get $(\boldsymbol{\theta}_{(k+1)},\boldsymbol{\Psi}_{(k+1)})$.
 
-## E-Step
+### E-Step
+
 First, the joint likelihood of $(\boldsymbol{Y},\boldsymbol{F})$, denoted as $L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})$, is given by
 
+```{=tex}
 \begin{align*}
 L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})=&\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i)\\
 =&\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\\
@@ -46,41 +30,36 @@ L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})=&\prod_
 = &(2\pi)^{-\frac{n}{2}(p+k)}(\prod_{i=1}^p\psi_{jj})^{-\frac{n}{2}}\exp\{-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(\boldsymbol{Y}_{ij}-\boldsymbol{F}(i,)\boldsymbol{\theta}(,j))^2}{\psi_{jj}}\}\\
 &\exp\{-\frac{1}{2}\sum_{i=1}^n\boldsymbol{F}(i,)\boldsymbol{F}(i,)^\top\}.
 \end{align*}
-
+```
 Furthermore, the log-likelihood, denoted as $l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})$, is given by
 
+```{=tex}
 \begin{equation}
 l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\theta},\boldsymbol{\Psi})=-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(\boldsymbol{Y}_{ij}-\boldsymbol{F}(i,)\boldsymbol{\theta}(,j))^2}{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\boldsymbol{F}(i,)\boldsymbol{F}(i,)^\top+\text{constant}.
 \label{ll}
 \end{equation}
-
+```
 Now let us deduce the conditional expectation to $\boldsymbol{F}$ given $\boldsymbol{Y},\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)}$, denoted as $El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})$. In \ref{ll}, the first term is independent on $\boldsymbol{F}$, hence stay the same under conditional expectation. The last term is independent on $(\boldsymbol{\theta},\boldsymbol{\Psi})$, therefore we can regard it as a constant in $El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})$. We only need to consider the term inside the sum in the second term, more specifically, the numerator, we have
 
 $$
 (\boldsymbol{Y}_{ij}-\boldsymbol{F}(i,)\boldsymbol{\theta}(,j))^2 = \boldsymbol{Y}_{ij}^2 - 2 \boldsymbol{Y}_{ij}\boldsymbol{F}(i,)\boldsymbol{\theta}(,j)+\boldsymbol{\theta}(,j)^\top \boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)\boldsymbol{\theta}(,j)
 $$
 
-Without ambiguity, denote $\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]$ to be the conditional expectation $\mathbb{E}[\boldsymbol{F}(i,)|\boldsymbol{Y},\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)}]$ for simplification. Then the conditional expectation $El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})$ is given by
-\begin{align*}
+Without ambiguity, denote $\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]$ to be the conditional expectation $\mathbb{E}[\boldsymbol{F}(i,)|\boldsymbol{Y},\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)}]$ for simplification. Then the conditional expectation $El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})$ is given by \begin{align*}
 El_{(k)}(\boldsymbol{\theta},\boldsymbol{\Psi})=&\text{constant}-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\\
 &\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{Y}_{ij}^2 - 2 \boldsymbol{Y}_{ij}\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]\boldsymbol{\theta}(,j)+\boldsymbol{\theta}(,j)^\top \mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]\boldsymbol{\theta}(,j)}{\psi_{jj}}\\
 \end{align*}
 
-To deal with $\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]$ and $\mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]$, we only need to know the mean and variance of conditional distribution $\boldsymbol{F}(i,)|\boldsymbol{Y},\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)}$, where the latter one is denoted as $\mathbb{V}[\boldsymbol{F}(i,)|_{(k)}]$. This is because we can always treat $\mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]$ as 
+To deal with $\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]$ and $\mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]$, we only need to know the mean and variance of conditional distribution $\boldsymbol{F}(i,)|\boldsymbol{Y},\boldsymbol{\theta}_{(k)},\boldsymbol{\Psi}_{(k)}$, where the latter one is denoted as $\mathbb{V}[\boldsymbol{F}(i,)|_{(k)}]$. This is because we can always treat $\mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]$ as
 
 $$
 \mathbb{E}[\boldsymbol{F}(i,)^\top\boldsymbol{F}(i,)|_{(k)}]= \mathbb{V}[\boldsymbol{F}(i,)|_{(k)}]+ \mathbb{E}[\boldsymbol{F}(i,)|_{(k)}]^\top\mathbb{E}[\boldsymbol{F}(i,)|_{(k)}].
 $$
 
-We have 
+We have
 
-_Theorem_: If $\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_\boldsymbol{\alpha},\boldsymbol{\Sigma_\boldsymbol{\alpha}})$ and $\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_\boldsymbol{\beta},\boldsymbol{\Sigma}_\boldsymbol{\beta})$, then we have $\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})$, where 
-\begin{align*}
+*Theorem*: If $\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_\boldsymbol{\alpha},\boldsymbol{\Sigma_\boldsymbol{\alpha}})$ and $\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_\boldsymbol{\beta},\boldsymbol{\Sigma}_\boldsymbol{\beta})$, then we have $\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})$, where \begin{align*}
 & \boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}=\boldsymbol{\mu}_\boldsymbol{\alpha}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{\beta}\\
 & \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_\boldsymbol{\alpha}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
 
 \end{align*}
-
-
-
-

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Model Selection in Factor Analysis - Abstract</title>
+<title>Model Selection in Factor Analysis - 2&nbsp; The EM Algorithm</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./disclaimer.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./chapter3.html" rel="next">
+<link href="./chapter1.html" rel="prev">
 <link href="site_libs/quarto-contrib/quarto-project/anu-thesis/assets/ANU_Favicon_Inversed_Gold.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -76,6 +76,35 @@ ul.task-list li input[type="checkbox"] {
   });
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -88,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./abstract.html">Abstract</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./chapter2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The EM Algorithm</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -125,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./abstract.html" class="sidebar-item-text sidebar-link active">
+  <a href="./abstract.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Abstract</span></a>
   </div>
 </li>
@@ -149,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter2.html" class="sidebar-item-text sidebar-link">
+  <a href="./chapter2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The EM Algorithm</span></span></a>
   </div>
 </li>
@@ -190,14 +219,21 @@ ul.task-list li input[type="checkbox"] {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar"><div class="quarto-margin-header"><div class="margin-header-item">
 <p><img src="images/ANU_Primary_Vertical_GoldBlack.png" class="logo img-fluid"></p>
 </div></div>
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#a-brief-introduction-about-the-em-algorithm" id="toc-a-brief-introduction-about-the-em-algorithm" class="nav-link active" data-scroll-target="#a-brief-introduction-about-the-em-algorithm"><span class="header-section-number">2.1</span> A brief introduction about the EM algorithm</a></li>
+  <li><a href="#the-e-step-and-m-step" id="toc-the-e-step-and-m-step" class="nav-link" data-scroll-target="#the-e-step-and-m-step"><span class="header-section-number">2.2</span> The E-step and M-step</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/anuopensci/quarto-anu-thesis/edit/main/chapter2.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anuopensci/quarto-anu-thesis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Abstract</h1>
+<h1 class="title"><span id="sec-EM" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The EM Algorithm</span></span></h1>
 </div>
 
 
@@ -214,8 +250,23 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="a-brief-introduction-about-the-em-algorithm" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="a-brief-introduction-about-the-em-algorithm"><span class="header-section-number">2.1</span> A brief introduction about the EM algorithm</h2>
+<p>The Expectation-Maximization (EM) algorithm is a widely used iterative method to compute the maximum likelihood estimation, especially when we have some unobserved data<span class="citation" data-cites="Ng2012EMAlgorithm">(<a href="references.html#ref-Ng2012EMAlgorithm" role="doc-biblioref"><strong>Ng2012EMAlgorithm?</strong></a>)</span>. As we mentioned, the key of maximum likelihood estimation is solving equation <span class="math display">\[\begin{equation}
+\frac{\partial}{\partial \beta}l=0.
+\end{equation}\]</span> However, challenges often arise from the complex nature of the log-likelihood function, especially with data that is grouped, censored, or truncated. To navigate these difficulties, the EM algorithm introduces an ingenious approach by conceptualizing an equivalent statistical problem that incorporates both observed and unobserved data. Here, <em>augmented data</em>(or complete) refers to the integration of this unobserved component, enhancing the algorithm’s ability to iteratively estimate through two distinct phases: the Expectation step (E-step) and the Maximization step (M-step). The iteration between these steps facilitates the efficient of parameter estimates, making the EM algorithm an essential tool for handling incomplete datasets effectively.</p>
+</section>
+<section id="the-e-step-and-m-step" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-e-step-and-m-step"><span class="header-section-number">2.2</span> The E-step and M-step</h2>
+<p>Let <span class="math inline">\(\boldsymbol{x}\)</span> denote the vector containing complete data, <span class="math inline">\(\boldsymbol{y}\)</span> denote the observed incomplete data and <span class="math inline">\(\boldsymbol{z}\)</span> denote the vector containing the missing data. Here ‘missing data’ is not necessarily missing, even if it does not at first appear to be missed, we can formulating it to be as such to facilitate the computation (we may see this later)<span class="citation" data-cites="Ng2012EMAlgorithm">(<a href="references.html#ref-Ng2012EMAlgorithm" role="doc-biblioref"><strong>Ng2012EMAlgorithm?</strong></a>)</span>.</p>
+<p>Now denote <span class="math inline">\(g_c(\boldsymbol{x};\boldsymbol{\Psi})\)</span> as the probability density function (p.d.f.) of the random vector <span class="math inline">\(\boldsymbol{X}\)</span> corresponding to <span class="math inline">\(\boldsymbol{x}\)</span>. Then the complete-data log-likelihood function when complete data is fully observed can be given by <span class="math display">\[\log L_c(\boldsymbol{\Psi})=\log g_c(\boldsymbol{x};\boldsymbol{\Psi}).\]</span> The EM algorithm approaches the problem of solving the incomplete-data likelihood equation indirectly by proceeding iteratively in terms of <span class="math inline">\(\log L_c(\boldsymbol{\Psi})\)</span>. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given <span class="math inline">\(\boldsymbol{y}\)</span> and current fit for <span class="math inline">\(\boldsymbol{\Psi}\)</span>.</p>
+<p>On the <span class="math inline">\((k+1)^th\)</span> iteration, we have <span class="math display">\[\begin{align*}
+&amp;\text{E-step: Compute } Q(\boldsymbol{\Psi};\boldsymbol{\Psi}^{(k)}):=\mathbb{E}[\log L_c(\boldsymbol{\Psi})|y]\\
+&amp;\text{M-step: Update }\boldsymbol{\Psi}^{(k+1)} \text{ as }\boldsymbol{{\Psi}}^{(k+1)}:=\text{arg}\max_\boldsymbol{\Psi} Q(\boldsymbol{\Psi};\boldsymbol{\Psi}^{(k)})
+\end{align*}\]</span></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -629,13 +680,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./chapter1.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./disclaimer.html" class="pagination-link" aria-label="Disclaimer">
-        <span class="nav-page-text">Disclaimer</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./chapter3.html" class="pagination-link" aria-label="The EM Algorithm in LASSO Factor Analytic Models">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The EM Algorithm in LASSO Factor Analytic Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -647,7 +698,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright © 2024, Zhining Wang</p>
-<div class="toc-actions"><ul><li><a href="https://github.com/anuopensci/quarto-anu-thesis/edit/main/abstract.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anuopensci/quarto-anu-thesis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/anuopensci/quarto-anu-thesis/edit/main/chapter2.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anuopensci/quarto-anu-thesis/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

@@ -1,18 +1,3 @@
----
-bibliography: ref.bib
-date: today
-format: 
-  html: default
-  pdf:
-    fontsize: 12pt
-    include-in-header:
-      text: |
-        \usepackage{fullpage}
-        \usepackage{enumitem}
-editor: 
-  markdown: 
-    wrap: 72
----
 # The EM Algorithm {#sec-EM}
 
 ## A brief introduction about the EM algorithm

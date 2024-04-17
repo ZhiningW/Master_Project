@@ -1,27 +1,7 @@
----
-title: "Model Selection in Factor Analysis"
-author: "Zhining Wang"
-supervisors:
-  - "Dr. Emi Tanaka"
-  - "Dr. Qinian Jin (co-supervisor)"
-bibliography: ref.bib
-date: today
-format: 
-  html: default
-  pdf:
-    fontsize: 12pt
-    include-in-header:
-      text: |
-        \usepackage{fullpage}
-        \usepackage{enumitem}
-editor: 
-  markdown: 
-    wrap: 72
----
+# Introduction
 
 Notation is presented in @tbl-notation.
 
-# Introduction
 
 ## What is factor analysis and why is it important?
 
@@ -55,7 +35,7 @@ be modelled by\
 If we assemble the $n$ observation, $\{\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_n\}$, into a matrix $\mathbf{Y}\in \mathbb{R}^{n\times p}$. The model can be rewritten as 
 $$\mathbf{Y}=\mathbf{F}\Lambda^\top+\mu+\epsilon$$ where common factors matrix $\mathbf{F}\in \mathbb{R}^{n\times k}$.
 
-# Indeterminacy of the loading matrix
+## Indeterminacy of the loading matrix
 
 One can easily see that if our factor analytic model is given by (1),
 then it can also be modelled as
@@ -67,14 +47,14 @@ Therefore a rotated loading matrix $\Lambda\mathbf{M}$ is still a valid
 loading matrix for a factor analytic model. Sometimes we resolve this problem by making the loading matrix to satisfy some constraints like [@mardiaMultivariateAnalysis1979]
 $$\Lambda^\top \Psi^{-1} \Lambda \text{ is diagonal.}$$
 
-# Traditional Estimation of Parameters in Factor Analytic Models 
+## Traditional Estimation of Parameters in Factor Analytic Models 
 We denote the set of parameters by $\beta := \{\text{vec}(\Lambda),\text{vec}(\Psi)\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input.
 Traditionally, a two-step procedure is used to construct a factor
 analytic model: estimate parameters by maximum likelihood estimation
 (aka, MLE) and then use rotation techniques to find an interpretable
 model.  
 
-## Maximum Likelihood Estimation 
+### Maximum Likelihood Estimation 
 Suppose we have $n$ independent and identically distributed observations
 $\mathbf{y}_1,\mathbf{y}_2,\dots,\mathbf{y}_N$ from a p-dimensional
 multi-variate normal distribution $N_p(\mu,\Sigma)$ and by our
@@ -94,7 +74,7 @@ where $S$ is the sample covariance defined as $S:=\frac{1}{n}\sum^n_{i=1}(\mathb
 However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like EM algorithm developed by Rubin[@Rubin1982EMAlgorithms]. 
 
 
-## Rotation techniques
+### Rotation techniques
 After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method [@hiroseSparseEstimationNonconcave2015].
 
 Suppose $Q(\Lambda)$ is an criterion for $\Lambda$ in the rotation procedure, and we may express it as $Q(\Lambda):= \sum^p_{i=1}\sum^d_{j=1}P(\lambda_{ij})$ where $P(\cdot)$ is some loss function[@hiroseSparseEstimationNonconcave2015]. Specifically, if we set $P(\cdot)=|\cdot|$, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as [@Jennrich2004Rotation]
@@ -109,7 +89,7 @@ where $\Lambda_0$ is an initial guess. Since we execute this technique after obt
 \end{align*}
 where $\hat{\Lambda}_{\text{MLE}}$ is the maximum likelihood estimator.
 
-## Discussion about two-step method
+### Discussion about two-step method
 The traditional two-step method faces significant shortcomings, primarily its unsuitability[@hiroseSparseEstimationNonconcave2015]. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by
 $$
 \Lambda=
