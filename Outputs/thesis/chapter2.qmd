@@ -3,9 +3,9 @@
 ## A brief introduction about the EM algorithm
 
 The Expectation-Maximization (EM) algorithm is a widely used iterative method to compute the maximum likelihood estimation, especially when we have some unobserved data[@Ng2012EMAlgorithm]. As we mentioned, the key of maximum likelihood estimation is solving equation
-\begin{equation}
+$$
 \frac{\partial}{\partial \beta}l=0.
-\end{equation}
+$${#eq-}
 However, challenges often arise from the complex nature of the log-likelihood function, especially with data that is grouped, censored, or truncated. To navigate these difficulties, the EM algorithm introduces an ingenious approach by conceptualizing an equivalent statistical problem that incorporates both observed and unobserved data. Here, _augmented data_(or complete) refers to the integration of this unobserved component, enhancing the algorithm's ability to iteratively estimate through two distinct phases: the Expectation step (E-step) and the Maximization step (M-step). The iteration between these steps facilitates the efficient of parameter estimates, making the EM algorithm an essential tool for handling incomplete datasets effectively.
 
 ## The E-step and M-step

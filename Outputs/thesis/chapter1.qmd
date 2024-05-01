@@ -1,3 +1,6 @@
+---
+bibliography: ref.bib
+---
 # Introduction
 
 Notation is presented in @tbl-notation.
@@ -46,13 +49,10 @@ Therefore a rotated loading matrix $\boldsymbol{\Lambda}\boldsymbol{M}$ is still
 loading matrix for a factor analytic model. Sometimes we resolve this problem by making the loading matrix to satisfy some constraints like [@mardiaMultivariateAnalysis1979]
 $$\boldsymbol{\Lambda}^\top \boldsymbol{\Psi}^{-1} \boldsymbol{\Lambda} \text{ is diagonal.}$$
 
-<<<<<<< HEAD
-# Traditional Estimation of Parameters in Factor Analytic Models 
-We denote the set of parameters by $\beta := \{\text{vec}(\boldsymbol{\Lambda}),\text{vec}(\boldsymbol{\Psi})\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input.
-=======
+
 ## Traditional Estimation of Parameters in Factor Analytic Models 
-We denote the set of parameters by $\beta := \{\text{vec}(\Lambda),\text{vec}(\Psi)\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input.
->>>>>>> 3774f5f54df9fd2721c6192f453b892b5d29e4a8
+We denote the set of parameters by $\beta := \{\text{vec}(\boldsymbol{\Lambda}),\text{vec}(\boldsymbol{\Psi})\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input.
+
 Traditionally, a two-step procedure is used to construct a factor
 analytic model: estimate parameters by maximum likelihood estimation
 (aka, MLE) and then use rotation techniques to find an interpretable
@@ -151,7 +151,7 @@ The test statistics is given by $\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\b
 
 
 
-# Penalized Likelihood Method
+## Penalized Likelihood Method
 Penalized likelihood method can be viewed as a generalization of two-step method mentioned above[@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
 $$
  \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}l_p := l(\boldsymbol{\Lambda},\boldsymbol{\Psi})-\rho\sum^p_{i=1}\sum^k_{j=1}P(|\boldsymbol{\Lambda}_{ij}|).
