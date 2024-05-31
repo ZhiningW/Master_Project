@@ -99,7 +99,7 @@ window.Quarto = {
 <h1>The EM Algorithm in LASSO Factor Analytic Models</h1>
 <section id="model-setup" class="level2">
 <h2 class="anchored" data-anchor-id="model-setup">Model Setup</h2>
-<p>Suppose we have the <span class="math inline">\(n\)</span> centralized observations, <span class="math inline">\(\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}\)</span>, where <span class="math inline">\(\boldsymbol{y}_j\in \mathbb{R}^p\)</span> and hence the mean, <span class="math inline">\(\boldsymbol{\mu_j}=\boldsymbol{0}_p\)</span> (<span class="math inline">\(j=1,2,\dots,n\)</span>). For each of the observation <span class="math inline">\(\boldsymbol{y}_j\)</span>, the common factor and unique factor are <span class="math inline">\(\boldsymbol{f}_j\)</span> and <span class="math inline">\(\boldsymbol{\epsilon}_j\)</span> respectively. Denote the response matrix as <span class="math inline">\(\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top\)</span>, the common factor matrix as <span class="math inline">\(\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top\)</span>, and the unique factor matrix as <span class="math inline">\(\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top\)</span>. Then the model can be written as <span class="math display">\[\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\hat\epsilon}.\]</span><br>
+<p>Suppose we have the <span class="math inline">\(n\)</span> centralized observations, <span class="math inline">\(\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}\)</span>, where <span class="math inline">\(\boldsymbol{y}_j\in \mathbb{R}^p\)</span> and hence the mean, <span class="math inline">\(\boldsymbol{\mu}_j=\boldsymbol{0}_p\)</span> (<span class="math inline">\(j=1,2,\dots,n\)</span>). For each of the observation <span class="math inline">\(\boldsymbol{y}_j\)</span>, the common factor and unique factor are <span class="math inline">\(\boldsymbol{f}_j\)</span> and <span class="math inline">\(\boldsymbol{\epsilon}_j\)</span> respectively. Denote the response matrix as <span class="math inline">\(\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top\)</span>, the common factor matrix as <span class="math inline">\(\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top\)</span>, and the unique factor matrix as <span class="math inline">\(\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top\)</span>. Then the model can be written as <span class="math display">\[\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\hat\epsilon}.\]</span><br>
 We also assume</p>
 <ol type="1">
 <li><p><span class="math inline">\(\boldsymbol{\epsilon}_j\)</span> follows a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\boldsymbol{\Psi}\)</span> for <span class="math inline">\(j=1,2,\dots,n\)</span>, where <span class="math inline">\(\boldsymbol{\Psi}\)</span> is a diagonal matrix defined by <span class="math inline">\(\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})\)</span>.</p></li>
@@ -113,7 +113,8 @@ We also assume</p>
 <section id="e-step" class="level3">
 <h3 class="anchored" data-anchor-id="e-step">E-Step</h3>
 <p>First, the joint likelihood of <span class="math inline">\((\boldsymbol{Y},\boldsymbol{F})\)</span>, denoted as <span class="math inline">\(L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>, is given by</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&amp;\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i)\\
 =&amp;\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\\
 =&amp;\prod_{i=1}^nN(\boldsymbol{y}_i;\boldsymbol{\Lambda}\boldsymbol{f}_i,\boldsymbol{\Psi})N(\boldsymbol{f}_i;\boldsymbol{0}_k,\boldsymbol{I}_k)\\
@@ -121,7 +122,8 @@ L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&amp;\
 &amp;(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\}][(2\pi)^{-\frac{k}{2}}\det({\boldsymbol{I}_k})^{-\frac{1}{2}}\exp\{-\frac{1}{2}\boldsymbol{f}_i^\top\boldsymbol{I}_k^{-1}\boldsymbol{f}_i\}]\\
 = &amp;(2\pi)^{-\frac{n}{2}(p+k)}(\prod_{i=1}^p\psi_{jj})^{-\frac{n}{2}}\exp\{-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}\}\\
 &amp;\exp\{-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\}.
-\end{align*}\]</span>
+\end{align*}
+\]</span></p>
 <p>Furthermore, the log-likelihood, denoted as <span class="math inline">\(l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>, is given by</p>
 <p><span id="eq-loglikelihood"><span class="math display">\[
 l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i+\text{constant}.
@@ -131,51 +133,64 @@ l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=-\frac
 (y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2 = y_{ij}^2 - 2 y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i + \boldsymbol{\Lambda}(j,)\boldsymbol{f}_i\boldsymbol{f}_i^\top \boldsymbol{\Lambda}^\top(,j).
 \]</span></p>
 <p>Without ambiguity, denote <span class="math inline">\(\mathbb{E}[\boldsymbol{f}_i|_{(k)}]\)</span> to be the conditional expectation <span class="math inline">\(\mathbb{E}[\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)}]\)</span> for simplification. Then the conditional expectation <span class="math inline">\(El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span> is given by</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&amp;\text{constant}-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\\
 &amp;\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2 - 2 y_{ij}{\boldsymbol{\Lambda}}(j,)\mathbb{E}[\boldsymbol{f}_i|_{(k)}]\boldsymbol+\boldsymbol{\Lambda}(j,) \mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}^\top_i|_{(k)}]\boldsymbol{\Lambda}^\top(,j)}{\psi_{jj}}\\
-\end{align*}\]</span>
+\end{align*}
+\]</span></p>
 <p>To deal with <span class="math inline">\(\mathbb{E}[\boldsymbol{f}_i|_{(k)}]\)</span> and <span class="math inline">\(\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]\)</span>, we only need to know the mean and variance of conditional distribution <span class="math inline">\(\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}\)</span>, or equivalently <span class="math inline">\(\boldsymbol{f}_i|\boldsymbol{y}_i,\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}\)</span> because of the independency of <span class="math inline">\(\boldsymbol{f}_i\)</span> to <span class="math inline">\(\boldsymbol{y}_j\)</span> for (<span class="math inline">\(i\neq j\)</span>). This is because we can always treat <span class="math inline">\(\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]\)</span> as</p>
 <p><span class="math display">\[
 \mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]= \mathbb{V}[\boldsymbol{f}_i|_{(k)}]+ \mathbb{E}[\boldsymbol{f}_i|_{(k)}]\mathbb{E}[\boldsymbol{f}_i|_{(k)}]^\top.
 \]</span> where <span class="math inline">\(\mathbb{V}[\boldsymbol{f}_i|_{(k)}]\)</span> is the variance of conditional distribution. We have</p>
 <div id="lem-1" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 1</strong></span> If <span class="math inline">\(\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_\boldsymbol{\alpha},\boldsymbol{\Sigma_\boldsymbol{\alpha}})\)</span> and <span class="math inline">\(\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_\boldsymbol{\beta},\boldsymbol{\Sigma}_\boldsymbol{\beta})\)</span>, then we have <span class="math inline">\(\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})\)</span>, where</p>
-<span class="math display">\[\begin{align*}
+<p><span class="theorem-title"><strong>Lemma 1</strong></span> If <span class="math inline">\(\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_\boldsymbol{\alpha},\boldsymbol{\Sigma_\boldsymbol{\alpha}})\)</span> and <span class="math inline">\(\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_\boldsymbol{\beta},\boldsymbol{\Sigma}_\boldsymbol{\beta})\)</span>, then we have <span class="math inline">\(\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})\)</span>, where <span class="math display">\[
+\begin{align*}
 &amp; \boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}=\boldsymbol{\mu}_\boldsymbol{\alpha}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{\beta}\\
 &amp; \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_\boldsymbol{\alpha}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
-\end{align*}\]</span>
+\end{align*}
+\]</span></p>
 </div>
 <p>In our scenario, we have</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 &amp; \boldsymbol{\mu}_{\boldsymbol{f}_i}= \boldsymbol{0}_k, \boldsymbol{\Sigma}_{\boldsymbol{f}_{i}}=\boldsymbol{I}_k\\
 &amp; \boldsymbol{\mu}_{\boldsymbol{y}_i}= \boldsymbol{0}_p, \boldsymbol{\Sigma}_{\boldsymbol{y}_i}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
-\end{align*} \]</span>
+\end{align*}
+\]</span></p>
 <p>and also</p>
 <p><span class="math display">\[
 \boldsymbol{Cov}(\boldsymbol{y_i},\boldsymbol{f_i})=\boldsymbol{Cov}(\boldsymbol{\Lambda f}_i+\boldsymbol{\epsilon}_i,\boldsymbol{f}_i)=\boldsymbol{\Lambda}^\top.
 \]</span></p>
 <p>Therefore we have</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 &amp;\mathbb{E}(\boldsymbol{f}_i|_{(k)})=\boldsymbol{\mu}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{y}_i\\
 &amp;\mathbb{V}(\boldsymbol{f}_i|_{(k)})=\boldsymbol{\Sigma}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{\Lambda}_{(k)}.\\
-\end{align*} \]</span>
+\end{align*}
+\]</span></p>
 <p>For simplification, let us denote</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 &amp;\boldsymbol{A}:=\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\\
 &amp;\boldsymbol{B}:=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{\Lambda}_{(k)},\\
-\end{align*} \]</span>
+\end{align*}
+\]</span></p>
 <p>we will get</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 &amp;\mathbb{E}(\boldsymbol{f}_i|_{(k)})= \boldsymbol{A}\boldsymbol{y}_i\\
 &amp;\mathbb{E}(\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)})= \boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top.
-\end{align*}\]</span>
+\end{align*}
+\]</span></p>
 <p>Our expectation will finally be confirmed by</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= &amp; -\frac{n}{2}\sum_{j=1}^p\log{\Psi_{jj}}\\
 &amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2+2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\Psi_{jj}}\\
 &amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\Psi_{jj}}+\text{constant}.
-\end{align*}\]</span>
+\end{align*}
+\]</span></p>
 </section>
 <section id="m-step" class="level3">
 <h3 class="anchored" data-anchor-id="m-step">M-step</h3>
@@ -194,32 +209,38 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(k)}(\boldsymbol{\Lambda},\bolds
 <p><span class="math display">\[
 \frac{\partial}{\partial \psi_{jj}}Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})=0.
 \]</span> By simple calculation, we will have</p>
-<span class="math display">\[\begin{align*}
-\frac{\partial}{\partial \psi_{jj}}Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})=
+<p><span class="math display">\[
+\begin{align*}
+\frac{\partial}{\partial \psi_{jj}}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})=
 &amp;-\frac{n}{2}\frac{1}{\psi_{jj}}+\frac{1}{2}\sum_{i=1}^n
 \frac{y_{ij}^2+2y_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj}^2} \\
 &amp;+ \frac{1}{2}\sum_{i=1}^n\frac{\boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top}{\psi_{jj}^2}.\\
-\end{align*}\]</span>
+\end{align*}
+\]</span></p>
 <p>Thus the update of <span class="math inline">\(\boldsymbol{\Psi}\)</span> will be elementwisely given by</p>
-<span class="math display">\[\begin{equation}
+<p><span class="math display">\[
+\begin{equation}
 \psi_{jj,(k+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2+2y_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top.
-\end{equation}\]</span>
+\end{equation}
+\]</span></p>
 <p>For step 2, let us revise the update formula, we have</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 \boldsymbol{\Lambda}_{(k+1)}=&amp;\arg \max_\boldsymbol{\Lambda} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)})\\
 =&amp;\arg \max_\boldsymbol{\Lambda} \{-\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
 &amp;-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}}-\frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})\\
 &amp;-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj,(k+1)}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2}{\psi_{jj,(k+1)}}+\text{constant}\}.\\
-\end{align*}\]</span>
+\end{align*}
+\]</span></p>
 <p>Since the last three terms do not contain any <span class="math inline">\(\boldsymbol{\Lambda}\)</span>, so they can be eliminated. After letting <span class="math inline">\(P_\rho(\boldsymbol{\Lambda}):=\rho\sum_{j=1}^p\sum_{i=1}^k|\lambda_{ji}|=\rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1\)</span> as LASSO, we can rewrite it as</p>
-<span class="math display">\[\begin{align*}
+<p>$$ <span class="math display">\[\begin{align*}
 \boldsymbol{\Lambda}_{(k+1)}
 
 =&amp; \arg \min_{\boldsymbol{\Lambda}}\{\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
 
 &amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
   \}
-\end{align*} \]</span>
+\end{align*}\]</span> $$</p>
 <p>Notice that the objective function with respect to <span class="math inline">\(\boldsymbol{\Lambda}(j,)\)</span> for any given <span class="math inline">\(j=1,2,\dots,p\)</span> is convex, and due to non-differentiablity of the <span class="math inline">\(L_1\)</span>-norm at certain points, a subgradient approach can be necessary to optimize <span class="math inline">\(\boldsymbol{\Lambda}\)</span> row by row.</p>
 <p>Denote the objective function as <span class="math inline">\(g(\boldsymbol{\Lambda})\)</span>, the subdifferential of <span class="math inline">\(g(\boldsymbol{\Lambda})\)</span> with respect to some given <span class="math inline">\(j=1,2,\dots,p\)</span> is given by <span class="math display">\[\begin{align*}
 \partial_{(j)}g(\boldsymbol{\Lambda})&amp;=\sum_{i=1}^n\frac{2y_{ij}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}+\sum_{i=1}^n\frac{(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top+\boldsymbol{B}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}}+\rho \partial||\boldsymbol{\Lambda}(j,)^\top||_1\\
@@ -237,8 +258,17 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(k)}(\boldsymbol{\Lambda},\bolds
 \end{cases}\)</span> elementwisely.</p>
 </div>
 <p>Therefore a iterative subgradient method for finding <span class="math inline">\(\boldsymbol{\Lambda}_{(k+1)}\)</span> rowwisely given by <span class="math inline">\(\boldsymbol{\Lambda}_{(k)}\)</span> is given by</p>
-<div id="thm-sbgmethod" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1</strong></span> For each <span class="math inline">\(j=1,2,...,p\)</span>, denote <span class="math inline">\(\boldsymbol{\Lambda}_{(k+1)}^{(l)}(j,)\)</span> as the <span class="math inline">\(l^{th}\)</span> iteration when executing the subgradient method to find the <span class="math inline">\(j^{th}\)</span> row of <span class="math inline">\(\boldsymbol{\Lambda}_{(k+1)}\)</span>, we iterate as following</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+algorithm
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For each <span class="math inline">\(j=1,2,...,p\)</span>, denote <span class="math inline">\(\boldsymbol{\Lambda}_{(k+1)}^{(l)}(j,)\)</span> as the <span class="math inline">\(l^{th}\)</span> iteration when executing the subgradient method to find the <span class="math inline">\(j^{th}\)</span> row of <span class="math inline">\(\boldsymbol{\Lambda}_{(k+1)}\)</span>, we iterate as following</p>
 <ol type="1">
 <li>Set <span class="math inline">\(\boldsymbol{\Lambda}_{(k+1)}^{(0)}(j,):=\boldsymbol{\Lambda}_{(k)}(j,)\)</span>.</li>
 <li>For <span class="math inline">\(l\geq 1\)</span>, calculate <span class="math display">\[
@@ -246,16 +276,21 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(k)}(\boldsymbol{\Lambda},\bolds
 \]</span></li>
 <li>Update <span class="math inline">\(\boldsymbol{\Lambda}_{(k+1)}^{(l+1)}(j,)\)</span> as <span class="math display">\[
 \boldsymbol{\Lambda}_{(k+1)}^{(l+1)}(j,)=\boldsymbol{\Lambda}_{(k+1)}^{(l)}(j,)-t^{(l)}[\partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})]^\top
-\]</span> where <span class="math inline">\(t^{(l)}\)</span> is the step size in the <span class="math inline">\(l^{th}\)</span> iteration and a widely used choice is letting <span class="math inline">\(t^{(l)}=\frac{1}{(l+1)||[\partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})]^\top||_2}\)</span>.(I need a citation here.)</li>
+\]</span> where <span class="math inline">\(t^{(l)}\)</span> is the step size in the <span class="math inline">\(l^{th}\)</span> iteration and a widely used choice is letting <span class="math inline">\(t^{(l)}=\frac{1}{(l+1)||[\partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})]^\top||_2}\)</span>, where <span class="math inline">\(||\cdot||_2\)</span> is the <span class="math inline">\(L_2\)</span> norm.(<span class="citation" data-cites="boyd2003subgradient">Boyd, Xiao, and Mutapcic (<a href="#ref-boyd2003subgradient" role="doc-biblioref">2003</a>)</span>)</li>
 <li>Repeat step 3 and 4 until converge.</li>
 </ol>
 </div>
+</div>
+<p>the EM-Algorithm for LASSO FA</p>
 
 </section>
 </section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-boyd2003subgradient" class="csl-entry" role="listitem">
+Boyd, S., L. Xiao, and A. Mutapcic. 2003. <span>“Subgradient Methods.”</span> Lecture notes of EE392o, Stanford University, Autumn Quarter, 2004(01).
+</div>
 <div id="ref-Ng2012EMAlgorithm" class="csl-entry" role="listitem">
 Ng, S. K., T. Krishnan, and G. J. McLachlan. 2012. <span>“The EM Algorithm.”</span> In <em>Handbook of Computational Statistics: Concepts and Methods</em>, 139–72. Springer.
 </div>

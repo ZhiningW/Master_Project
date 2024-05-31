@@ -68,7 +68,7 @@ $$L(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\prod^n_{i=1}\left[(2\pi)^{-\frac{p}
 and hence the log-likelihood is given by
 \begin{align*}
 l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=& \sum^n_{i=1}[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})]\\
-&= -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}S)],
+&= -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})],
 \end{align*}
 where $\boldsymbol{S}$ is the sample covariance defined as $\boldsymbol{S}:=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top$. To get the MLE of parameters, we seek the roots of equation system
 \begin{cases}
@@ -147,7 +147,11 @@ Another problem is that the absence of model selection complicates efficient mod
   &&&H_k: k \text{ common factors are sufficient to describe the data } \\
   \longleftrightarrow &&&H_a: \text{ Otherwise}.
 \end{align*}
-The test statistics is given by $\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\boldsymbol{\Psi}})$ which has an asymptotic $\chi^2_s$ distribution with $s=\frac{1}{2}(p-k)^2-(p+k)$ by the property of MLE. Typically, the test is conducted at a $5\%$ significant level. We can start the procedure from a very small $k$, say, $k=1$ or $k=2$ and then increase $k$ until the null hypothesis is not rejected.
+The test statistics is given by $\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\boldsymbol{\Psi}})$ which has an asymptotic $\chi^2_s$ distribution with $s=\frac{1}{2}(p-k)^2-(p+k)$ by the property of MLE, where $F$ is given by (@mardiaMultivariateAnalysis1979)
+$$
+F(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})-\log(\det(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}))-p.
+$$
+Typically, the test is conducted at a $5\%$ significant level. We can start the procedure from a very small $k$, say, $k=1$ or $k=2$ and then increase $k$ until the null hypothesis is not rejected.
 
 
 

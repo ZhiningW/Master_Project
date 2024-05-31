@@ -5,7 +5,7 @@ bibliography: ref.bib
 
 ## Model Setup
 
-Suppose we have the $n$ centralized observations, $\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}$, where $\boldsymbol{y}_j\in \mathbb{R}^p$ and hence the mean, $\boldsymbol{\mu_j}=\boldsymbol{0}_p$ ($j=1,2,\dots,n$). For each of the observation $\boldsymbol{y}_j$, the common factor and unique factor are $\boldsymbol{f}_j$ and $\boldsymbol{\epsilon}_j$ respectively. Denote the response matrix as $\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top$, the common factor matrix as $\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top$, and the unique factor matrix as $\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top$. Then the model can be written as $$\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\hat\epsilon}.$$\
+Suppose we have the $n$ centralized observations, $\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}$, where $\boldsymbol{y}_j\in \mathbb{R}^p$ and hence the mean, $\boldsymbol{\mu}_j=\boldsymbol{0}_p$ ($j=1,2,\dots,n$). For each of the observation $\boldsymbol{y}_j$, the common factor and unique factor are $\boldsymbol{f}_j$ and $\boldsymbol{\epsilon}_j$ respectively. Denote the response matrix as $\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top$, the common factor matrix as $\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top$, and the unique factor matrix as $\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top$. Then the model can be written as $$\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\hat\epsilon}.$$\
 We also assume
 
 1.  $\boldsymbol{\epsilon}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{\Psi}$ for $j=1,2,\dots,n$, where $\boldsymbol{\Psi}$ is a diagonal matrix defined by $\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})$.
@@ -22,7 +22,7 @@ We treat the common factor matrix $\boldsymbol{F}$ as the latent variable. In E-
 
 First, the joint likelihood of $(\boldsymbol{Y},\boldsymbol{F})$, denoted as $L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})$, is given by
 
-```{=tex}
+$$
 \begin{align*}
 L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i)\\
 =&\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\\
@@ -32,7 +32,7 @@ L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&\prod
 = &(2\pi)^{-\frac{n}{2}(p+k)}(\prod_{i=1}^p\psi_{jj})^{-\frac{n}{2}}\exp\{-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}\}\\
 &\exp\{-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\}.
 \end{align*}
-```
+$$
 
 Furthermore, the log-likelihood, denoted as $l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})$, is given by
 
@@ -48,12 +48,12 @@ $$
 
 Without ambiguity, denote $\mathbb{E}[\boldsymbol{f}_i|_{(k)}]$ to be the conditional expectation $\mathbb{E}[\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)}]$ for simplification. Then the conditional expectation $El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})$ is given by
 
-```{=tex}
+$$
 \begin{align*}
 El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&\text{constant}-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\\
 &\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2 - 2 y_{ij}{\boldsymbol{\Lambda}}(j,)\mathbb{E}[\boldsymbol{f}_i|_{(k)}]\boldsymbol+\boldsymbol{\Lambda}(j,) \mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}^\top_i|_{(k)}]\boldsymbol{\Lambda}^\top(,j)}{\psi_{jj}}\\
 \end{align*}
-```
+$$
 
 To deal with $\mathbb{E}[\boldsymbol{f}_i|_{(k)}]$ and $\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]$, we only need to know the mean and variance of conditional distribution $\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}$, or equivalently $\boldsymbol{f}_i|\boldsymbol{y}_i,\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}$ because of the independency of $\boldsymbol{f}_i$ to $\boldsymbol{y}_j$ for ($i\neq j$). This is because we can always treat $\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]$ as
 
@@ -64,22 +64,22 @@ $$ where $\mathbb{V}[\boldsymbol{f}_i|_{(k)}]$ is the variance of conditional di
 :::{#lem-1} 
 
 If $\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_\boldsymbol{\alpha},\boldsymbol{\Sigma_\boldsymbol{\alpha}})$ and $\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_\boldsymbol{\beta},\boldsymbol{\Sigma}_\boldsymbol{\beta})$, then we have $\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})$, where 
-```{=tex}
+$$
 \begin{align*}
 & \boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}=\boldsymbol{\mu}_\boldsymbol{\alpha}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{\beta}\\
 & \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_\boldsymbol{\alpha}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
 \end{align*}
-```
+$$
 :::
 
 In our scenario, we have 
 
-```{=tex}
+$$
 \begin{align*}
 & \boldsymbol{\mu}_{\boldsymbol{f}_i}= \boldsymbol{0}_k, \boldsymbol{\Sigma}_{\boldsymbol{f}_{i}}=\boldsymbol{I}_k\\
 & \boldsymbol{\mu}_{\boldsymbol{y}_i}= \boldsymbol{0}_p, \boldsymbol{\Sigma}_{\boldsymbol{y}_i}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
 \end{align*} 
-```
+$$
 
 and also 
 
@@ -89,40 +89,40 @@ $$
 
 Therefore we have 
 
-```{=tex}
+$$
 \begin{align*}
 &\mathbb{E}(\boldsymbol{f}_i|_{(k)})=\boldsymbol{\mu}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{y}_i\\
 &\mathbb{V}(\boldsymbol{f}_i|_{(k)})=\boldsymbol{\Sigma}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{\Lambda}_{(k)}.\\
 \end{align*} 
-```
+$$
 
 For simplification, let us denote 
 
-```{=tex}
+$$
 \begin{align*}
 &\boldsymbol{A}:=\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\\
 &\boldsymbol{B}:=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{\Lambda}_{(k)},\\
 \end{align*} 
-```
+$$
 
 we will get 
 
-```{=tex}
+$$
 \begin{align*}
 &\mathbb{E}(\boldsymbol{f}_i|_{(k)})= \boldsymbol{A}\boldsymbol{y}_i\\
 &\mathbb{E}(\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)})= \boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top.
 \end{align*}
-```
+$$
 
 Our expectation will finally be confirmed by 
 
-```{=tex}
+$$
 \begin{align*}
 El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= & -\frac{n}{2}\sum_{j=1}^p\log{\Psi_{jj}}\\
 & -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2+2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\Psi_{jj}}\\
 & -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\Psi_{jj}}+\text{constant}.
 \end{align*}
-```
+$$
 
 ### M-step
 
@@ -149,37 +149,37 @@ $$
 $$
 By simple calculation, we will have 
 
-```{=tex}
+$$
 \begin{align*}
-\frac{\partial}{\partial \psi_{jj}}Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})=
+\frac{\partial}{\partial \psi_{jj}}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})=
 &-\frac{n}{2}\frac{1}{\psi_{jj}}+\frac{1}{2}\sum_{i=1}^n
 \frac{y_{ij}^2+2y_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj}^2} \\
 &+ \frac{1}{2}\sum_{i=1}^n\frac{\boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top}{\psi_{jj}^2}.\\
 \end{align*}
-```
+$$
 
 Thus the update of $\boldsymbol{\Psi}$ will be elementwisely given by 
 
-```{=tex}
+$$
 \begin{equation}
 \psi_{jj,(k+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2+2y_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top.
 \end{equation}
-```
+$$
 
 For step 2, let us revise the update formula, we have 
 
-```{=tex}
+$$
 \begin{align*}
 \boldsymbol{\Lambda}_{(k+1)}=&\arg \max_\boldsymbol{\Lambda} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)})\\
 =&\arg \max_\boldsymbol{\Lambda} \{-\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
 &-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}}-\frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})\\
 &-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj,(k+1)}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2}{\psi_{jj,(k+1)}}+\text{constant}\}.\\
 \end{align*}
-```
+$$
 
 Since the last three terms do not contain any $\boldsymbol{\Lambda}$, so they can be eliminated. After letting $P_\rho(\boldsymbol{\Lambda}):=\rho\sum_{j=1}^p\sum_{i=1}^k|\lambda_{ji}|=\rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1$ as LASSO, we can rewrite it as
 
-```{=tex}
+$$
 \begin{align*}
 \boldsymbol{\Lambda}_{(k+1)}
 
@@ -188,7 +188,7 @@ Since the last three terms do not contain any $\boldsymbol{\Lambda}$, so they ca
 & + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
   \}
 \end{align*} 
-``` 
+$$
 
 Notice that the objective function with respect to $\boldsymbol{\Lambda}(j,)$ for any given $j=1,2,\dots,p$ is convex, and due to non-differentiablity of the $L_1$-norm at certain points, a subgradient approach can be necessary to optimize $\boldsymbol{\Lambda}$ row by row.
 
@@ -217,7 +217,9 @@ elementwisely.
 
 Therefore a iterative subgradient method for finding $\boldsymbol{\Lambda}_{(k+1)}$ rowwisely given by $\boldsymbol{\Lambda}_{(k)}$ is given by
 
-:::{#thm-sbgmethod}
+:::{.callout-note}
+
+## algorithm 
 For each $j=1,2,...,p$, denote $\boldsymbol{\Lambda}_{(k+1)}^{(l)}(j,)$ as the $l^{th}$ iteration when executing the subgradient method to find the $j^{th}$ row of $\boldsymbol{\Lambda}_{(k+1)}$, we iterate as following
 
 1. Set $\boldsymbol{\Lambda}_{(k+1)}^{(0)}(j,):=\boldsymbol{\Lambda}_{(k)}(j,)$.
@@ -229,6 +231,9 @@ $$
 $$
 \boldsymbol{\Lambda}_{(k+1)}^{(l+1)}(j,)=\boldsymbol{\Lambda}_{(k+1)}^{(l)}(j,)-t^{(l)}[\partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})]^\top
 $$
-where $t^{(l)}$ is the step size in the $l^{th}$ iteration and a widely used choice is letting $t^{(l)}=\frac{1}{(l+1)||[\partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})]^\top||_2}$.(I need a citation here.)
+where $t^{(l)}$ is the step size in the $l^{th}$ iteration and a widely used choice is letting $t^{(l)}=\frac{1}{(l+1)||[\partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})]^\top||_2}$, where $||\cdot||_2$ is the $L_2$ norm.(@boyd2003subgradient)
 4. Repeat step 3 and 4 until converge.
 :::
+
+the EM-Algorithm for LASSO FA
+
