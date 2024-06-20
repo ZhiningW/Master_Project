@@ -44,6 +44,31 @@ psi_update <- function(lambda,psi,Y,j){
   return(first_term + second_term + third_term)
 }
 
+psi_valid <- function(lambda,psi,Y,j){
+  # Input: lambda: loading matrix of size p*k we have now
+  #        psi: the variance matrix of size p*p of common factor we have now
+  #        Y: the response matrix of size n*p
+  # Output: True if psi is good to iterate (i.e in the concave region), False otherwise
+  
+  n <- nrow(Y)
+  p <- ncol(Y)
+  mat_A <- A(lambda,psi)
+  mat_B <- B(lambda, psi)
+  constraint <- numeric(length=p)
+  for (j in 1:p){
+    lambda_j <- lambda[j,,drop=FALSE]
+  
+  # Start calculating
+  first_term <- (1/(2*n)) * sum(Y[,j]*Y[,j])
+  second_term <- (1/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
+                                                        %*% Y[,j, drop=FALSE]),ncol=1)
+  third_term <- (1/(2*n)) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
+                                      %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
+  constraint[j]<- first_term + second_term + third_term
+  }
+  
+  return(diag(psi)<=constraint)
+  }
 pem_E <- function(lambda,psi,Y,rho){
   Out <- npem_E(lambda,psi,Y)-1/2*rho*sum(abs(lambda))
   return(Out)
