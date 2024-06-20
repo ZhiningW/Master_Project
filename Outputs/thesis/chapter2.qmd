@@ -5,20 +5,60 @@
 The Expectation-Maximization (EM) algorithm is a widely used iterative method to compute the maximum likelihood estimation, especially when we have some unobserved data[@Ng2012EMAlgorithm]. As we mentioned, the key of maximum likelihood estimation is solving equation
 $$
 \frac{\partial}{\partial \beta}l=0.
-$${#eq-}
-However, challenges often arise from the complex nature of the log-likelihood function, especially with data that is grouped, censored, or truncated. To navigate these difficulties, the EM algorithm introduces an ingenious approach by conceptualizing an equivalent statistical problem that incorporates both observed and unobserved data. Here, _augmented data_(or complete) refers to the integration of this unobserved component, enhancing the algorithm's ability to iteratively estimate through two distinct phases: the Expectation step (E-step) and the Maximization step (M-step). The iteration between these steps facilitates the efficient of parameter estimates, making the EM algorithm an essential tool for handling incomplete datasets effectively.
+$$
+However, challenges often arise from the complex nature of the log-likelihood function, especially with data that is grouped, censored, or truncated. To navigate these difficulties, the EM algorithm introduces an ingenious approach by conceptualizing an equivalent statistical problem that incorporates both observed and unobserved data. Here, _augmented data_(or complete) refers to the integration of this unobserved component, enhancing the algorithm's ability to iteratively estimate through two distinct phases: the Expectation step (E-step) and the Maximization step (M-step). The iteration between these steps facilitates the efficient of parameter estimates, making the EM algorithm an essential tool for handling incomplete data sets effectively.
 
 ## The E-step and M-step
 
-Let $\boldsymbol{x}$ denote the vector containing complete data, $\boldsymbol{y}$ denote the observed incomplete data and $\boldsymbol{z}$ denote the vector containing the missing data. Here 'missing data' is not necessarily missing, even if it does not at first appear to be missed, we can formulating it to be as such to facilitate the computation (we may see this later)[@Ng2012EMAlgorithm].
+Let $\boldsymbol{x}$ denote the vector containing complete data, $\boldsymbol{y}$ denote the observed incomplete data and $\boldsymbol{z}$ denote the vector containing the missing data. Here 'missing data' is not necessarily missing, even if it does not at first appear to be missed, we can formulating it to be as such to facilitate the computation (we may see this later)[@Ng2012EMAlgorithm]. Also we assume $\boldsymbol{\beta}$ as the parameter we want to estimate over the parameter space $\boldsymbol{\Omega}$.
 
-Now denote $g_c(\boldsymbol{x};\boldsymbol{\Psi})$ as the probability density function (p.d.f.) of the random vector $\boldsymbol{X}$ corresponding to $\boldsymbol{x}$. Then the complete-data log-likelihood function when complete data is fully observed can be given by 
-$$\log L_c(\boldsymbol{\Psi})=\log g_c(\boldsymbol{x};\boldsymbol{\Psi}).$$
-The EM algorithm approaches the problem of solving the incomplete-data likelihood equation indirectly by proceeding iteratively in terms of $\log L_c(\boldsymbol{\Psi})$. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given $\boldsymbol{y}$ and current fit for $\boldsymbol{\Psi}$.
+Now denote $f_\boldsymbol{X}(\boldsymbol{x};\boldsymbol{\beta})$ as the probability density function (p.d.f.) of the random vector $\boldsymbol{X}$ corresponding to $\boldsymbol{x}$. Then the complete-data log-likelihood function when complete data is fully observed can be given by 
+
+$$\log L_\boldsymbol{X}(\boldsymbol{\beta})=\log f_\boldsymbol{X}(\boldsymbol{x};\boldsymbol{\beta}).$$
+
+The EM algorithm approaches the problem of solving the incomplete-data likelihood equation indirectly by proceeding iteratively in terms of $\log L_\boldsymbol{X}(\boldsymbol{\beta})$. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given $\boldsymbol{y}$ and current fit for $\boldsymbol{\beta}$.
 
 On the $(k+1)^th$ iteration, we have
+$$
 \begin{align*}
-&\text{E-step: Compute } Q(\boldsymbol{\Psi};\boldsymbol{\Psi}^{(k)}):=\mathbb{E}[\log L_c(\boldsymbol{\Psi})|y]\\
-&\text{M-step: Update }\boldsymbol{\Psi}^{(k+1)} \text{ as }\boldsymbol{{\Psi}}^{(k+1)}:=\text{arg}\max_\boldsymbol{\Psi} Q(\boldsymbol{\Psi};\boldsymbol{\Psi}^{(k)}).
+&\text{E-step: Compute } Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}):=\mathbb{E}_\boldsymbol{X}[\log L_\boldsymbol{X}(\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
+&\text{M-step: Update }\boldsymbol{\beta}^{(k+1)} \text{ as }\boldsymbol{{\beta}}^{(k+1)}:=\text{arg}\max_\boldsymbol{\beta} Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) \text{ (Original EM)}\\
+& \text{ Or update }\boldsymbol{{\beta}}^{(k+1)} \text{ such that } Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\text{ (Generalized EM)}.
+\end{align*} 
+$$
+We keep iterating between E-step and M-step until convergence, which may be determined by a criteria such as $||\boldsymbol{\beta}^{(k+1)}-\boldsymbol{\beta}^{(k)}||_p\leq \epsilon$ for some p-norm $||\cdot||_p$ and positive $\epsilon$.
+
+Meanwhile, the M-step in both original and generalized algorithms defines a mapping from the parameter space $\boldsymbol{\Omega}$ to itself by 
+$$
+\begin{align*}
+M: \boldsymbol{\Omega} &\to \boldsymbol{\Omega}\\
+   \boldsymbol{\beta}^{(k)} &\mapsto \boldsymbol{\beta}^{(k+1)}.
 \end{align*}
+$$
+
+## Convergence of the EM Algorithm
+By the definition of conditional likelihood, our likelihood of complete data can be expressed by
+$$
+L_\boldsymbol{X}(\boldsymbol{\beta}) = f_\boldsymbol{X}(\boldsymbol{x};\boldsymbol{\beta})=L_\boldsymbol{Y}(\boldsymbol{\beta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}),
+$$
+and hence the log-likelihood is given by
+$$
+\log L_\boldsymbol{X}(\boldsymbol{\beta}) = \log L_\boldsymbol{Y}(\boldsymbol{\beta})+ \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}).
+$$
+Take expectation to both sides of the equation with respect to $\boldsymbol{x|y}$ and replace $\boldsymbol{\beta}$ by $\boldsymbol{\beta}^{(k)}$, we will have 
+$$
+Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) = \log L_\boldsymbol{Y}(\boldsymbol{\beta}) + \mathbb{E}_\boldsymbol{X}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].
+$$
+Now consider the difference of log-likelihood of $\boldsymbol{Y}$ function between two iterations, we have
+$$
+\begin{align*}
+  \log L_\boldsymbol{Y}(\boldsymbol{\beta}^{(k+1)})-\log L_\boldsymbol{Y}(\boldsymbol{\beta}^{(k)}) =
+  &\{Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})-Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\}\\
+  &-\{\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
+  &-\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
+\end{align*}
+$$
+By the procedure of EM-algorithm, we always have $Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})$. By the Jason's inequality, we have $\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].$
+Therefore during iterations, the log-likelihood of observed data $\boldsymbol{Y}$ keeps increasing. If the log-likelihood is bounded, then we can promise that it must converge to some maximum.
+
 

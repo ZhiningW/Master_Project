@@ -162,7 +162,7 @@ Thus the update of $\boldsymbol{\Psi}$ will be elementwisely given by
 
 $$
 \begin{equation}
-\psi_{jj,(k+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2+2y_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top.
+\psi_{jj,(k+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2+\frac{2}{n}\sum_{i=1}^ny_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top.
 \end{equation}
 $$
 
