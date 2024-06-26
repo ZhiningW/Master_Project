@@ -37,7 +37,7 @@ psi_update <- function(lambda,psi,Y,j){
   
   # Start calculating
   first_term <- (1/n) * sum(Y[,j]*Y[,j])
-  second_term <- (2/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
+  second_term <- -(2/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
                                                         %*% Y[,j, drop=FALSE]),ncol=1)
   third_term <- (1/n) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
                                       %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
@@ -59,16 +59,17 @@ psi_valid <- function(lambda,psi,Y,j){
     lambda_j <- lambda[j,,drop=FALSE]
   
   # Start calculating
-  first_term <- (1/(2*n)) * sum(Y[,j]*Y[,j])
-  second_term <- (1/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
+  first_term <- (2/n) * sum(Y[,j]*Y[,j])
+  second_term <- -(4/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
                                                         %*% Y[,j, drop=FALSE]),ncol=1)
-  third_term <- (1/(2*n)) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
+  third_term <- (2/n) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
                                       %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
   constraint[j]<- first_term + second_term + third_term
   }
   
   return(diag(psi)<=constraint)
-  }
+}
+
 pem_E <- function(lambda,psi,Y,rho){
   Out <- npem_E(lambda,psi,Y)-1/2*rho*sum(abs(lambda))
   return(Out)
@@ -100,7 +101,7 @@ npem_E <- function(lambda,psi,Y){
       lambda_j <- t(as.matrix(lambda[j,]))
       Y_i <- t(as.matrix(Y[i,]))
       second_term <- second_term 
-      + (yij^2 + 2 * yij * lambda_j %*% mat_A %*% t(Y_i))/psi[j,j]
+      + (yij^2 - 2 * yij * lambda_j %*% mat_A %*% t(Y_i))/psi[j,j]
     }
     
   }
@@ -121,7 +122,6 @@ npem_E <- function(lambda,psi,Y){
   return(first_term + second_term + third_term)
 }
 
-library(MASS)  # Ensure MASS library is loaded
 
 subgradient <- function(lambda,psi,Y,epsilon,j,rho){
   ### to find the subgradient
@@ -129,7 +129,7 @@ subgradient <- function(lambda,psi,Y,epsilon,j,rho){
   mat_A <- A(lambda,psi)
   mat_B <- B(lambda,psi)
   lambda_j <- lambda[j, , drop = FALSE]
-  first_term <- as.matrix(rowSums(tcrossprod(mat_A,Y)%*%Y[,j, drop = FALSE]*2/psi[j,j]),ncol=1) 
+  first_term <- - as.matrix(rowSums(tcrossprod(mat_A,Y)%*%Y[,j, drop = FALSE]*2/psi[j,j]),ncol=1) 
   
   second_term <- 2 * ( n * mat_B + tcrossprod(mat_A,Y) %*% tcrossprod(Y,mat_A)) %*% t(lambda[j, ,drop= FALSE ]) /psi[j,j]
   third_term <- rho * sign(t(lambda_j)) 
@@ -205,13 +205,13 @@ Y <- F %*% t(real_loading) + epsilon # generating Y directly??
 
 rho <- 2 # penality parameter   #AIC / BIC 
 ## Set the initial guess
-pem_initial_loading <- real_loading   # Take distinct initial values to see what happens
+pem_initial_loading <- matrix(1, nrow=p, ncol=k)   # Take distinct initial values to see what happens
 pem_initial_psi <- diag(rep(0.1,p))     # Take distinct initial values to see what happens
 
 ## End the iteration if the error between two steps is less than np_tolerance
 ## and regard as convergent
 pem_tolerance <- 0.01 
-n_max_iter <- 10
+n_max_iter <- 30
 ## Set the parameters for iteration
 pem_step <- 0 # record the number of iterations
 pem_loading_diff <- 1000 # Set a big difference in case smaller than tolerance at very beginning
@@ -222,7 +222,7 @@ pem_expectation <- numeric(length = n_max_iter) # Record expectations during ite
 pem_loading_old <- pem_initial_loading
 pem_psi_old <- pem_initial_psi
 
-while(pem_loading_diff >= pem_tolerance && pem_psi_diff >= pem_tolerance){
+while(pem_loading_diff >= pem_tolerance){
   pem_step <- pem_step + 1
   pem_expectation[pem_step] <- pem_E(pem_loading_old,pem_psi_old,Y,rho)
   ## Update psi elementwisely
@@ -230,7 +230,6 @@ while(pem_loading_diff >= pem_tolerance && pem_psi_diff >= pem_tolerance){
   for (j in 1:p){
     pem_psi_new[j,j] <- psi_update(pem_loading_old,pem_psi_old,Y,j)
   }
-  pem_psi_diff <- norm(pem_psi_new - pem_psi_old, type = 'F') # calculate the difference between psi matrix
   
   ## Update loading matrix using current psi rowwisely
   
@@ -253,4 +252,4 @@ while(pem_loading_diff >= pem_tolerance && pem_psi_diff >= pem_tolerance){
 ## final result of penalized EM algorithm
 pem_loading <- pem_loading_new
 pem_psi <- pem_psi_new
-plot(pem_expectation)  
+plot(pem_expectation[-1])  
