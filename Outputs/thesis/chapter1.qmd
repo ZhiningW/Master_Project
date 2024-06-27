@@ -66,35 +66,42 @@ hypothesis, we have $\boldsymbol{\Sigma}=\boldsymbol{\Lambda}\boldsymbol{\Lambda
 function is given by
 $$L(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].$$
 and hence the log-likelihood is given by
+
 \begin{align*}
 l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=& \sum^n_{i=1}[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})]\\
-&= -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})],
+=& -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})],
 \end{align*}
+
 where $\boldsymbol{S}$ is the sample covariance defined as $\boldsymbol{S}:=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top$. To get the MLE of parameters, we seek the roots of equation system
 \begin{cases}
 \frac{\partial}{\partial \boldsymbol{\Lambda}}l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=0 \\
 \frac{\partial}{\partial \boldsymbol{\Psi}}l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=0.
 \end{cases}
-However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like EM algorithm developed by Rubin[@Rubin1982EMAlgorithms]. 
+However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like EM algorithm developed by Rubin [@Rubin1982EMAlgorithms]. 
 
 
 ### Rotation techniques
 After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method [@hiroseSparseEstimationNonconcave2015].
 
 Suppose $Q(\boldsymbol{\Lambda})$ is an criterion for $\boldsymbol{\Lambda}$ in the rotation procedure, and we may express it as $Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})$ where $P(\cdot)$ is some loss function[@hiroseSparseEstimationNonconcave2015]. Specifically, if we set $P(\cdot)=|\cdot|$, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as [@Jennrich2004Rotation]
+
 \begin{align*}
-&\min_\boldsymbol{\Lambda} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
+&\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
 &\text{subject to } \boldsymbol{\Lambda}=\boldsymbol{\Lambda}_0\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
 \end{align*}
+
 where $\boldsymbol{\Lambda}_0$ is an initial guess. Since we execute this technique after obtaining the MLE of parameters, therefore what we want is 
+
 \begin{align*}
-&\min_\boldsymbol{\Lambda} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
+&\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
 &\text{subject to } \boldsymbol{\Lambda}=\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
 \end{align*}
+
 where $\hat{\boldsymbol{\Lambda}}_{\text{MLE}}$ is the maximum likelihood estimator.
 
 ### Discussion about two-step method
-The traditional two-step method faces significant shortcomings, primarily its unsuitability[@hiroseSparseEstimationNonconcave2015]. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by
+
+The traditional two-step method faces significant shortcomings, primarily its unsuitability [@hiroseSparseEstimationNonconcave2015]. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by
 $$
 \boldsymbol{\Lambda}=
 \begin{bmatrix}
@@ -105,7 +112,8 @@ $$
 0 & 0\\
 \end{bmatrix}.
 $$
-We generate $\boldsymbol{Y}\in \mathbb{R}^{{100}\times 5}$ using common factor $\boldsymbol{f}\in \mathbb{R}^{{100}\times 2}$ where each factor is generated randomly from standard normal distribution $N(0,1)$. We utilize the R-function factanal() to produce the loading matrix via MLE and then call varimax() to rotate our loading matrix. What we finally get is
+We generate $\boldsymbol{Y}\in \mathbb{R}^{{100}\times 5}$ using common factor $\boldsymbol{f}\in \mathbb{R}^{{100}\times 2}$ where each factor is generated randomly from standard normal distribution $N(0,1)$. We utilize the R-function `factanal()` to produce the loading matrix via MLE and then call varimax() to rotate our loading matrix. What we finally get is
+
 $$
 \hat{\boldsymbol{\Lambda}}=
 \begin{bmatrix}
@@ -119,7 +127,8 @@ $$
 which is neither precise nor sparse.
 
 Simulation code:
-```
+
+```{r}
 set.seed(123)
 n <- 100 # Number of observations
 p <- 5   # Number of features
@@ -142,7 +151,7 @@ rotated_fa <- varimax(fa_result$loadings)
 
 
 
-Another problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model[@mardiaMultivariateAnalysis1979]. We have
+Another problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model [@mardiaMultivariateAnalysis1979]. We have
 \begin{align*}
   &&&H_k: k \text{ common factors are sufficient to describe the data } \\
   \longleftrightarrow &&&H_a: \text{ Otherwise}.
@@ -156,17 +165,19 @@ Typically, the test is conducted at a $5\%$ significant level. We can start the 
 
 
 ## Penalized Likelihood Method
-Penalized likelihood method can be viewed as a generalization of two-step method mentioned above[@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
+
+Penalized likelihood method can be viewed as a generalization of two-step method mentioned above [@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
 $$
  \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}l_p := l(\boldsymbol{\Lambda},\boldsymbol{\Psi})-\rho\sum^p_{i=1}\sum^k_{j=1}P(|\boldsymbol{\Lambda}_{ij}|).
 $$
-where we call $l_p$ as the penalized likelihood, $\rho$ is called regularization parameter and we can treat $P(\cdot)$ as a penalized function. There are many types of penalized functions developed, such as LASSO ($P(\cdot)=|\cdot|$) and MC+ ($P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)$)[@hiroseSparseEstimationNonconcave2015]. In this article, we will mainly focus on the LASSO penalty.
+where we call $l_p$ as the penalized likelihood, $\rho$ is called regularization parameter and we can treat $P(\cdot)$ as a penalized function. There are many types of penalized functions developed, such as LASSO ($P(\cdot)=|\cdot|$) and MC+ ($P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)$) [@hiroseSparseEstimationNonconcave2015]. In this article, we will mainly focus on the LASSO penalty.
 
 ## LASSO penalty and LASSO estimator
 
 Again, recall that the LASSO penalized likelihood is given by
 $$l_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|$$
 and the LASSO estimator, denoted as $(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*)$, can be obtained via
+
 \begin{align*}
 (\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|\\
 &=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|.

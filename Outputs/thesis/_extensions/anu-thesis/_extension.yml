@@ -30,6 +30,7 @@ contributes:
       toc-depth: 3
       published-title: "Date"
       number-sections: true
+      mainfont: PublicSans
     html:
       theme: [custom.scss]
       css: assets/css/all.css
