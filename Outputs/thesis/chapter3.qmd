@@ -1,7 +1,7 @@
 ---
 bibliography: ref.bib
 ---
-# The EM Algorithm in LASSO Factor Analytic Models
+# The EM Algorithm in LASSO Factor Analytic Models {#sec-penEM}
 
 ## Model Setup
 

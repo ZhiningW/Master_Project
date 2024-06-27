@@ -1,0 +1,18 @@
+# Method {#sec-method}
+
+As described in @sec-bg, there are various methods to fit a factor analytic model to multivariate data. There are several 
+
+## Existing R packages
+
+## Selecting initial values 
+
+## Simulation setting 
+
+
+### Setting 1
+
+
+### Setting 2
+
+
+
