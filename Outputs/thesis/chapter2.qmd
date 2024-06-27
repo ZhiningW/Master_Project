@@ -55,10 +55,18 @@ $$
   \log L_\boldsymbol{Y}(\boldsymbol{\beta}^{(k+1)})-\log L_\boldsymbol{Y}(\boldsymbol{\beta}^{(k)}) =
   &\{Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})-Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\}\\
   &-\{\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
-  &-\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
+  &-\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
 \end{align*}
 $$
-By the procedure of EM-algorithm, we always have $Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})$. By the Jensen's inequality, we have $\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].$
+By the procedure of EM-algorithm, we always have $Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})$. By the Gibbs' inequality, we have $\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].$
 Therefore during iterations, the log-likelihood of observed data $\boldsymbol{Y}$ keeps increasing. If the log-likelihood is bounded, then we can promise that it must converge to some maximum.
 
+## Convergence Rate of the EM Algorithm
+
+The rate of convergence of the EM algorithm is linear and really depends on the information of the observed data. If a large portion of data is missing, convergence can be really slow[@Ng2012EMAlgorithm]. 
+Suppose the parameter $\boldsymbol{\beta}$ converges to a fixed point $\boldsymbol{\beta}^*$ and $M(\cdot)$ is continuous. By a Taylor series expansion of $\boldsymbol{\beta}^{(k+1)}=M(\boldsymbol{\beta}^{(k)})$ at $\boldsymbol{\beta}^*$, in the neighborhood of $\boldsymbol{\beta}^*$, we have
+$$
+\boldsymbol{\beta}^{(k+1)}-\boldsymbol{\beta}^* \approx J_M(\boldsymbol{\beta}^*)(\boldsymbol{\beta}^{(k)}-\boldsymbol{\beta}^*),
+$$
+where $J_M(\boldsymbol{\beta}^*)$ is the Jacobian matrix for function $M(\cdot)$ at $\boldsymbol{\beta^*}$. Therefore we can say that the EM algorithm is essentially a linear iteration with convergence rate matrix $J_M(\boldsymbol{\beta}^*)$ in the neighborhood of $\boldsymbol{\beta}^*$.
 

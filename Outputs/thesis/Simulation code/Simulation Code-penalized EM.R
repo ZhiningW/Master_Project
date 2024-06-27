@@ -44,7 +44,7 @@ psi_update <- function(lambda,psi,Y,j){
   return(first_term + second_term + third_term)
 }
 
-psi_valid <- function(lambda,psi,Y,j){
+psi_valid <- function(lambda,psi,Y){
   # Input: lambda: loading matrix of size p*k we have now
   #        psi: the variance matrix of size p*p of common factor we have now
   #        Y: the response matrix of size n*p
@@ -153,6 +153,7 @@ subg_method <- function(lambda,psi,Y,epsilon,j,rho){
   lambda_j_old <- lambda[j, ,drop= FALSE]
   error <- 10000
   iteration <- 0
+  
   while(error>epsilon && iteration < 30){
     subg <- subgradient(lambda,psi,Y,epsilon,j,rho)
     t <- 1/ ((iteration + 1)*norm(subg,type='2'))# step size
@@ -211,7 +212,7 @@ pem_initial_psi <- diag(rep(0.1,p))     # Take distinct initial values to see wh
 ## End the iteration if the error between two steps is less than np_tolerance
 ## and regard as convergent
 pem_tolerance <- 0.01 
-n_max_iter <- 30
+n_max_iter <- 50
 ## Set the parameters for iteration
 pem_step <- 0 # record the number of iterations
 pem_loading_diff <- 1000 # Set a big difference in case smaller than tolerance at very beginning
@@ -226,6 +227,8 @@ while(pem_loading_diff >= pem_tolerance){
   pem_step <- pem_step + 1
   pem_expectation[pem_step] <- pem_E(pem_loading_old,pem_psi_old,Y,rho)
   ## Update psi elementwisely
+  psi_goodtoupdate <- psi_valid(pem_loading_old,pem_psi_old,Y)
+  psi_update_position <- which(psi_goodtoupdate != 0)
   pem_psi_new <- matrix(0, nrow = p, ncol = p)
   for (j in 1:p){
     pem_psi_new[j,j] <- psi_update(pem_loading_old,pem_psi_old,Y,j)
