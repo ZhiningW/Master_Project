@@ -1,7 +1,7 @@
 ---
 bibliography: ref.bib
 ---
-# The EM Algorithm in LASSO Factor Analytic Models
+# The EM Algorithm in LASSO Factor Analytic Models {#sec-penEM}
 
 ## Model Setup
 
@@ -64,11 +64,11 @@ where $\mathbb{V}[\boldsymbol{f}_i|_{(k)}]$ is the variance of conditional distr
 
 :::{#lem-1} 
 
-If $\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_\boldsymbol{\alpha},\boldsymbol{\Sigma_\boldsymbol{\alpha}})$ and $\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_\boldsymbol{\beta},\boldsymbol{\Sigma}_\boldsymbol{\beta})$, then we have $\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})$, where 
+If $\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}},\boldsymbol{\Sigma_{\boldsymbol{\alpha}}})$ and $\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\beta}})$, then we have $\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})$, where 
 $$
 \begin{align*}
-& \boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}=\boldsymbol{\mu}_\boldsymbol{\alpha}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{\beta}\\
-& \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_\boldsymbol{\alpha}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
+& \boldsymbol{\mu}_{\boldsymbol{\alpha}}|\boldsymbol{\beta}=\boldsymbol{\mu}_{\boldsymbol{\alpha}}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_{\boldsymbol{\beta}}^{-1}\boldsymbol{\beta}\\
+& \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_{\boldsymbol{\alpha}}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_{\boldsymbol{\beta}}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
 \end{align*}
 $$
 :::
@@ -169,18 +169,18 @@ $$
 
 For step 2, let us revise the update formula, we have 
 
-$$
+
 \begin{align*}
-\boldsymbol{\Lambda}_{(k+1)}=&\arg \max_\boldsymbol{\Lambda} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)})\\
-=&\arg \max_\boldsymbol{\Lambda} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
+\boldsymbol{\Lambda}_{(k+1)}=&\arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)})\\
+=&\arg \max_{\boldsymbol{\Lambda}} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
 &-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}}-\frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})\\
 &-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj,(k+1)}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2}{\psi_{jj,(k+1)}}+\text{constant}\}.\\
 \end{align*}
-$$
+
 
 Since the last three terms do not contain any $\boldsymbol{\Lambda}$, so they can be eliminated. After letting $P_\rho(\boldsymbol{\Lambda}):=\rho\sum_{j=1}^p\sum_{i=1}^k|\lambda_{ji}|=\rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1$ as LASSO, we can rewrite it as
 
-$$
+
 \begin{align*}
 \boldsymbol{\Lambda}_{(k+1)}
 
@@ -189,7 +189,7 @@ $$
 & + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
   \}
 \end{align*} 
-$$
+
 
 Notice that the objective function with respect to $\boldsymbol{\Lambda}(j,)$ for any given $j=1,2,\dots,p$ is convex, and due to non-differentiablity of the $L_1$-norm at certain points, a subgradient approach can be necessary to optimize $\boldsymbol{\Lambda}$ row by row.
 

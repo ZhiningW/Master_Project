@@ -1,0 +1,16 @@
+Package: penlvm
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("Emi", "Tanaka", , "dr.emi.tanaka@gmail.com", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0002-1455-259X"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports: 
+    MASS
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

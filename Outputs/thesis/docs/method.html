@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Zhining Wang">
 
-<title>Model Selection in Factor Analysis</title>
+<title>{{&lt; var title &gt;}} – 3&nbsp; Method</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chapter1.html" rel="next">
+<link href="./results.html" rel="next">
+<link href="./background.html" rel="prev">
 <link href="site_libs/quarto-contrib/quarto-project/anu-thesis/assets/ANU_Favicon_Inversed_Gold.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -89,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./method.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Method</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -104,7 +104,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Model Selection in Factor Analysis</a> 
+      <a href="./">Model Selection for Factor Analysis</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/ZhiningW/Master_Project" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
@@ -119,26 +119,32 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter1.html" class="sidebar-item-text sidebar-link">
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The EM Algorithm</span></span></a>
+  <a href="./background.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./chapter3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The EM Algorithm in LASSO Factor Analytic Models</span></span></a>
+  <a href="./method.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Method</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -159,16 +165,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#existing-r-packages" id="toc-existing-r-packages" class="nav-link active" data-scroll-target="#existing-r-packages"><span class="header-section-number">3.1</span> Existing R packages</a></li>
+  <li><a href="#selecting-initial-values" id="toc-selecting-initial-values" class="nav-link" data-scroll-target="#selecting-initial-values"><span class="header-section-number">3.2</span> Selecting initial values</a></li>
+  <li><a href="#simulation-setting" id="toc-simulation-setting" class="nav-link" data-scroll-target="#simulation-setting"><span class="header-section-number">3.3</span> Simulation setting</a>
+  <ul class="collapse">
+  <li><a href="#setting-1" id="toc-setting-1" class="nav-link" data-scroll-target="#setting-1"><span class="header-section-number">3.3.1</span> Setting 1</a></li>
+  <li><a href="#setting-2" id="toc-setting-2" class="nav-link" data-scroll-target="#setting-2"><span class="header-section-number">3.3.2</span> Setting 2</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/ZhiningW/Master_Project/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ZhiningW/Master_Project/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/ZhiningW/Master_Project/edit/main/method.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ZhiningW/Master_Project/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Model Selection in Factor Analysis</h1>
+<h1 class="title"><span id="sec-method" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Method</span></span></h1>
 </div>
 
 
@@ -177,20 +189,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Zhining Wang </p>
-          </div>
-  </div>
   
-    <div>
-    <div class="quarto-title-meta-heading">Date</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">27th June 2024
-            </p>
-    </div>
-  </div>
   
   </div>
 
@@ -203,10 +202,23 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
+<p>As described in <a href="background.html" class="quarto-xref"><span>Chapter 2</span></a>, there are various methods to fit a factor analytic model to multivariate data. There are several</p>
+<section id="existing-r-packages" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="existing-r-packages"><span class="header-section-number">3.1</span> Existing R packages</h2>
+</section>
+<section id="selecting-initial-values" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="selecting-initial-values"><span class="header-section-number">3.2</span> Selecting initial values</h2>
+</section>
+<section id="simulation-setting" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="simulation-setting"><span class="header-section-number">3.3</span> Simulation setting</h2>
+<section id="setting-1" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="setting-1"><span class="header-section-number">3.3.1</span> Setting 1</h3>
+</section>
+<section id="setting-2" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="setting-2"><span class="header-section-number">3.3.2</span> Setting 2</h3>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -632,10 +644,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./background.html" class="pagination-link" aria-label="Background">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chapter1.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./results.html" class="pagination-link" aria-label="Results">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -647,7 +662,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </div>   
     <div class="nav-footer-center">
 <p>Copyright © 2024, Zhining Wang</p>
-<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ZhiningW/Master_Project/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ZhiningW/Master_Project/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ZhiningW/Master_Project/edit/main/method.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ZhiningW/Master_Project/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

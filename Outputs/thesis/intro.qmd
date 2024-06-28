@@ -1,0 +1,39 @@
+---
+bibliography: ref.bib
+---
+# Introduction
+
+Multivariate data, where each observational unit consists of multiple outcomes, are abundant across multitude of disciplines (e.g. in psychology, multiple test scores from different courses for a student; in agriculture, yield measurements at different environments for the same crop variety; and in biology, gene expressions from genes of the same organism). A key analysis of multivariate data include understanding or predicting the characteristics of observational units. A simple analysis may assess one outcome at a time, however, a more sophisticated form of an analysis would consider multiple outcomes simultaneously and exploit the correlated structure within the data. While the latter analysis would be more desirable to make the most out of the data, there are several challenges as explained next.
+
+
+
+We represent multivariate data as a $n \times p$ matrix, $\textbf{Y}$, where $n \in \mathbb{Z}^+$ is the number of individuals and $p \in \mathbb{Z}^+$ is the number of dependent variables. 
+
+
+
+
+
+Notation used throughout this thesis is presented in @tbl-notation.
+
+
+| Notation | Description |
+| ---: | --------------------- |
+| $\boldsymbol{A}^\top$ | the transpose of the matrix (or vector) $A$ |
+| $\mathbb{R}^{p}$ | the space of all p-dimensional real column vectors like $[a_1,a_2,\dots,a_p]^\top$ |
+| $\mathbb{R}^{p\times q}$ | the space of all real matrices with size $p\times q$| 
+| $\mathbb{E}[\cdot]$| the expectation, or mean of a random variable |
+| $\mathbb{V}[\cdot]$ | the variance, or covariance of a random variable |
+| $\boldsymbol{Cov}[\cdot , \cdot]$ | the covariance of two random variables |
+| $\boldsymbol{0}_{p}$ and $\boldsymbol{0}_{p\times q}$ | the p-dimensional $0$ vector or $0$ matrix in size $p\times q$ respectively |
+| $\boldsymbol{I}_p$ | the identity matrix in size $p\times p$ |
+| $\det(\cdot)$ | the determinant of a matrix |
+| $M(i,)$| the $i^{th}$ row of the matrix $M$|
+| $M(,j)$| the $j^{th}$ row of the matrix $M$|
+
+: List of notations used in this report. {#tbl-notation}
+
+
+
+This thesis is structured as follows. @sec-bg outlines the background information on factor analytics models, EM algorithm, and penalised likelihood estimation. @sec-method describe the methods and simulation settings. @sec-results presents the results from the simulation with discussion.
+
+This thesis is written reproducibly using the Quarto system [@quarto] and all the code to reproduce the thesis and results can be found at <https://github.com/ZhiningW/Master_Project>.
