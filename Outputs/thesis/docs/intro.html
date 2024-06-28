@@ -253,8 +253,8 @@ window.Quarto = {
 </header>
 
 
-<p>Multivariate data, where each observational unit consists of multiple outcomes, are abundant across multitude of disciplines (e.g.&nbsp;in psychology, multiple test scores from different courses for a student; in agriculture, yield measurements at different environments for the same crop variety; and in biology, gene expressions from genes of the same organism). A key analysis of multivariate data include understanding or predicting the characteristics of observational units. A simple analysis may assess one outcome at a time, however, a more sophisticated form of an analysis would consider multiple outcomes simultaneously and exploit the correlated structure within the data. While the latter analysis would be more desirable to make the most out of the data, there are several challenges as explained next.</p>
-<p>We represent multivariate data as a <span class="math inline">n \times p</span> matrix, <span class="math inline">\textbf{Y}</span>, where <span class="math inline">n \in \mathbb{Z}^+</span> is the number of individuals and <span class="math inline">p \in \mathbb{Z}^+</span> is the number of dependent variables.</p>
+<p>Multivariate data, where each observational unit consists of multiple outcomes, are abundant across multitude of disciplines (e.g.&nbsp;in psychology, multiple test scores from different courses for a student; in agriculture, yield measurements at different environments for the same crop variety; and in biology, gene expressions from genes of the same organism). A key analysis of multivariate data include understanding or predicting the characteristics of observational units. A simple analysis may assess one outcome at a time using some univariate technique, however, a more sophisticated form of an analysis would consider multiple outcomes simultaneously and exploit the correlated structure within the data. While the latter analysis would be more desirable to make the most out of the data, there are several challenges as explained next.</p>
+<p>Suppose we have a multivariate data denoted as a <span class="math inline">n \times p</span> matrix, <span class="math inline">\textbf{Y}</span>, where <span class="math inline">n \in \mathbb{Z}^+</span> is the number of observational units and <span class="math inline">p \in \mathbb{Z}^+</span> is the number of dependent variables. The entry in the <span class="math inline">i</span>-th row and <span class="math inline">j</span>-th column of <span class="math inline">\textbf{Y}</span> is written as <span class="math inline">y_{ij}</span>. We may write the matrix as <span class="math inline">\mathbf{Y} = (y_{ij})</span>, <span class="math inline">\mathbf{Y} = \begin{bmatrix}\boldsymbol{y}_{(1)} &amp; \cdots &amp; \boldsymbol{y}_{(p)}\end{bmatrix}</span>.</p>
 <p>Notation used throughout this thesis is presented in <a href="#tbl-notation" class="quarto-xref">Table&nbsp;<span>1.1</span></a>.</p>
 <div id="tbl-notation" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -280,27 +280,27 @@ Table&nbsp;1.1: List of notations used in this report.
 </tr>
 <tr class="even">
 <td style="text-align: right;"><span class="math inline">\mathbb{R}^{p}</span></td>
-<td>the space of all p-dimensional real column vectors like <span class="math inline">[a_1,a_2,\dots,a_p]^\top</span></td>
+<td>the space of all <span class="math inline">p</span>-dimensional real column vectors like <span class="math inline">[a_1,a_2,\dots,a_p]^\top</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;"><span class="math inline">\mathbb{R}^{p\times q}</span></td>
 <td>the space of all real matrices with size <span class="math inline">p\times q</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><span class="math inline">\mathbb{E}[\cdot]</span></td>
+<td style="text-align: right;"><span class="math inline">\mathbb{E}(\cdot)</span></td>
 <td>the expectation, or mean of a random variable</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;"><span class="math inline">\mathbb{V}[\cdot]</span></td>
+<td style="text-align: right;"><span class="math inline">\mathbb{V}(\cdot)</span></td>
 <td>the variance, or covariance of a random variable</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><span class="math inline">\boldsymbol{Cov}[\cdot , \cdot]</span></td>
+<td style="text-align: right;"><span class="math inline">\boldsymbol{Cov}(\cdot , \cdot)</span></td>
 <td>the covariance of two random variables</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;"><span class="math inline">\boldsymbol{0}_{p}</span> and <span class="math inline">\boldsymbol{0}_{p\times q}</span></td>
-<td>the p-dimensional <span class="math inline">0</span> vector or <span class="math inline">0</span> matrix in size <span class="math inline">p\times q</span> respectively</td>
+<td>the <span class="math inline">p</span>-dimensional <span class="math inline">0</span> vector or <span class="math inline">0</span> matrix in size <span class="math inline">p\times q</span> respectively</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;"><span class="math inline">\boldsymbol{I}_p</span></td>
@@ -311,12 +311,12 @@ Table&nbsp;1.1: List of notations used in this report.
 <td>the determinant of a matrix</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><span class="math inline">M(i,)</span></td>
-<td>the <span class="math inline">i^{th}</span> row of the matrix <span class="math inline">M</span></td>
+<td style="text-align: right;"><span class="math inline">\boldsymbol{m}_i</span></td>
+<td>the <span class="math inline">i^{th}</span> row of the matrix <span class="math inline">\textbf{M}</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;"><span class="math inline">M(,j)</span></td>
-<td>the <span class="math inline">j^{th}</span> row of the matrix <span class="math inline">M</span></td>
+<td style="text-align: right;"><span class="math inline">\boldsymbol{m}_{(j)}</span></td>
+<td>the <span class="math inline">j^{th}</span> column of the matrix <span class="math inline">\textbf{M}</span></td>
 </tr>
 </tbody>
 </table>

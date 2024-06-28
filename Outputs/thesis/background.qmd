@@ -3,10 +3,12 @@
 
 ## Factor analytic model
 
-Factor analysis is a mathematical model which tries to use fewer
+Factor analysis (FA) is a statistical method which attempts to use fewer
 underlying factors to explain the correlation between a large set of
-observed variables [@mardiaMultivariateAnalysis1979]. It provides a useful tool for
-exploring the covariance structure among observable variables [@hiroseSparseEstimationNonconcave2015]. One of the major assumptions that factor analytic model stands on
+observed variables [@mardiaMultivariateAnalysis1979]. 
+
+
+It provides a useful tool for exploring the covariance structure among observable variables [@hiroseSparseEstimationNonconcave2015]. One of the major assumptions that factor analytic model stands on
 is that it is impossible for us to observe those underlying factors
 directly. This assumption is especially suited to subjects like
 psychology where we cannot observe exactly some concept like how

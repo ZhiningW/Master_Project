@@ -6,10 +6,22 @@ As described in @sec-bg, there are various methods to fit a factor analytic mode
 
 ## Selecting initial values 
 
+- MLE approach (non-penalised approach)
+- MLE + Rotation
+- FA model -> one order at a time
+- uniform/fixed 
+
+
 ## Simulation setting 
+
+Criteria? Judge based on estimation? Sparsity structure.
 
 
 ### Setting 1
+
+- Hirose + other existing simulation settings in published papers
+- Different FA order (k = 2, 4, 6, 8 x n = 200, 400, 800, 1600 x sparse vs non-sparse).
+
 
 
 ### Setting 2

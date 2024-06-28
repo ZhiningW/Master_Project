@@ -1,5 +1,5 @@
 test_that("model works", {
-  et.seed(124)
+  set.seed(124)
 
   n <- 5000  # Size of observations
   p <- 8     # Dimension of each observation
