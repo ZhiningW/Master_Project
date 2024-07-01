@@ -22,8 +22,6 @@ contributes:
     format: anu-thesis-html
   formats:
     common:
-      filters:
-       - latex-environment
       environments: flushright
       date-format: "Do MMMM YYYY"
       toc: true

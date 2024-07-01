@@ -212,7 +212,7 @@ pem_initial_psi <- diag(rep(0.1,p))     # Take distinct initial values to see wh
 ## End the iteration if the error between two steps is less than np_tolerance
 ## and regard as convergent
 pem_tolerance <- 0.01 
-n_max_iter <- 50
+n_max_iter <- 30
 ## Set the parameters for iteration
 pem_step <- 0 # record the number of iterations
 pem_loading_diff <- 1000 # Set a big difference in case smaller than tolerance at very beginning
@@ -221,17 +221,16 @@ pem_expectation <- numeric(length = n_max_iter) # Record expectations during ite
 
 # update iteratively
 pem_loading_old <- pem_initial_loading
-pem_psi_old <- pem_initial_psi
+pem_psi <- pem_initial_psi
 
 while(pem_loading_diff >= pem_tolerance){
   pem_step <- pem_step + 1
   pem_expectation[pem_step] <- pem_E(pem_loading_old,pem_psi_old,Y,rho)
   ## Update psi elementwisely
   psi_goodtoupdate <- psi_valid(pem_loading_old,pem_psi_old,Y)
-  psi_update_position <- which(psi_goodtoupdate != 0)
-  pem_psi_new <- matrix(0, nrow = p, ncol = p)
-  for (j in 1:p){
-    pem_psi_new[j,j] <- psi_update(pem_loading_old,pem_psi_old,Y,j)
+  psi_update_position <- which(psi_goodtoupdate)
+  for (j in psi_update_position){
+    pem_psi[j,j] <- psi_update(pem_loading_old,pem_psi_old,Y,j)
   }
   
   ## Update loading matrix using current psi rowwisely
@@ -243,11 +242,10 @@ while(pem_loading_diff >= pem_tolerance){
   pem_loading_diff <- norm(pem_loading_new - pem_loading_old, type = 'F')
   
   ## Update parameters
-  pem_psi_old <- pem_psi_new
   pem_loading_old <- pem_loading_new
   
   if (pem_step > n_max_iter){
-    cat('Failed to converge!')
+    cli::cli_alert_warning('Failed to converge!')
     break
   }
   

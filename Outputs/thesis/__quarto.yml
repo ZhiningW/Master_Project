@@ -1,5 +1,5 @@
 project:
-  type: anu-thesis
+  type: book
   output-dir: docs
 
 book:
@@ -45,7 +45,8 @@ supervisor:
   - Dr. Qinian Jin 
 
 format:
-  anu-thesis-html: default
+  html: default
+  #anu-thesis-html: default
   #anu-thesis-pdf:
   #  keep-tex: false
     #classoption: twoside
