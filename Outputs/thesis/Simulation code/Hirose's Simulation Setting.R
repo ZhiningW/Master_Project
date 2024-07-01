@@ -253,7 +253,7 @@ Model_A <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow=6, ncol=2, byr
 # Model_B <- 
 
 initial_loading <- matrix(c(1,0,2,3,2,1,2,2,2,2,2,1), nrow=6, ncol=2)
-initial_psi <- diag(rep(0.01,6))
+initial_psi <- diag(rep(0.1,6))
 
 
 simula_Hirose(Model_A,2000,2,initial_loading,initial_psi)
