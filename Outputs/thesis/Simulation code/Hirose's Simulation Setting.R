@@ -1,7 +1,5 @@
 rm(list = ls())
-### Functions may be used in the simulation
-library(MASS)
-set.seed(123)
+################### Functions may be used in the simulation ####################
 ## To calculate A in article
 A <- function(lambda, psi) {
   # Input: lambda: loading matrix of size p*k we have now
@@ -39,7 +37,7 @@ psi_update <- function(lambda,psi,Y,j){
   # Start calculating
   first_term <- (1/n) * sum(Y[,j]*Y[,j])
   second_term <- -(2/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
-                                                        %*% Y[,j, drop=FALSE]),ncol=1)
+                                                         %*% Y[,j, drop=FALSE]),ncol=1)
   third_term <- (1/n) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
                                       %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
   return(first_term + second_term + third_term)
@@ -58,14 +56,14 @@ psi_valid <- function(lambda,psi,Y){
   constraint <- numeric(length=p)
   for (j in 1:p){
     lambda_j <- lambda[j,,drop=FALSE]
-  
-  # Start calculating
-  first_term <- (2/n) * sum(Y[,j]*Y[,j])
-  second_term <- -(4/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
-                                                        %*% Y[,j, drop=FALSE]),ncol=1)
-  third_term <- (2/n) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
-                                      %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
-  constraint[j]<- first_term + second_term + third_term
+    
+    # Start calculating
+    first_term <- (2/n) * sum(Y[,j]*Y[,j])
+    second_term <- -(4/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
+                                                           %*% Y[,j, drop=FALSE]),ncol=1)
+    third_term <- (2/n) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
+                                        %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
+    constraint[j]<- first_term + second_term + third_term
   }
   
   return(diag(psi)<=constraint)
@@ -137,9 +135,6 @@ subgradient <- function(lambda,psi,Y,epsilon,j,rho){
   return(first_term+second_term+third_term)
 }
 
- 
-
-
 subg_method <- function(lambda,psi,Y,epsilon,j,rho){
   ### Input:  lambda: loading matrix
   ###         psi: the variance matrix of size p*p of common factor we have now
@@ -168,91 +163,111 @@ subg_method <- function(lambda,psi,Y,epsilon,j,rho){
 }
 
 
-#####################################################
-### Background settings
-n <- 5000  # Size of observations
-p <- 8     # Dimension of each observation
-k <- 4     # Order of FA model (dimension of latent variables)
 
-# Real parameters of the FA model
-# Generate the loading matrix
-sparsity_level <- 0.3  # The proportion of zero elements in the loading matrix
-non_zeros <- round(k * p * (1 - sparsity_level))
-poss_values_1 <- c(0.5, 0.6, 0.7, 0.8, 0.9, -0.5, -0.6, -0.7, -0.8, -0.9)
-loading_position <- sample(k * p, non_zeros)
-real_loading <- matrix(0, nrow = p, ncol = k)
-real_loading[loading_position] <- sample(poss_values_1, non_zeros, replace = TRUE)
 
-# Ensure no all-zero rows or columns
-while (any(rowSums(real_loading) == 0) || any(colSums(real_loading) == 0)) {
-  loading_position <- sample(k * p, non_zeros)
-  real_loading <- matrix(0, nrow = p, ncol = k)
-  real_loading[loading_position] <- sample(poss_values_1, non_zeros, replace = TRUE)
+####################### Main Function to Run Simulation #####################
+
+
+simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
+  #### Input:
+   ###    real_loading: the real loading matrix
+   ###    N: the number of the sample we want to generate
+   ###    rho: the penality parameter
+   ###    initial_loading: the initialization of the loading matrix used for the algorithm
+   ###    initial_psi: the initialization of the psi-matrix used for the algorithm
+  #### Output:
+   ###    loading_result: the loading matrix after updating
+   ###    psi_result: the psi-matrix after updating
+   ###    sparsity: the number of zero-elements of the loading_result
+  
+  
+  ## Necessary package
+  
+  library(MASS)
+  
+  ## Basic settings
+  p <- nrow(real_loading)
+  k <- ncol(real_loading)
+  real_psi <- diag(diag((p) - tcrossprod(real_loading)))
+  
+  ## Generate a Data Set
+  # Hirose use this to generate instead of Y = lambda %*% F + epsilon
+  Y <- mvrnorm(n = N, mu = rep(0,p), Sigma = real_psi)  
+  ## End the iteration if the error between two steps is less than np_tolerance
+  ## and regard as convergent
+  pem_tolerance <- 0.01 
+  n_max_iter <- 40
+  ## Set the parameters for iteration
+  pem_step <- 0 # record the number of iterations
+  pem_loading_diff <- 1000 # Set a big difference in case smaller than tolerance at very beginning
+  pem_psi_diff <- 1000
+  pem_expectation <- numeric(length = n_max_iter) # Record expectations during iteration
+  
+  # update iteratively
+  pem_loading_old <- initial_loading
+  pem_psi_old <- initial_psi
+  
+  while(pem_loading_diff >= pem_tolerance){
+    pem_step <- pem_step + 1
+    pem_expectation[pem_step] <- pem_E(pem_loading_old,pem_psi_old,Y,rho)
+    ## Update psi elementwisely
+    ## psi_goodtoupdate <- psi_valid(pem_loading_old,pem_psi_old,Y)
+    ## psi_update_position <- which(psi_goodtoupdate)
+    pem_psi_new <- matrix(0, nrow = p, ncol = p)
+    for (j in 1:p){
+      pem_psi_new[j,j] <- psi_update(pem_loading_old,pem_psi_old,Y,j)
+    }
+    print(pem_psi_new)
+    ## Update loading matrix using current psi rowwisely
+    
+    pem_loading_new <- matrix(0, nrow = p, ncol = k)
+    for (j in 1:p){
+      pem_loading_new[j,] <- subg_method(pem_loading_old,pem_psi_new,Y,pem_tolerance,j,rho)
+    }
+    print(pem_loading_new)
+    pem_loading_diff <- norm(pem_loading_new - pem_loading_old, type = 'F')
+    
+    ## Update parameters
+    pem_psi_old <- pem_psi_new
+    pem_loading_old <- pem_loading_new
+    
+    if (pem_step > n_max_iter){
+      cli::cli_alert_warning('Failed to converge!')
+      break
+    }
+    
+  }
+  ## final result of penalized EM algorithm
+  loading_result <- pem_loading_old
+  psi_result <- pem_psi_old
+  plot(pem_expectation[-1])  
+  sparsity <- sum(loading_result < 0.1)
+  result <-  
+  return (list(loading_result,psi_result,sparsity))
 }
 
-
-# Generate the real variance of the unique factors epsilon
-poss_values_2 <- c(0.1, 0.2, 0.3, 0.4)
-diagonal_values <- sample(poss_values_2, p, replace = TRUE)
-real_psi <- diag(diagonal_values)
+################## Simulation ##############################################
 
 
-# Generate the factor matrix F, response matrix Y, and unique factor epsilon
-F <- matrix(rnorm(n * k, mean = 0, sd = 1), nrow = n, ncol = k)
-epsilon <- mvrnorm(n = n, mu = rep(0, p), Sigma = real_psi)
-Y <- F %*% t(real_loading) + epsilon # generating Y directly??
-#####################################################
+Model_A <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow=6, ncol=2, byrow = TRUE)
+# Model_B <- 
 
-rho <- 2 # penality parameter   #AIC / BIC 
-## Set the initial guess
-pem_initial_loading <- matrix(1, nrow=p, ncol=k)   # Take distinct initial values to see what happens
-pem_initial_psi <- diag(rep(0.1,p))     # Take distinct initial values to see what happens
+initial_loading <- matrix(c(1,0,2,3,2,1,2,2,2,2,2,1), nrow=6, ncol=2)
+initial_psi <- diag(rep(0.01,6))
 
-## End the iteration if the error between two steps is less than np_tolerance
-## and regard as convergent
-pem_tolerance <- 0.01 
-n_max_iter <- 30
-## Set the parameters for iteration
-pem_step <- 0 # record the number of iterations
-pem_loading_diff <- 1000 # Set a big difference in case smaller than tolerance at very beginning
-pem_psi_diff <- 1000
-pem_expectation <- numeric(length = n_max_iter) # Record expectations during iteration
 
-# update iteratively
-pem_loading_old <- pem_initial_loading
-pem_psi_old <- pem_initial_psi
+simula_Hirose(Model_A,2000,2,initial_loading,initial_psi)
 
-while(pem_loading_diff >= pem_tolerance){
-  pem_step <- pem_step + 1
-  pem_expectation[pem_step] <- pem_E(pem_loading_old,pem_psi_old,Y,rho)
-  ## Update psi elementwisely
-  # psi_goodtoupdate <- psi_valid(pem_loading_old,pem_psi_old,Y)
-  # psi_update_position <- which(psi_goodtoupdate)
-  pem_psi_new <- matrix(0, nrow = p, ncol = p)
-  for (j in 1:p){
-    pem_psi_new[j,j] <- psi_update(pem_loading_old,pem_psi_old,Y,j)
-  }
-  print(diag(pem_psi_new))
-  ## Update loading matrix using current psi rowwisely
-  
-  pem_loading_new <- matrix(0, nrow = p, ncol = k)
-  for (j in 1:p){
-    pem_loading_new[j,] <- subg_method(pem_loading_old,pem_psi_new,Y,pem_tolerance,j,rho)
-  }
-  print(pem_loading_new)
-  pem_loading_diff <- norm(pem_loading_new - pem_loading_old, type = 'F')
-  
-  ## Update parameters
-  pem_loading_old <- pem_loading_new
-  pem_psi_old <- pem_psi_new
-  
-  if (pem_step > n_max_iter){
-    cli::cli_alert_warning('Failed to converge!')
-    break
-  }
-  
-}
-## final result of penalized EM algorithm
-pem_loading <- pem_loading_new
-pem_psi <- pem_psi_new
-plot(pem_expectation[-1])  
+
+
+
+
+
+
+
+
+
+
+
+
+
