@@ -1,10 +1,37 @@
 [
   {
+<<<<<<< HEAD
+=======
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Model Selection for Factor Analysis",
+    "section": "",
+    "text": "Preface",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "Multivariate data, where each observational unit consists of multiple outcomes, are abundant across multitude of disciplines (e.g. in psychology, multiple test scores from different courses for a student; in agriculture, yield measurements at different environments for the same crop variety; and in biology, gene expressions from genes of the same organism). A key analysis of multivariate data include understanding or predicting the characteristics of observational units. A simple analysis may assess one outcome at a time using some univariate technique, however, a more sophisticated form of an analysis would consider multiple outcomes simultaneously and exploit the correlated structure within the data. While the latter analysis would be more desirable to make the most out of the data, there are several challenges as explained next.\nSuppose we have a multivariate data denoted as a n \\times p matrix, \\textbf{Y}, where n \\in \\mathbb{Z}^+ is the number of observational units and p \\in \\mathbb{Z}^+ is the number of dependent variables. The entry in the i-th row and j-th column of \\textbf{Y} is written as y_{ij}. We may write the matrix as \\mathbf{Y} = (y_{ij}), \\mathbf{Y} = \\begin{bmatrix}\\boldsymbol{y}_{(1)} & \\cdots & \\boldsymbol{y}_{(p)}\\end{bmatrix}.\nNotation used throughout this thesis is presented in Table 1.1.\n\n\n\nTable 1.1: List of notations used in this report.\n\n\n\n\n\n\n\n\n\nNotation\nDescription\n\n\n\n\n\\boldsymbol{A}^\\top\nthe transpose of the matrix (or vector) A\n\n\n\\mathbb{R}^{p}\nthe space of all p-dimensional real column vectors like [a_1,a_2,\\dots,a_p]^\\top\n\n\n\\mathbb{R}^{p\\times q}\nthe space of all real matrices with size p\\times q\n\n\n\\mathbb{E}(\\cdot)\nthe expectation, or mean of a random variable\n\n\n\\mathbb{V}(\\cdot)\nthe variance, or covariance of a random variable\n\n\n\\boldsymbol{Cov}(\\cdot , \\cdot)\nthe covariance of two random variables\n\n\n\\boldsymbol{0}_{p} and \\boldsymbol{0}_{p\\times q}\nthe p-dimensional 0 vector or 0 matrix in size p\\times q respectively\n\n\n\\boldsymbol{I}_p\nthe identity matrix in size p\\times p\n\n\n\\det(\\cdot)\nthe determinant of a matrix\n\n\n\\boldsymbol{m}_i\nthe i^{th} row of the matrix \\textbf{M}\n\n\n\\boldsymbol{m}_{(j)}\nthe j^{th} column of the matrix \\textbf{M}\n\n\n\n\n\n\nThis thesis is structured as follows. Chapter 2 outlines the background information on factor analytics models, EM algorithm, and penalised likelihood estimation. Chapter 3 describe the methods and simulation settings. Chapter 4 presents the results from the simulation with discussion.\nThis thesis is written reproducibly using the Quarto system (Allaire and Dervieux 2024) and all the code to reproduce the thesis and results can be found at https://github.com/ZhiningW/Master_Project.\n\n\n\n\nAllaire, JJ, and Christophe Dervieux. 2024. Quarto: R Interface to ’Quarto’ Markdown Publishing System. https://CRAN.R-project.org/package=quarto.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+>>>>>>> 81322d8404742f5962c1a5690bf956d20b115800
     "objectID": "background.html",
     "href": "background.html",
     "title": "2  Background",
     "section": "",
+<<<<<<< HEAD
     "text": "2.1 Factor analytic model\nFactor analysis is a mathematical model which tries to use fewer underlying factors to explain the correlation between a large set of observed variables (Mardia, Kent, and Bibby 1979). It provides a useful tool for exploring the covariance structure among observable variables (Hirose and Yamamoto 2015). One of the major assumptions that factor analytic model stands on is that it is impossible for us to observe those underlying factors directly. This assumption is especially suited to subjects like psychology where we cannot observe exactly some concept like how intelligent our subjects are (Mardia, Kent, and Bibby 1979).\nSuppose we have a observable random vector \\(\\boldsymbol{y}\\in \\mathbb{R}^p\\) with mean \\(\\mathbb{E}[\\boldsymbol{y}]=\\boldsymbol{\\mu}\\) and variance \\(\\mathbb{V}[\\boldsymbol{y}]=\\boldsymbol{\\Sigma}\\). Then a \\(k\\)-order factor analysis model for \\(\\boldsymbol{y}\\) can be given by \\[\\begin{equation}\n\\boldsymbol{y}=\\boldsymbol{\\Lambda} \\boldsymbol{f}+\\boldsymbol{\\mu}+\\boldsymbol{\\epsilon},\n\\end{equation}\\] where \\(\\boldsymbol{\\Lambda} \\in \\mathbb{R}^{p \\times k}\\) is called loading matrix, we call \\(\\boldsymbol{f} \\in \\mathbb{R}^{k}\\) as common factors and \\(\\boldsymbol{\\epsilon} \\in \\mathbb{R}^{p}\\) is unique factors. To make the model well-defined, we may assume \\[\\mathbb{E}[\\boldsymbol{f}]=\\boldsymbol{0}_k, \\mathbb{V}[\\boldsymbol{f}]=\\boldsymbol{I}_{k\\times k}, \\mathbb{E}[\\boldsymbol{\\epsilon}]=\\boldsymbol{0}_p, \\mathbb{V}[\\boldsymbol{\\epsilon}]=:\\boldsymbol{\\Psi}=\\text{diag}(\\Psi_{11},\\dots,\\Psi_{pp})\\] and also the independence between any elements from \\(\\boldsymbol{f}\\) and \\(\\boldsymbol{\\epsilon}\\) separately, i.e. \\[Cov[f_i,\\epsilon_j]=0, \\text{for all } i\\in\\{1,2,\\dots,k\\} \\text{ and } j \\in \\{1,2,\\dots,p\\}\\] Straightforwardly, the covariance of observable vector \\(\\boldsymbol{y}\\) can be modelled by\n\\[\\begin{equation}\n\\mathbb{V}[\\boldsymbol{y}]=\\boldsymbol{\\Lambda}\\boldsymbol{\\Lambda}^\\top+\\boldsymbol{\\Psi}\n\\end{equation}\\]",
+=======
+    "text": "2.1 Factor analytic model\nFactor analysis (FA) is a statistical method which attempts to use fewer underlying factors to explain the correlation between a large set of observed variables (Mardia, Kent, and Bibby 1979).\nIt provides a useful tool for exploring the covariance structure among observable variables (Hirose and Yamamoto 2015). One of the major assumptions that factor analytic model stands on is that it is impossible for us to observe those underlying factors directly. This assumption is especially suited to subjects like psychology where we cannot observe exactly some concept like how intelligent our subjects are (Mardia, Kent, and Bibby 1979).\nSuppose we have a observable random vector \\boldsymbol{y}\\in \\mathbb{R}^p with mean \\mathbb{E}[\\boldsymbol{y}]=\\boldsymbol{\\mu} and variance \\mathbb{V}[\\boldsymbol{y}]=\\boldsymbol{\\Sigma}. Then a k-order factor analysis model for \\boldsymbol{y} can be given by \\begin{equation}\n\\boldsymbol{y}=\\boldsymbol{\\Lambda} \\boldsymbol{f}+\\boldsymbol{\\mu}+\\boldsymbol{\\epsilon},\n\\end{equation} where \\boldsymbol{\\Lambda} \\in \\mathbb{R}^{p \\times k} is called loading matrix, we call \\boldsymbol{f} \\in \\mathbb{R}^{k} as common factors and \\boldsymbol{\\epsilon} \\in \\mathbb{R}^{p} is unique factors. To make the model well-defined, we may assume \\mathbb{E}[\\boldsymbol{f}]=\\boldsymbol{0}_k, \\mathbb{V}[\\boldsymbol{f}]=\\boldsymbol{I}_{k\\times k}, \\mathbb{E}[\\boldsymbol{\\epsilon}]=\\boldsymbol{0}_p, \\mathbb{V}[\\boldsymbol{\\epsilon}]=:\\boldsymbol{\\Psi}=\\text{diag}(\\Psi_{11},\\dots,\\Psi_{pp}) and also the independence between any elements from \\boldsymbol{f} and \\boldsymbol{\\epsilon} separately, i.e. Cov[f_i,\\epsilon_j]=0, \\text{for all } i\\in\\{1,2,\\dots,k\\} \\text{ and } j \\in \\{1,2,\\dots,p\\} Straightforwardly, the covariance of observable vector \\boldsymbol{y} can be modelled by\n\\begin{equation}\n\\mathbb{V}[\\boldsymbol{y}]=\\boldsymbol{\\Lambda}\\boldsymbol{\\Lambda}^\\top+\\boldsymbol{\\Psi}\n\\end{equation}",
+>>>>>>> 81322d8404742f5962c1a5690bf956d20b115800
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Background</span>"
     ]
@@ -30,6 +57,16 @@
     ]
   },
   {
+    "objectID": "background.html#parameter-estimation",
+    "href": "background.html#parameter-estimation",
+    "title": "2  Background",
+    "section": "2.2 Parameter Estimation",
+    "text": "2.2 Parameter Estimation\nWe denote the set of parameters by \\beta := \\{\\text{vec}(\\boldsymbol{\\Lambda}),\\text{vec}(\\boldsymbol{\\Psi})\\} where \\text{vec}(\\cdot) is the vectorisation of the input.\nTraditionally, a two-step procedure is used to construct a factor analytic model: estimate parameters by maximum likelihood estimation (aka, MLE) and then use rotation techniques to find an interpretable model.\n\n2.2.1 Maximum Likelihood Estimation\nSuppose we have n independent and identically distributed observations \\boldsymbol{y}_1,\\boldsymbol{y}_2,\\dots,\\boldsymbol{y}_N from a p-dimensional multi-variate normal distribution N_p(\\boldsymbol{\\mu},\\boldsymbol{\\Sigma}) and by our hypothesis, we have \\boldsymbol{\\Sigma}=\\boldsymbol{\\Lambda}\\boldsymbol{\\Lambda}^\\top+\\boldsymbol{\\Psi}. Then the likelihood function is given by L(\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi})=\\prod^n_{i=1}\\left[(2\\pi)^{-\\frac{p}{2}}\\det(\\boldsymbol{\\Sigma})^{-\\frac{1}{2}}\\exp(-\\frac{1}{2}(\\boldsymbol{y}_i-\\boldsymbol{\\mu})^\\top\\boldsymbol{\\Sigma}^{-1}(\\boldsymbol{y}_i-\\boldsymbol{\\mu}))\\right]. and hence the log-likelihood is given by\n\\begin{align*}\nl(\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi})=& \\sum^n_{i=1}[-\\frac{p}{2}\\log(2\\pi)-\\frac{1}{2}\\log(\\det(\\boldsymbol{\\Sigma}))-\\frac{1}{2}(\\boldsymbol{y}_i-\\boldsymbol{\\mu})^\\top\\boldsymbol{\\Sigma}^{-1}(\\boldsymbol{y}_i-\\boldsymbol{\\mu})]\\\\\n=& -\\frac{n}{2}[p\\log(2\\pi)+\\log(\\det(\\boldsymbol{\\Sigma}))+\\text{tr}(\\boldsymbol{\\Sigma}^{-1}\\boldsymbol{S})],\n\\end{align*}\nwhere \\boldsymbol{S} is the sample covariance defined as \\boldsymbol{S}:=\\frac{1}{n}\\sum^n_{i=1}(\\boldsymbol{y}_i-\\boldsymbol{\\mu})(\\boldsymbol{y}_i-\\boldsymbol{\\mu})^\\top. To get the MLE of parameters, we seek the roots of equation system\n\\begin{cases}\n\\frac{\\partial}{\\partial \\boldsymbol{\\Lambda}}l(\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi})=0 \\\\\n\\frac{\\partial}{\\partial \\boldsymbol{\\Psi}}l(\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi})=0.\n\\end{cases}\nHowever, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like EM algorithm developed by Rubin (Rubin and Thayer 1982).\n\n\n2.2.2 Rotation techniques\nAfter estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method (Hirose and Yamamoto 2015).\nSuppose Q(\\boldsymbol{\\Lambda}) is an criterion for \\boldsymbol{\\Lambda} in the rotation procedure, and we may express it as Q(\\boldsymbol{\\Lambda}):= \\sum^p_{i=1}\\sum^d_{j=1}P(\\boldsymbol{\\Lambda}_{ij}) where P(\\cdot) is some loss function(Hirose and Yamamoto 2015). Specifically, if we set P(\\cdot)=|\\cdot|, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as (Jennrich 2004)\n\\begin{align*}\n&\\min_{\\boldsymbol{\\Lambda}} \\sum^p_{i=1}\\sum^k_{j=1}P(\\boldsymbol{\\Lambda}_{ij})\\\\\n&\\text{subject to } \\boldsymbol{\\Lambda}=\\boldsymbol{\\Lambda}_0\\boldsymbol{M} \\text{ and } \\boldsymbol{M}^\\top\\boldsymbol{M}=\\boldsymbol{I}_k,\n\\end{align*}\nwhere \\boldsymbol{\\Lambda}_0 is an initial guess. Since we execute this technique after obtaining the MLE of parameters, therefore what we want is\n\\begin{align*}\n&\\min_{\\boldsymbol{\\Lambda}} \\sum^p_{i=1}\\sum^k_{j=1}P(\\boldsymbol{\\Lambda}_{ij})\\\\\n&\\text{subject to } \\boldsymbol{\\Lambda}=\\hat{\\boldsymbol{\\Lambda}}_{\\text{MLE}}\\boldsymbol{M} \\text{ and } \\boldsymbol{M}^\\top\\boldsymbol{M}=\\boldsymbol{I}_k,\n\\end{align*}\nwhere \\hat{\\boldsymbol{\\Lambda}}_{\\text{MLE}} is the maximum likelihood estimator.\n\n\n2.2.3 Discussion about two-step method\nThe traditional two-step method faces significant shortcomings, primarily its unsuitability (Hirose and Yamamoto 2015). Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by \n\\boldsymbol{\\Lambda}=\n\\begin{bmatrix}\n0.8 & 0 \\\\\n0 & 0.8 \\\\\n0 & 0\\\\\n0 & 0\\\\\n0 & 0\\\\\n\\end{bmatrix}.\n We generate \\boldsymbol{Y}\\in \\mathbb{R}^{{100}\\times 5} using common factor \\boldsymbol{f}\\in \\mathbb{R}^{{100}\\times 2} where each factor is generated randomly from standard normal distribution N(0,1). We utilize the R-function factanal() to produce the loading matrix via MLE and then call varimax() to rotate our loading matrix. What we finally get is\n\n\\hat{\\boldsymbol{\\Lambda}}=\n\\begin{bmatrix}\n-0.158 & 0.985\\\\\n0 & 0\\\\\n0.997 & 0\\\\\n0.207 & 0\\\\\n0 & 0\\\\\n\\end{bmatrix},\n which is neither precise nor sparse.\nSimulation code:\n\nset.seed(123)\nn &lt;- 100 # Number of observations\np &lt;- 5   # Number of features\n\nfactor1 &lt;- rnorm(n, 0, 1) # set factors\nfactor2 &lt;- rnorm(n, 0, 1)\n\nX &lt;- matrix(NA, nrow=n, ncol=p)\nX[,1] &lt;- 0.8*factor1 + rnorm(n, 0, 1)  # Strong loading\nX[,2] &lt;- 0.8*factor2 + rnorm(n, 0, 1)  # Strong loading\nX[,3] &lt;- rnorm(n, 0, 1)  # Noise, no strong loading on any factor\nX[,4] &lt;- rnorm(n, 0, 1)  \nX[,5] &lt;- rnorm(n, 0, 1) \n\nfa_result &lt;- factanal(factors = 2, covmat = cor(X))\nrotated_fa &lt;- varimax(fa_result$loadings)\n\nAnother problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model (Mardia, Kent, and Bibby 1979). We have \\begin{align*}\n  &&&H_k: k \\text{ common factors are sufficient to describe the data } \\\\\n  \\longleftrightarrow &&&H_a: \\text{ Otherwise}.\n\\end{align*} The test statistics is given by \\text{TS}=nF(\\hat{\\boldsymbol{\\Lambda}},\\hat{\\boldsymbol{\\Psi}}) which has an asymptotic \\chi^2_s distribution with s=\\frac{1}{2}(p-k)^2-(p+k) by the property of MLE, where F is given by (Mardia, Kent, and Bibby (1979)) \nF(\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi})=\\text{tr}(\\boldsymbol{\\Sigma}^{-1}\\boldsymbol{S})-\\log(\\det(\\boldsymbol{\\Sigma}^{-1}\\boldsymbol{S}))-p.\n Typically, the test is conducted at a 5\\% significant level. We can start the procedure from a very small k, say, k=1 or k=2 and then increase k until the null hypothesis is not rejected.\n\n\n2.2.4 Penalized Likelihood Method\nPenalized likelihood method can be viewed as a generalization of two-step method mentioned above (Hirose and Yamamoto 2015). A penalized factor analytic model can be obtained by solving following optimization problem \n\\max_{\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi}}l_p := l(\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi})-\\rho\\sum^p_{i=1}\\sum^k_{j=1}P(|\\boldsymbol{\\Lambda}_{ij}|).\n where we call l_p as the penalized likelihood, \\rho is called regularization parameter and we can treat P(\\cdot) as a penalized function. There are many types of penalized functions developed, such as LASSO (P(\\cdot)=|\\cdot|) and MC+ (P(|\\theta|;\\rho;\\gamma)=n(|\\theta|-\\frac{\\theta^2}{2\\rho\\gamma})I(|\\theta|&lt;\\rho\\gamma)+\\frac{\\rho^2\\gamma}{2}I(|\\theta|\\geq\\rho\\gamma)) (Hirose and Yamamoto 2015). In this article, we will mainly focus on the LASSO penalty.\n\n\n2.2.5 LASSO penalty and LASSO estimator\nAgain, recall that the LASSO penalized likelihood is given by l_p=-\\frac{n}{2}[p\\log(2\\pi)+\\log(\\det(\\boldsymbol{\\Sigma}))+\\text{tr}(\\boldsymbol{\\Sigma}^{-1}\\boldsymbol{S})]-\\rho\\sum^p_{i=1}\\sum^k_{j=1}|\\Lambda_{ij}| and the LASSO estimator, denoted as (\\boldsymbol{\\Lambda}^*,\\boldsymbol{\\Psi}^*), can be obtained via\n\\begin{align*}\n(\\boldsymbol{\\Lambda}^*,\\boldsymbol{\\Psi}^*) &= \\text{arg}\\max_{\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi}} \\quad -\\frac{n}{2}[p\\log(2\\pi)+\\log(\\det(\\boldsymbol{\\Sigma}))+\\text{tr}(\\boldsymbol{\\Sigma}^{-1}\\boldsymbol{S})]-\\rho\\sum^p_{i=1}\\sum^k_{j=1}|\\Lambda_{ij}|\\\\\n&=\\text{arg}\\min_{\\boldsymbol{\\Lambda},\\boldsymbol{\\Psi}} \\quad \\log(\\det(\\boldsymbol{\\Sigma}))+\\text{tr}(\\boldsymbol{\\Sigma}^{-1}\\boldsymbol{S})+\\frac{2}{n}\\rho\\sum^p_{i=1}\\sum^k_{j=1}|\\Lambda_{ij}|.\n\\end{align*}\nAn E-M algorithm can be applied for evaluating the LASSO estimator.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Background</span>"
+    ]
+  },
+  {
     "objectID": "background.html#sec-EM",
     "href": "background.html#sec-EM",
     "title": "2  Background",
@@ -48,5 +85,48 @@
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Background</span>"
     ]
+<<<<<<< HEAD
+=======
+  },
+  {
+    "objectID": "method.html",
+    "href": "method.html",
+    "title": "3  Method",
+    "section": "",
+    "text": "3.1 Existing R packages",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Method</span>"
+    ]
+  },
+  {
+    "objectID": "method.html#selecting-initial-values",
+    "href": "method.html#selecting-initial-values",
+    "title": "3  Method",
+    "section": "3.2 Selecting initial values",
+    "text": "3.2 Selecting initial values\n\nMLE approach (non-penalised approach)\nMLE + Rotation\nFA model -&gt; one order at a time\nuniform/fixed",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Method</span>"
+    ]
+  },
+  {
+    "objectID": "method.html#simulation-setting",
+    "href": "method.html#simulation-setting",
+    "title": "3  Method",
+    "section": "3.3 Simulation setting",
+    "text": "3.3 Simulation setting\nCriteria? Judge based on estimation? Sparsity structure.\n\n3.3.1 Setting 1\n\nHirose + other existing simulation settings in published papers\nDifferent FA order (k = 2, 4, 6, 8 x n = 200, 400, 800, 1600 x sparse vs non-sparse).\n\n\n\n3.3.2 Setting 2",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Method</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Allaire, JJ, and Christophe Dervieux. 2024. Quarto: R Interface to\n’Quarto’ Markdown Publishing System. https://CRAN.R-project.org/package=quarto.\n\n\nHirose, Kei, and Michio Yamamoto. 2015. “Sparse Estimation via\nNonconcave Penalized Likelihood in Factor Analysis Model.”\nStatistics and Computing 25 (5): 863–75. https://doi.org/10.1007/s11222-014-9458-0.\n\n\nJennrich, R. I. 2004. “Rotation to Simple Loadings Using Component\nLoss Functions: The Orthogonal Case.” Psychometrika 69:\n257–73.\n\n\nMardia, K. V., J. T. Kent, and J. M. Bibby. 1979. Multivariate\nAnalysis. Probability and Mathematical Statistics. London ; New\nYork: Academic Press.\n\n\nNg, S. K., T. Krishnan, and G. J. McLachlan. 2012. “The EM\nAlgorithm.” In Handbook of Computational Statistics: Concepts\nand Methods, 139–72. Springer.\n\n\nRubin, Donald B., and Dorothy T. Thayer. 1982. “EM Algorithms for\nML Factor Analysis.” Psychometrika 47: 69–76.",
+    "crumbs": [
+      "References"
+    ]
+>>>>>>> 81322d8404742f5962c1a5690bf956d20b115800
   }
 ]
