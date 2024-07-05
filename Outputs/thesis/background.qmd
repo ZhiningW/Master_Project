@@ -5,33 +5,26 @@
 
 Factor analysis (FA) is a statistical method which attempts to use fewer
 underlying factors to explain the correlation between a large set of
-observed variables [@mardiaMultivariateAnalysis1979]. 
+observed variables [@mardiaMultivariateAnalysis1979]. FA provides a useful tool for exploring the covariance structure among observable variables [@hiroseSparseEstimationNonconcave2015].
 
+An FA model assumes that the observations are explained by a small number of underlying factors. This assumption is suited to many areas, e.g. in
+psychology where certain variables, like intelligence, cannot be directly measured [@mardiaMultivariateAnalysis1979].
 
-It provides a useful tool for exploring the covariance structure among observable variables [@hiroseSparseEstimationNonconcave2015]. One of the major assumptions that factor analytic model stands on
-is that it is impossible for us to observe those underlying factors
-directly. This assumption is especially suited to subjects like
-psychology where we cannot observe exactly some concept like how
-intelligent our subjects are [@mardiaMultivariateAnalysis1979].
-
-Suppose we have a observable random vector $\boldsymbol{y}\in \mathbb{R}^p$
-with mean $\mathbb{E}[\boldsymbol{y}]=\boldsymbol{\mu}$ and variance
-$\mathbb{V}[\boldsymbol{y}]=\boldsymbol{\Sigma}$. Then a $k$-order factor analysis model
+Suppose we have an observable random vector $\boldsymbol{y}\in \mathbb{R}^p$
+with mean $\mathbb{E}(\boldsymbol{y})=\boldsymbol{\mu}$ and variance
+$\mathbb{V}(\boldsymbol{y})=\boldsymbol{\Sigma}$. Then a $k$-order factor analysis model
 for $\boldsymbol{y}$ can be given by \begin{equation}
 \boldsymbol{y}=\boldsymbol{\Lambda} \boldsymbol{f}+\boldsymbol{\mu}+\boldsymbol{\epsilon},
-\end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$ is called
-_loading matrix_, we call $\boldsymbol{f} \in \mathbb{R}^{k}$ as
-_common factors_ and $\boldsymbol{\epsilon} \in \mathbb{R}^{p}$ is
-_unique factors_. To make the model well-defined, we may assume
-$$\mathbb{E}[\boldsymbol{f}]=\boldsymbol{0}_k, \mathbb{V}[\boldsymbol{f}]=\boldsymbol{I}_{k\times k}, \mathbb{E}[\boldsymbol{\epsilon}]=\boldsymbol{0}_p, \mathbb{V}[\boldsymbol{\epsilon}]=:\boldsymbol{\Psi}=\text{diag}(\Psi_{11},\dots,\Psi_{pp})$$
-and also the independence between any elements from $\boldsymbol{f}$ and
-$\boldsymbol{\epsilon}$ separately, i.e.
-$$Cov[f_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,k\} \text{ and } j \in \{1,2,\dots,p\}$$
-Straightforwardly, the covariance of observable vector $\boldsymbol{y}$ can
-be modelled by\
-\begin{equation}
-\mathbb{V}[\boldsymbol{y}]=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
-\end{equation}
+\end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$   $\boldsymbol{f} \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon} \in \mathbb{R}^{p}$ is are called the _loading matrix_, _common factors_  and _unique factors_, respectively. 
+
+To make the model well-defined, we may assume
+
+$$\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_k\\\boldsymbol{0}_p\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_k & \mathbf{0}_{k\times p}\\\mathbf{0}_{p\times k} & \mathbf{\Psi}\end{bmatrix},$$
+
+where $\boldsymbol{\Psi}$ is a diagonal matrix where we denote the $i$-th diagonal entry as $\Psi_{ii}$. Based on this assumption, the covariance of observable vector $\boldsymbol{y}$ can
+be modelled by
+
+$$\mathbb{V}(\boldsymbol{y}|\boldsymbol{\Lambda},\boldsymbol{\Psi} )=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.$$
 
 
 
@@ -57,7 +50,7 @@ $$\boldsymbol{\Lambda}^\top \boldsymbol{\Psi}^{-1} \boldsymbol{\Lambda} \text{ i
 
 ## Parameter Estimation
 
-We denote the set of parameters by $\beta := \{\text{vec}(\boldsymbol{\Lambda}),\text{vec}(\boldsymbol{\Psi})\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input.
+We denote the set of parameters by $\boldsymbol{\theta} = \{\text{vec}(\boldsymbol{\Lambda}),\text{vec}(\boldsymbol{\Psi})\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input.
 
 Traditionally, a two-step procedure is used to construct a factor
 analytic model: estimate parameters by maximum likelihood estimation
