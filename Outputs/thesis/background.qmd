@@ -15,13 +15,13 @@ with mean $\mathbb{E}(\boldsymbol{y})=\boldsymbol{\mu}$ and variance
 $\mathbb{V}(\boldsymbol{y})=\boldsymbol{\Sigma}$. Then a $k$-order factor analysis model
 for $\boldsymbol{y}$ can be given by \begin{equation}
 \boldsymbol{y}=\boldsymbol{\Lambda} \boldsymbol{f}+\boldsymbol{\mu}+\boldsymbol{\epsilon},
-\end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$   $\boldsymbol{f} \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon} \in \mathbb{R}^{p}$ is are called the _loading matrix_, _common factors_  and _unique factors_, respectively. 
+\end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$,   $\boldsymbol{f} \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon} \in \mathbb{R}^{p}$ are called the _loading matrix_, _common factors_  and _unique factors_, respectively. The order $k$ is usually much smaller than $p$. For simplicity, we can assume that $\boldsymbol{\mu} = \boldsymbol{0}_p$ by substituting $\boldsymbol{y}$ with the centered version, i.e. $\boldsymbol{y} - \frac{1}{p}\boldsymbol{1}_p^\top\boldsymbol{y}\boldsymbol{1}_p$ where $\boldsymbol{1}_p$ is a $p$-vector of ones.
 
 To make the model well-defined, we may assume
 
 $$\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_k\\\boldsymbol{0}_p\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_k & \mathbf{0}_{k\times p}\\\mathbf{0}_{p\times k} & \mathbf{\Psi}\end{bmatrix},$$
 
-where $\boldsymbol{\Psi}$ is a diagonal matrix where we denote the $i$-th diagonal entry as $\Psi_{ii}$. Based on this assumption, the covariance of observable vector $\boldsymbol{y}$ can
+where $\boldsymbol{\Psi}$ is a $p\times p$ diagonal matrix where we denote the $i$-th diagonal entry as $\psi_{ii}$. Based on this assumption, the covariance of observable vector $\boldsymbol{y}$ can
 be modelled by
 
 $$\mathbb{V}(\boldsymbol{y}|\boldsymbol{\Lambda},\boldsymbol{\Psi} )=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.$$
@@ -43,14 +43,14 @@ Therefore a rotated loading matrix $\boldsymbol{\Lambda}\boldsymbol{M}$ is still
 loading matrix for a factor analytic model. Sometimes we resolve this problem by making the loading matrix to satisfy some constraints like [@mardiaMultivariateAnalysis1979]
 $$\boldsymbol{\Lambda}^\top \boldsymbol{\Psi}^{-1} \boldsymbol{\Lambda} \text{ is diagonal.}$$
 
-:::
+::: 
 
 
 
 
 ## Parameter Estimation
 
-We denote the set of parameters by $\boldsymbol{\theta} = \{\text{vec}(\boldsymbol{\Lambda}),\text{vec}(\boldsymbol{\Psi})\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input.
+We denote the set of parameters by $\boldsymbol{\theta} = \{\text{vec}(\boldsymbol{\Lambda}), \text{diag}(\boldsymbol{\Psi})\}$ where $\text{vec}(\cdot)$ is the vectorisation of the input matrix and $\text{diag}(\cdot)$ is the diagonal elements of the input matrix.
 
 Traditionally, a two-step procedure is used to construct a factor
 analytic model: estimate parameters by maximum likelihood estimation
@@ -62,10 +62,10 @@ model.
 Suppose we have $n$ independent and identically distributed observations
 $\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_N$ from a p-dimensional
 multi-variate normal distribution $N_p(\boldsymbol{\mu},\boldsymbol{\Sigma})$ and by our
-hypothesis, we have $\boldsymbol{\Sigma}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}$. Then the likelihood function is given by
+hypothesis, we have $\boldsymbol{\Sigma}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}$. Now denote $f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta})$ as the probability density function of the random vector $\boldsymbol{Y}$ corresponding to $\boldsymbol{y}$. Then the likelihood is give by
 
 $$
-L(\boldsymbol{\theta})=\prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].
+L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta}) =\prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].
 $$ {#eq-likelihood}
 
 The maximum likelihood estimate (MLE) of $\boldsymbol{\theta}$, denoted as $\hat{\boldsymbol{\theta}}$, is found by finding $\boldsymbol{\theta}$ that maximises @eq-likelihood. However, it is often more convenient to maximise the log likelihood function. 
@@ -74,7 +74,7 @@ The maximum likelihood estimate (MLE) of $\boldsymbol{\theta}$, denoted as $\hat
 
 The log-likelihood is given by 
 
-$$\ell(\boldsymbol{\Lambda},\boldsymbol{\Psi}) =  -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right]$$ {#eq-loglikelihood}
+$$\ell(\boldsymbol{\theta}) =  -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right]$$ {#eq-loglikelihood}
 
 where $\boldsymbol{S}$ is the sample covariance defined as $\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top$. 
 
@@ -83,7 +83,7 @@ where $\boldsymbol{S}$ is the sample covariance defined as $\boldsymbol{S}=\frac
 ::: {.proof}
 
 \begin{align*}
-\ell(\boldsymbol{\Lambda},\boldsymbol{\Psi})=& \sum^n_{i=1}\left[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
+\ell(\boldsymbol{\theta})=& \sum^n_{i=1}\left[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
 =& -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
 =& -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right],
 \end{align*}
@@ -97,8 +97,8 @@ where $\boldsymbol{S}$ is the sample covariance defined as $\boldsymbol{S}=\frac
 The MLE is obtained by seeking the roots of equation system (provided the likelihood is compact)
 
 \begin{align}
-\frac{\partial}{\partial \boldsymbol{\Lambda}}\ell(\boldsymbol{\Lambda},\boldsymbol{\Psi})&=0 \\
-\frac{\partial}{\partial \boldsymbol{\Psi}}\ell(\boldsymbol{\Lambda},\boldsymbol{\Psi})&= 0.
+\frac{\partial}{\partial \boldsymbol{\Lambda}}\ell(\boldsymbol{\theta})&=0 \\
+\frac{\partial}{\partial \boldsymbol{\Psi}}\ell(\boldsymbol{\theta})&= 0.
 \end{align}
 
 However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximisation (EM) algorithm [@Rubin1982EMAlgorithms]. 
@@ -107,41 +107,32 @@ However, there is no closed form of the roots. Many iterative algorithms are dev
 
 ## The EM Algorithm {#sec-EM}
 
-The Expectation-Maximization (EM) algorithm is a widely used iterative method to compute the maximum likelihood estimation, especially when we have some unobserved data [@Ng2012EMAlgorithm]. As we mentioned, the key of maximum likelihood estimation is solving equation
-$$
-\frac{\partial}{\partial \beta}l=0.
-$$
-However, challenges often arise from the complex nature of the log-likelihood function, especially with data that is grouped, censored, or truncated. To navigate these difficulties, the EM algorithm introduces an ingenious approach by conceptualizing an equivalent statistical problem that incorporates both observed and unobserved data. Here, _augmented data_(or complete) refers to the integration of this unobserved component, enhancing the algorithm's ability to iteratively estimate through two distinct phases: the Expectation step (E-step) and the Maximization step (M-step). The iteration between these steps facilitates the efficient of parameter estimates, making the EM algorithm an essential tool for handling incomplete data sets effectively.
+The Expectation-Maximization (EM) algorithm is a widely used iterative method to find the MLE, especially when the model depends on latent variables. The EM algorithm iteratively apply two distinct steps: the Expectation step (E-step) and the Maximization step (M-step). More specifically, we define 
 
-### The E-step and M-step
+$$Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}) = \mathbb{E}\left(\ell (\boldsymbol{\theta}; \boldsymbol{y})\bigg|\boldsymbol{y},\boldsymbol{\theta}^{(t)}\right).$$
+Then for the $(t + 1)$-th interation, the steps involve:
 
-Let $\boldsymbol{x}$ denote the vector containing complete data, $\boldsymbol{y}$ denote the observed incomplete data and $\boldsymbol{z}$ denote the vector containing the missing data. Here 'missing data' is not necessarily missing, even if it does not at first appear to be missed, we can formulating it to be as such to facilitate the computation (we may see this later) [@Ng2012EMAlgorithm]. Also we assume $\boldsymbol{\beta}$ as the parameter we want to estimate over the parameter space $\boldsymbol{\Omega}$.
+- *E-step*: Compute $Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)})$.
+- *M-step*: Update $\boldsymbol{\theta}^{(t+1)}$ as $\boldsymbol{\theta}$ that maximses $Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)})$. 
 
-Now denote $f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta})$ as the probability density function (p.d.f.) of the random vector $\boldsymbol{X}$ corresponding to $\boldsymbol{x}$. Then the complete-data log-likelihood function when complete data is fully observed can be given by 
+The M-step may be replaced with updating $\boldsymbol{\theta}^{(t+1)}$ such that $Q(\boldsymbol{\theta}^{(t+1)}|\boldsymbol{\theta}^{(t)}) \geq Q(\boldsymbol{\theta}^{(t)}|\boldsymbol{\theta}^{(t)})$.
 
-$$\log L_{\boldsymbol{X}}(\boldsymbol{\beta})=\log f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta}).$$
+We iterate between E-step and M-step until convergence. The convergence may be determined by a criteria such as $||\boldsymbol{\theta}^{(t+1)}-\boldsymbol{\theta}^{(t)}||_p\leq \epsilon$ for some $p$-norm $||\cdot||_p$ and $\epsilon > 0$.
 
-The EM algorithm approaches the problem of solving the incomplete-data likelihood equation indirectly by proceeding iteratively in terms of $\log L_{\boldsymbol{X}}(\boldsymbol{\beta})$. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given $\boldsymbol{y}$ and current fit for $\boldsymbol{\beta}$.
 
-On the $(k+1)^th$ iteration, we have
-$$
-\begin{align*}
-&\text{E-step: Compute } Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}):=\mathbb{E}_{\boldsymbol{X}}[\log L_{\boldsymbol{X}}(\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
-&\text{M-step: Update }\boldsymbol{\beta}^{(k+1)} \text{ as }\boldsymbol{{\beta}}^{(k+1)}:=\text{arg}\max_{\boldsymbol{\beta}} Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) \text{ (Original EM)}\\
-& \text{ Or update }\boldsymbol{{\beta}}^{(k+1)} \text{ such that } Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\text{ (Generalized EM)}.
-\end{align*} 
-$$
-We keep iterating between E-step and M-step until convergence, which may be determined by a criteria such as $||\boldsymbol{\beta}^{(k+1)}-\boldsymbol{\beta}^{(k)}||_p\leq \epsilon$ for some p-norm $||\cdot||_p$ and positive $\epsilon$.
 
-Meanwhile, the M-step in both original and generalized algorithms defines a mapping from the parameter space $\boldsymbol{\Omega}$ to itself by 
-$$
-\begin{align*}
-M: \boldsymbol{\Omega} &\to \boldsymbol{\Omega}\\
-   \boldsymbol{\beta}^{(k)} &\mapsto \boldsymbol{\beta}^{(k+1)}.
-\end{align*}
-$$
+The EM algorithm approaches the problem of solving the likelihood equation indirectly by proceeding iteratively in terms of $\ell(\boldsymbol{\theta};\boldsymbol{y})$. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given $\boldsymbol{y}$ and current fit for $\boldsymbol{\theta}$.
 
-### Convergence of the EM Algorithm
+::: {#lem-convergence}
+
+## Convergence of the EM Algorithm
+For all $\epsilon > 0$, there exists $t > t_0$ such that
+$||\boldsymbol{\theta}^{(t)} - \hat{\boldsymbol{\theta}}|| < \epsilon$ where $\hat{\boldsymbol{\theta}}$ is the MLE.
+
+:::
+
+::: proof
+
 
 By the definition of conditional likelihood, our likelihood of complete data can be expressed by
 $$
@@ -167,9 +158,10 @@ $$
 By the procedure of EM-algorithm, we always have $Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})$. By the Jensen's inequality, we have $\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].$
 Therefore during iterations, the log-likelihood of observed data $\boldsymbol{Y}$ keeps increasing. If the log-likelihood is bounded, then we can promise that it must converge to some maximum.
 
+:::
 
 
-### Rotation techniques
+## Rotation techniques
 After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method [@hiroseSparseEstimationNonconcave2015].
 
 Suppose $Q(\boldsymbol{\Lambda})$ is an criterion for $\boldsymbol{\Lambda}$ in the rotation procedure, and we may express it as $Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})$ where $P(\cdot)$ is some loss function[@hiroseSparseEstimationNonconcave2015]. Specifically, if we set $P(\cdot)=|\cdot|$, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as [@Jennrich2004Rotation]
@@ -253,7 +245,7 @@ Typically, the test is conducted at a $5\%$ significant level. We can start the 
 
 
 
-### Penalized Likelihood Method
+## Penalized Likelihood Method
 
 Penalized likelihood method can be viewed as a generalization of two-step method mentioned above [@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
 $$
@@ -274,39 +266,5 @@ and the LASSO estimator, denoted as $(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*
 
 An E-M algorithm can be applied for evaluating the LASSO estimator.
 
-
-
-## The EM Algorithm in LASSO Factor Analytic Models {#sec-penEM}
-
-### Model Setup
-
-Suppose we have the $n$ centralized observations, $\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}$, where $\boldsymbol{y}_j\in \mathbb{R}^p$ and hence the mean, $\boldsymbol{\mu}_j=\boldsymbol{0}_p$ ($j=1,2,\dots,n$). For each of the observation $\boldsymbol{y}_j$, the common factor and unique factor are $\boldsymbol{f}_j$ and $\boldsymbol{\epsilon}_j$ respectively. Denote the response matrix as $\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top$, the common factor matrix as $\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top$, and the unique factor matrix as $\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top$. Then the model can be written as $$\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\hat\epsilon}.$$\
-We also assume
-
-1.  $\boldsymbol{\epsilon}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{\Psi}$ for $j=1,2,\dots,n$, where $\boldsymbol{\Psi}$ is a diagonal matrix defined by $\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})$.
-
-2.  $\boldsymbol{f}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{I}_k$ for $j=1,2,\dots,n$.
-
-3.  $\boldsymbol{y}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}$ for $j=1,2,\dots,n$. Those $\boldsymbol{y}_j$ are pairwisely independent.
-
-### The EM Algorithm
-
-We treat the common factor matrix $\boldsymbol{F}$ as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of $(\boldsymbol{Y},\boldsymbol{F})$ given $\boldsymbol{Y}$ and $(\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)})$, where $(\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)})$ is the parameter we got in the $k$-th iteration ($k>1$) and $(\boldsymbol{\Lambda}_{(0)},\boldsymbol{\Psi}_{(0)})$ is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get $(\boldsymbol{\Lambda}_{(k+1)},\boldsymbol{\Psi}_{(k+1)})$.
-
-### E-Step
-
-First, the joint likelihood of $(\boldsymbol{Y},\boldsymbol{F})$, denoted as $L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})$, is given by
-
-$$
-\begin{align*}
-L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i)\\
-=&\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\\
-=&\prod_{i=1}^nN(\boldsymbol{y}_i;\boldsymbol{\Lambda}\boldsymbol{f}_i,\boldsymbol{\Psi})N(\boldsymbol{f}_i;\boldsymbol{0}_k,\boldsymbol{I}_k)\\
-=&\prod_{i=1}^n[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Psi})^{-\frac{1}{2}}\exp\{-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}\\
-&(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\}][(2\pi)^{-\frac{k}{2}}\det({\boldsymbol{I}_k})^{-\frac{1}{2}}\exp\{-\frac{1}{2}\boldsymbol{f}_i^\top\boldsymbol{I}_k^{-1}\boldsymbol{f}_i\}]\\
-= &(2\pi)^{-\frac{n}{2}(p+k)}(\prod_{i=1}^p\psi_{jj})^{-\frac{n}{2}}\exp\{-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}\}\\
-&\exp\{-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\}.
-\end{align*}
-$$
 
 
