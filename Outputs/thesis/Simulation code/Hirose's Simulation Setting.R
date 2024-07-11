@@ -130,12 +130,12 @@ subgradient <- function(lambda,psi,Y,epsilon,j,rho){
   lambda_j <- lambda[j, , drop = FALSE]
   first_term <- - as.matrix(rowSums(tcrossprod(mat_A,Y)%*%Y[,j, drop = FALSE]*2/psi[j,j]),ncol=1) 
   
-  second_term <- 2 * ( n * mat_B + tcrossprod(mat_A,Y) %*% tcrossprod(Y,mat_A)) %*% t(lambda[j, ,drop= FALSE ]) /psi[j,j]
+  second_term <- 2 * ( n * mat_B %*% t(lambda[j, ,drop= FALSE ]) + tcrossprod(mat_A,Y) %*% tcrossprod(Y,mat_A) %*% t(lambda[j, ,drop= FALSE ]) ) /psi[j,j]
   third_term <- rho * sign(t(lambda_j)) 
   return(first_term+second_term+third_term)
 }
 
-subg_method <- function(lambda,psi,Y,epsilon,j,rho){
+subg_method <- function(lambda,psi,Y,j,rho){
   ### Input:  lambda: loading matrix
   ###         psi: the variance matrix of size p*p of common factor we have now
   ###         Y: response 
@@ -150,7 +150,8 @@ subg_method <- function(lambda,psi,Y,epsilon,j,rho){
   error <- 10000
   iteration <- 0
   
-  while(error>epsilon && iteration < 30){
+  # while(error>0.1 && iteration < 100){
+  while(error>0.1){
     subg <- subgradient(lambda,psi,Y,epsilon,j,rho)
     t <- 1/ ((iteration + 1)*norm(subg,type='2'))# step size
     lambda_j_new <- lambda_j_old - t * t(subg)
@@ -170,15 +171,15 @@ subg_method <- function(lambda,psi,Y,epsilon,j,rho){
 
 simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   #### Input:
-   ###    real_loading: the real loading matrix
-   ###    N: the number of the sample we want to generate
-   ###    rho: the penality parameter
-   ###    initial_loading: the initialization of the loading matrix used for the algorithm
-   ###    initial_psi: the initialization of the psi-matrix used for the algorithm
+  ###    real_loading: the real loading matrix
+  ###    N: the number of the sample we want to generate
+  ###    rho: the penality parameter
+  ###    initial_loading: the initialization of the loading matrix used for the algorithm
+  ###    initial_psi: the initialization of the psi-matrix used for the algorithm
   #### Output:
-   ###    loading_result: the loading matrix after updating
-   ###    psi_result: the psi-matrix after updating
-   ###    sparsity: the number of zero-elements of the loading_result
+  ###    loading_result: the loading matrix after updating
+  ###    psi_result: the psi-matrix after updating
+  ###    sparsity: the number of zero-elements of the loading_result
   
   
   ## Necessary package
@@ -188,15 +189,15 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   ## Basic settings
   p <- nrow(real_loading)
   k <- ncol(real_loading)
-  real_psi <- diag(diag((p) - tcrossprod(real_loading)))
-  
+  psi_diag <- diag(diag(p)-tcrossprod(real_loading))
+  real_psi <- diag(psi_diag)
   ## Generate a Data Set
   # Hirose use this to generate instead of Y = lambda %*% F + epsilon
   Y <- mvrnorm(n = N, mu = rep(0,p), Sigma = real_psi)  
   ## End the iteration if the error between two steps is less than np_tolerance
   ## and regard as convergent
   pem_tolerance <- 0.01 
-  n_max_iter <- 40
+  n_max_iter <- 100
   ## Set the parameters for iteration
   pem_step <- 0 # record the number of iterations
   pem_loading_diff <- 1000 # Set a big difference in case smaller than tolerance at very beginning
@@ -205,30 +206,28 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   
   # update iteratively
   pem_loading_old <- initial_loading
-  pem_psi_old <- initial_psi
+  pem_psi <- initial_psi
   
   while(pem_loading_diff >= pem_tolerance){
     pem_step <- pem_step + 1
-    pem_expectation[pem_step] <- pem_E(pem_loading_old,pem_psi_old,Y,rho)
+    pem_expectation[pem_step] <- pem_E(pem_loading_old,pem_psi,Y,rho)
     ## Update psi elementwisely
-    ## psi_goodtoupdate <- psi_valid(pem_loading_old,pem_psi_old,Y)
-    ## psi_update_position <- which(psi_goodtoupdate)
-    pem_psi_new <- matrix(0, nrow = p, ncol = p)
-    for (j in 1:p){
-      pem_psi_new[j,j] <- psi_update(pem_loading_old,pem_psi_old,Y,j)
+    psi_goodtoupdate <- psi_valid(pem_loading_old,pem_psi,Y)
+    psi_update_position <- which(psi_goodtoupdate)
+    for (j in psi_update_position){
+      pem_psi[j,j] <- psi_update(pem_loading_old,pem_psi,Y,j)
     }
-    print(pem_psi_new)
+    print(diag(pem_psi))
     ## Update loading matrix using current psi rowwisely
     
     pem_loading_new <- matrix(0, nrow = p, ncol = k)
     for (j in 1:p){
-      pem_loading_new[j,] <- subg_method(pem_loading_old,pem_psi_new,Y,pem_tolerance,j,rho)
+      pem_loading_new[j,] <- subg_method(pem_loading_old,pem_psi,Y,j,rho)
     }
     print(pem_loading_new)
     pem_loading_diff <- norm(pem_loading_new - pem_loading_old, type = 'F')
     
     ## Update parameters
-    pem_psi_old <- pem_psi_new
     pem_loading_old <- pem_loading_new
     
     if (pem_step > n_max_iter){
@@ -239,25 +238,36 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   }
   ## final result of penalized EM algorithm
   loading_result <- pem_loading_old
-  psi_result <- pem_psi_old
+  psi_result <- diag(pem_psi)
   plot(pem_expectation[-1])  
-  sparsity <- sum(loading_result < 0.1)
-  result <-  
-  return (list(loading_result,psi_result,sparsity))
+  sparsity <- sum(abs(loading_result) < 0.1)
+  AIC_model <- 2 * (p * k + p) - 2 * log(pem_expectation[length(pem_expectation)])
+  result <- list(loading_result,psi_result,sparsity,AIC_model)
+  return (result)
 }
+
 
 ################## Simulation ##############################################
 
-
+set.seed(126)
 Model_A <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow=6, ncol=2, byrow = TRUE)
 # Model_B <- 
 
-initial_loading <- matrix(c(1,0,2,3,2,1,2,2,2,2,2,1), nrow=6, ncol=2)
+initial_loading <- matrix(c(1,0,2,3,2,1,2,1,2,0,2,1), nrow=6, ncol=2)
 initial_psi <- diag(rep(0.1,6))
-
-
-simula_Hirose(Model_A,2000,2,initial_loading,initial_psi)
-
+pho_range <- seq(4, 5, by = 0.1)
+AIC_select <- numeric(length(pho_range))
+idex <- 1
+for (pho in pho_range){
+  AIC_select[idex] <- simula_Hirose(Model_A,2000,pho,initial_loading,initial_psi)[[4]]
+  idex <- idex + 1
+}
+plot(pho_range,AIC_select)
+min_AIC_index <- which.min(AIC_select)
+best_pho <- pho_range[min_AIC_index]
+simula_Hirose(Model_A,2000,best_pho,initial_loading,initial_psi)
+print(Model_A)
+print(diag(diag((nrow(Model_A))) - tcrossprod(Model_A)))
 
 
 
