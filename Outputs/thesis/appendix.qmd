@@ -3,9 +3,11 @@
 
 ## Multivariate Normal distribution
 
-Suppose that a $p$-vector random variable $\boldsymbol{y} \sim N(\boldsymbol{\mu},\mathbf{\Sigma})$, then the probability density function of $\boldsymbol{y}$ is given as:
+Suppose that a $p$-vector random variable $\boldsymbol{y} \sim N_p(\boldsymbol{\mu},\mathbf{\Sigma})$, then the probability density function of $\boldsymbol{y}$ is given as:
 
-$$f(\boldsymbol{y}) = (2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp\left(-\frac{1}{2}(\boldsymbol{y}-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}-\boldsymbol{\mu})\right).$$
+$$f(\boldsymbol{y}) = (2\pi)^{-\frac{p}{2}}|\boldsymbol{\Sigma}|^{-\frac{1}{2}}\exp\left(-\frac{1}{2}(\boldsymbol{y}-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}-\boldsymbol{\mu})\right).$$
+
+$$\log f(\boldsymbol{y}) = -\frac{p}{2}\log(2\pi)-\frac{1}{2}\log|\boldsymbol{\Sigma}|-\frac{1}{2}(\boldsymbol{y}-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}-\boldsymbol{\mu}).$$
 
 ## Conditional 
 
