@@ -19,7 +19,7 @@ for $\boldsymbol{y}_i$ can be given by \begin{equation}
 
 To make the model well-defined, we may assume
 
-$$\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_k\\\boldsymbol{0}_p\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_k & \mathbf{0}_{k\times p}\\\mathbf{0}_{p\times k} & \mathbf{\Psi}\end{bmatrix},$$
+$$\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}_i\\\boldsymbol{\epsilon}_i\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_k\\\boldsymbol{0}_p\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}_i\\\boldsymbol{\epsilon}_i\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_k & \mathbf{0}_{k\times p}\\\mathbf{0}_{p\times k} & \mathbf{\Psi}\end{bmatrix},$$
 
 where $\boldsymbol{\Psi}$ is a $p\times p$ diagonal matrix where we denote the $i$-th diagonal entry as $\psi_{ii}$. Based on this assumption, the covariance of observable vector $\boldsymbol{y}_i$ can
 be modelled by
@@ -30,9 +30,10 @@ Alternatively, we can write the model as
 
 
 $$\boldsymbol{y} = (\mathbf{I}_n \otimes \boldsymbol{\Lambda})\boldsymbol{f} + \boldsymbol{\epsilon}$$
-where $\boldsymbol{y} = (\boldsymbol{y}_1, \boldsymbol{y}_2, \cdots,  \boldsymbol{y}_n)$, $\boldsymbol{f} = (\boldsymbol{f}_1, \boldsymbol{f}_2, \cdots,  \boldsymbol{f}_n)$ and $\boldsymbol{\epsilon} = (\boldsymbol{\epsilon}_1, \boldsymbol{\epsilon}_2, \cdots,  \boldsymbol{\epsilon}_n)$.
+where $\boldsymbol{y} = (\boldsymbol{y}_1, \boldsymbol{y}_2, \cdots,  \boldsymbol{y}_n)$, $\boldsymbol{f} = (\boldsymbol{f}_1, \boldsymbol{f}_2, \cdots,  \boldsymbol{f}_n)$ and $\boldsymbol{\epsilon} = (\boldsymbol{\epsilon}_1, \boldsymbol{\epsilon}_2, \cdots,  \boldsymbol{\epsilon}_n)$. Thus we have
 
 
+$$\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_{nk}\\\boldsymbol{0}_{np}\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_{nk} & \mathbf{0}_{nk\times np}\\\mathbf{0}_{np\times nk} & \mathbf{I}_n \otimes \mathbf{\Psi}\end{bmatrix}.$$
 
 
 
