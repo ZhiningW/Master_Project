@@ -10,12 +10,12 @@ observed variables [@mardiaMultivariateAnalysis1979]. FA provides a useful tool 
 An FA model assumes that the observations are explained by a small number of underlying factors. This assumption is suited to many areas, e.g. in
 psychology where certain variables, like intelligence, cannot be directly measured [@mardiaMultivariateAnalysis1979].
 
-Suppose we have an observable random vector $\boldsymbol{y}\in \mathbb{R}^p$
-with mean $\mathbb{E}(\boldsymbol{y})=\boldsymbol{\mu}$ and variance
-$\mathbb{V}(\boldsymbol{y})=\boldsymbol{\Sigma}$. Then a $k$-order factor analysis model
-for $\boldsymbol{y}$ can be given by \begin{equation}
-\boldsymbol{y}=\boldsymbol{\Lambda} \boldsymbol{f}+\boldsymbol{\mu}+\boldsymbol{\epsilon},
-\end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$,   $\boldsymbol{f} \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon} \in \mathbb{R}^{p}$ are called the _loading matrix_, _common factors_  and _unique factors_, respectively. The order $k$ is usually much smaller than $p$. For simplicity, we can assume that $\boldsymbol{\mu} = \boldsymbol{0}_p$ by substituting $\boldsymbol{y}$ with the centered version, i.e. $\boldsymbol{y} - \frac{1}{p}\boldsymbol{1}_p^\top\boldsymbol{y}\boldsymbol{1}_p$ where $\boldsymbol{1}_p$ is a $p$-vector of ones.
+Suppose we have an observable random vector $\boldsymbol{y}_i\in \mathbb{R}^p$ for the $i$-th subject
+with mean $\mathbb{E}(\boldsymbol{y}_i)=\boldsymbol{\mu}$ and variance
+$\mathbb{V}(\boldsymbol{y}_i)=\boldsymbol{\Sigma}$. Then a $k$-order factor analysis model
+for $\boldsymbol{y}_i$ can be given by \begin{equation}
+\boldsymbol{y}_i=\boldsymbol{\mu}+\boldsymbol{\Lambda} \boldsymbol{f}_i+\boldsymbol{\epsilon}_i,
+\end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$,   $\boldsymbol{f}_i \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon}_i \in \mathbb{R}^{p}$ are called the _loading matrix_, _common factors_  and _unique (or specific) factors_, respectively. The order $k$ is usually much smaller than $p$. For simplicity, we can assume that $\boldsymbol{\mu} = \boldsymbol{0}_p$.
 
 To make the model well-defined, we may assume
 
