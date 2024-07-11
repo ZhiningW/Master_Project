@@ -1,0 +1,21 @@
+# Appendix 
+
+
+## Multivariate Normal distribution
+
+Suppose that a $p$-vector random variable $\boldsymbol{y} \sim N(\boldsymbol{\mu},\mathbf{\Sigma})$, then the probability density function of $\boldsymbol{y}$ is given as:
+
+$$f(\boldsymbol{y}) = (2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp\left(-\frac{1}{2}(\boldsymbol{y}-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}-\boldsymbol{\mu})\right).$$
+
+## Conditional 
+
+:::{#lem-cond} 
+
+If $\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}},\boldsymbol{\Sigma_{\boldsymbol{\alpha}}})$ and $\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\beta}})$, then we have $\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})$, where 
+$$
+\begin{align*}
+& \boldsymbol{\mu}_{\boldsymbol{\alpha}}|\boldsymbol{\beta}=\boldsymbol{\mu}_{\boldsymbol{\alpha}}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_{\boldsymbol{\beta}}^{-1}\boldsymbol{\beta}\\
+& \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_{\boldsymbol{\alpha}}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_{\boldsymbol{\beta}}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
+\end{align*}
+$$
+:::
