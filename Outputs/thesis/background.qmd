@@ -70,7 +70,7 @@ model.
 Suppose we have $n$ independent and identically distributed observations
 $\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_N$ from a p-dimensional
 multi-variate normal distribution $N_p(\boldsymbol{\mu},\boldsymbol{\Sigma})$ and by our
-hypothesis, we have $\boldsymbol{\Sigma}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}$. Now denote $f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta})$ as the probability density function of the random vector $\boldsymbol{Y}$ corresponding to $\boldsymbol{y}$. Then the likelihood is give by
+hypothesis, we have $\boldsymbol{\Sigma}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}$. Now denote $f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta})$ as the probability density function of the random vector $\boldsymbol{Y}$ corresponding to $\boldsymbol{y}$. Then the likelihood is given by
 
 $$
 L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta}) =\prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].
