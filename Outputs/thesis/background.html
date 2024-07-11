@@ -113,13 +113,15 @@ window.Quarto = {
 <h1>Background</h1>
 <section id="factor-analytic-model" class="level2">
 <h2 class="anchored" data-anchor-id="factor-analytic-model">Factor analytic model</h2>
-<p>Factor analysis is a mathematical model which tries to use fewer underlying factors to explain the correlation between a large set of observed variables <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span>. It provides a useful tool for exploring the covariance structure among observable variables <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>. One of the major assumptions that factor analytic model stands on is that it is impossible for us to observe those underlying factors directly. This assumption is especially suited to subjects like psychology where we cannot observe exactly some concept like how intelligent our subjects are <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span>.</p>
-<p>Suppose we have a observable random vector <span class="math inline">\(\boldsymbol{y}\in \mathbb{R}^p\)</span> with mean <span class="math inline">\(\mathbb{E}[\boldsymbol{y}]=\boldsymbol{\mu}\)</span> and variance <span class="math inline">\(\mathbb{V}[\boldsymbol{y}]=\boldsymbol{\Sigma}\)</span>. Then a <span class="math inline">\(k\)</span>-order factor analysis model for <span class="math inline">\(\boldsymbol{y}\)</span> can be given by <span class="math display">\[\begin{equation}
+<p>Factor analysis (FA) is a statistical method which attempts to use fewer underlying factors to explain the correlation between a large set of observed variables <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span>. FA provides a useful tool for exploring the covariance structure among observable variables <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>.</p>
+<p>An FA model assumes that the observations are explained by a small number of underlying factors. This assumption is suited to many areas, e.g.&nbsp;in psychology where certain variables, like intelligence, cannot be directly measured <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span>.</p>
+<p>Suppose we have an observable random vector <span class="math inline">\(\boldsymbol{y}\in \mathbb{R}^p\)</span> with mean <span class="math inline">\(\mathbb{E}(\boldsymbol{y})=\boldsymbol{\mu}\)</span> and variance <span class="math inline">\(\mathbb{V}(\boldsymbol{y})=\boldsymbol{\Sigma}\)</span>. Then a <span class="math inline">\(k\)</span>-order factor analysis model for <span class="math inline">\(\boldsymbol{y}\)</span> can be given by <span class="math display">\[\begin{equation}
 \boldsymbol{y}=\boldsymbol{\Lambda} \boldsymbol{f}+\boldsymbol{\mu}+\boldsymbol{\epsilon},
-\end{equation}\]</span> where <span class="math inline">\(\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}\)</span> is called <em>loading matrix</em>, we call <span class="math inline">\(\boldsymbol{f} \in \mathbb{R}^{k}\)</span> as <em>common factors</em> and <span class="math inline">\(\boldsymbol{\epsilon} \in \mathbb{R}^{p}\)</span> is <em>unique factors</em>. To make the model well-defined, we may assume <span class="math display">\[\mathbb{E}[\boldsymbol{f}]=\boldsymbol{0}_k, \mathbb{V}[\boldsymbol{f}]=\boldsymbol{I}_{k\times k}, \mathbb{E}[\boldsymbol{\epsilon}]=\boldsymbol{0}_p, \mathbb{V}[\boldsymbol{\epsilon}]=:\boldsymbol{\Psi}=\text{diag}(\Psi_{11},\dots,\Psi_{pp})\]</span> and also the independence between any elements from <span class="math inline">\(\boldsymbol{f}\)</span> and <span class="math inline">\(\boldsymbol{\epsilon}\)</span> separately, i.e. <span class="math display">\[Cov[f_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,k\} \text{ and } j \in \{1,2,\dots,p\}\]</span> Straightforwardly, the covariance of observable vector <span class="math inline">\(\boldsymbol{y}\)</span> can be modelled by<br>
-<span class="math display">\[\begin{equation}
-\mathbb{V}[\boldsymbol{y}]=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
-\end{equation}\]</span></p>
+\end{equation}\]</span> where <span class="math inline">\(\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}\)</span> <span class="math inline">\(\boldsymbol{f} \in \mathbb{R}^{k}\)</span> is and <span class="math inline">\(\boldsymbol{\epsilon} \in \mathbb{R}^{p}\)</span> is are called the <em>loading matrix</em>, <em>common factors</em> and <em>unique factors</em>, respectively.</p>
+<p>To make the model well-defined, we may assume</p>
+<p><span class="math display">\[\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_k\\\boldsymbol{0}_p\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_k &amp; \mathbf{0}_{k\times p}\\\mathbf{0}_{p\times k} &amp; \mathbf{\Psi}\end{bmatrix},\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{\Psi}\)</span> is a diagonal matrix where we denote the <span class="math inline">\(i\)</span>-th diagonal entry as <span class="math inline">\(\Psi_{ii}\)</span>. Based on this assumption, the covariance of observable vector <span class="math inline">\(\boldsymbol{y}\)</span> can be modelled by</p>
+<p><span class="math display">\[\mathbb{V}(\boldsymbol{y}|\boldsymbol{\Lambda},\boldsymbol{\Psi} )=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -136,21 +138,77 @@ Indeterminacy of the loading matrix
 </section>
 <section id="parameter-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-estimation">Parameter Estimation</h2>
-<p>We denote the set of parameters by <span class="math inline">\(\beta := \{\text{vec}(\boldsymbol{\Lambda}),\text{vec}(\boldsymbol{\Psi})\}\)</span> where <span class="math inline">\(\text{vec}(\cdot)\)</span> is the vectorisation of the input.</p>
+<p>We denote the set of parameters by <span class="math inline">\(\boldsymbol{\theta} = \{\text{vec}(\boldsymbol{\Lambda}),\text{vec}(\boldsymbol{\Psi})\}\)</span> where <span class="math inline">\(\text{vec}(\cdot)\)</span> is the vectorisation of the input.</p>
 <p>Traditionally, a two-step procedure is used to construct a factor analytic model: estimate parameters by maximum likelihood estimation (aka, MLE) and then use rotation techniques to find an interpretable model.</p>
 <section id="maximum-likelihood-estimation" class="level3">
 <h3 class="anchored" data-anchor-id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h3>
-<p>Suppose we have <span class="math inline">\(n\)</span> independent and identically distributed observations <span class="math inline">\(\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_N\)</span> from a p-dimensional multi-variate normal distribution <span class="math inline">\(N_p(\boldsymbol{\mu},\boldsymbol{\Sigma})\)</span> and by our hypothesis, we have <span class="math inline">\(\boldsymbol{\Sigma}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}\)</span>. Then the likelihood function is given by <span class="math display">\[L(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].\]</span> and hence the log-likelihood is given by</p>
-<p><span class="math display">\[\begin{align*}
-l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&amp; \sum^n_{i=1}[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})]\\
-=&amp; -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})],
+<p>Suppose we have <span class="math inline">\(n\)</span> independent and identically distributed observations <span class="math inline">\(\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_N\)</span> from a p-dimensional multi-variate normal distribution <span class="math inline">\(N_p(\boldsymbol{\mu},\boldsymbol{\Sigma})\)</span> and by our hypothesis, we have <span class="math inline">\(\boldsymbol{\Sigma}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}\)</span>. Then the likelihood function is given by</p>
+<p><span id="eq-likelihood"><span class="math display">\[
+L(\boldsymbol{\theta})=\prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].
+\tag{1}\]</span></span></p>
+<p>The maximum likelihood estimate (MLE) of <span class="math inline">\(\boldsymbol{\theta}\)</span>, denoted as <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>, is found by finding <span class="math inline">\(\boldsymbol{\theta}\)</span> that maximises <a href="#eq-likelihood" class="quarto-xref">Equation&nbsp;1</a>. However, it is often more convenient to maximise the log likelihood function.</p>
+<div id="lem-MLE" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 1</strong></span> The log-likelihood is given by</p>
+<p><span id="eq-loglikelihood"><span class="math display">\[\ell(\boldsymbol{\Lambda},\boldsymbol{\Psi}) =  -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right] \tag{2}\]</span></span></p>
+<p>where <span class="math inline">\(\boldsymbol{S}\)</span> is the sample covariance defined as <span class="math inline">\(\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\)</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span><span class="math display">\[\begin{align*}
+\ell(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&amp; \sum^n_{i=1}\left[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
+=&amp; -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
+=&amp; -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right],
 \end{align*}\]</span></p>
-where <span class="math inline">\(\boldsymbol{S}\)</span> is the sample covariance defined as <span class="math inline">\(\boldsymbol{S}:=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\)</span>. To get the MLE of parameters, we seek the roots of equation system
-<span class="math display">\[\begin{cases}
-\frac{\partial}{\partial \boldsymbol{\Lambda}}l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=0 \\
-\frac{\partial}{\partial \boldsymbol{\Psi}}l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=0.
-\end{cases}\]</span>
-<p>However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like EM algorithm developed by Rubin <span class="citation" data-cites="Rubin1982EMAlgorithms">[@Rubin1982EMAlgorithms]</span>.</p>
+<p>[TODO: show step from line 2 to 3].</p>
+</div>
+<p>The MLE is obtained by seeking the roots of equation system (provided the likelihood is compact)</p>
+<p><span class="math display">\[\begin{align}
+\frac{\partial}{\partial \boldsymbol{\Lambda}}\ell(\boldsymbol{\Lambda},\boldsymbol{\Psi})&amp;=0 \\
+\frac{\partial}{\partial \boldsymbol{\Psi}}\ell(\boldsymbol{\Lambda},\boldsymbol{\Psi})&amp;= 0.
+\end{align}\]</span></p>
+<p>However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximisation (EM) algorithm <span class="citation" data-cites="Rubin1982EMAlgorithms">[@Rubin1982EMAlgorithms]</span>.</p>
+</section>
+</section>
+<section id="sec-EM" class="level2">
+<h2 class="anchored" data-anchor-id="sec-EM">The EM Algorithm</h2>
+<p>The Expectation-Maximization (EM) algorithm is a widely used iterative method to compute the maximum likelihood estimation, especially when we have some unobserved data <span class="citation" data-cites="Ng2012EMAlgorithm">[@Ng2012EMAlgorithm]</span>. As we mentioned, the key of maximum likelihood estimation is solving equation <span class="math display">\[
+\frac{\partial}{\partial \beta}l=0.
+\]</span> However, challenges often arise from the complex nature of the log-likelihood function, especially with data that is grouped, censored, or truncated. To navigate these difficulties, the EM algorithm introduces an ingenious approach by conceptualizing an equivalent statistical problem that incorporates both observed and unobserved data. Here, <em>augmented data</em>(or complete) refers to the integration of this unobserved component, enhancing the algorithm’s ability to iteratively estimate through two distinct phases: the Expectation step (E-step) and the Maximization step (M-step). The iteration between these steps facilitates the efficient of parameter estimates, making the EM algorithm an essential tool for handling incomplete data sets effectively.</p>
+<section id="the-e-step-and-m-step" class="level3">
+<h3 class="anchored" data-anchor-id="the-e-step-and-m-step">The E-step and M-step</h3>
+<p>Let <span class="math inline">\(\boldsymbol{x}\)</span> denote the vector containing complete data, <span class="math inline">\(\boldsymbol{y}\)</span> denote the observed incomplete data and <span class="math inline">\(\boldsymbol{z}\)</span> denote the vector containing the missing data. Here ‘missing data’ is not necessarily missing, even if it does not at first appear to be missed, we can formulating it to be as such to facilitate the computation (we may see this later) <span class="citation" data-cites="Ng2012EMAlgorithm">[@Ng2012EMAlgorithm]</span>. Also we assume <span class="math inline">\(\boldsymbol{\beta}\)</span> as the parameter we want to estimate over the parameter space <span class="math inline">\(\boldsymbol{\Omega}\)</span>.</p>
+<p>Now denote <span class="math inline">\(f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta})\)</span> as the probability density function (p.d.f.) of the random vector <span class="math inline">\(\boldsymbol{X}\)</span> corresponding to <span class="math inline">\(\boldsymbol{x}\)</span>. Then the complete-data log-likelihood function when complete data is fully observed can be given by</p>
+<p><span class="math display">\[\log L_{\boldsymbol{X}}(\boldsymbol{\beta})=\log f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta}).\]</span></p>
+<p>The EM algorithm approaches the problem of solving the incomplete-data likelihood equation indirectly by proceeding iteratively in terms of <span class="math inline">\(\log L_{\boldsymbol{X}}(\boldsymbol{\beta})\)</span>. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given <span class="math inline">\(\boldsymbol{y}\)</span> and current fit for <span class="math inline">\(\boldsymbol{\beta}\)</span>.</p>
+<p>On the <span class="math inline">\((k+1)^th\)</span> iteration, we have <span class="math display">\[
+\begin{align*}
+&amp;\text{E-step: Compute } Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}):=\mathbb{E}_{\boldsymbol{X}}[\log L_{\boldsymbol{X}}(\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
+&amp;\text{M-step: Update }\boldsymbol{\beta}^{(k+1)} \text{ as }\boldsymbol{{\beta}}^{(k+1)}:=\text{arg}\max_{\boldsymbol{\beta}} Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) \text{ (Original EM)}\\
+&amp; \text{ Or update }\boldsymbol{{\beta}}^{(k+1)} \text{ such that } Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\text{ (Generalized EM)}.
+\end{align*}
+\]</span> We keep iterating between E-step and M-step until convergence, which may be determined by a criteria such as <span class="math inline">\(||\boldsymbol{\beta}^{(k+1)}-\boldsymbol{\beta}^{(k)}||_p\leq \epsilon\)</span> for some p-norm <span class="math inline">\(||\cdot||_p\)</span> and positive <span class="math inline">\(\epsilon\)</span>.</p>
+<p>Meanwhile, the M-step in both original and generalized algorithms defines a mapping from the parameter space <span class="math inline">\(\boldsymbol{\Omega}\)</span> to itself by <span class="math display">\[
+\begin{align*}
+M: \boldsymbol{\Omega} &amp;\to \boldsymbol{\Omega}\\
+   \boldsymbol{\beta}^{(k)} &amp;\mapsto \boldsymbol{\beta}^{(k+1)}.
+\end{align*}
+\]</span></p>
+</section>
+<section id="convergence-of-the-em-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="convergence-of-the-em-algorithm">Convergence of the EM Algorithm</h3>
+<p>By the definition of conditional likelihood, our likelihood of complete data can be expressed by <span class="math display">\[
+L_{\boldsymbol{X}}(\boldsymbol{\beta}) = f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta})=L_{\boldsymbol{Y}}(\boldsymbol{\beta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}),
+\]</span> and hence the log-likelihood is given by <span class="math display">\[
+\log L_{\boldsymbol{X}}(\boldsymbol{\beta}) = \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}) + \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}).
+\]</span> Take expectation to both sides of the equation with respect to <span class="math inline">\(\boldsymbol{x|y}\)</span> and replace <span class="math inline">\(\boldsymbol{\beta}\)</span> by <span class="math inline">\(\boldsymbol{\beta}^{(k)}\)</span>, we will have <span class="math display">\[
+Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) = \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}) + \mathbb{E}_{\boldsymbol{X}}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].
+\]</span> Now consider the difference of log-likelihood of <span class="math inline">\(\boldsymbol{Y}\)</span> function between two iterations, we have <span class="math display">\[
+\begin{align*}
+  \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}^{(k+1)})-\log L_{\boldsymbol{Y}}(\boldsymbol{\beta}^{(k)}) =
+  &amp;\{Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})-Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\}\\
+  &amp;-\{\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
+  &amp;-\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
+\end{align*}
+\]</span> By the procedure of EM-algorithm, we always have <span class="math inline">\(Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\)</span>. By the Jensen’s inequality, we have <span class="math inline">\(\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].\)</span> Therefore during iterations, the log-likelihood of observed data <span class="math inline">\(\boldsymbol{Y}\)</span> keeps increasing. If the log-likelihood is bounded, then we can promise that it must converge to some maximum.</p>
 </section>
 <section id="rotation-techniques" class="level3">
 <h3 class="anchored" data-anchor-id="rotation-techniques">Rotation techniques</h3>
@@ -229,49 +287,6 @@ F(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\text{tr}(\boldsymbol{\Sigma}^{-1}\bol
 &amp;=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|.
 \end{align*}\]</span></p>
 <p>An E-M algorithm can be applied for evaluating the LASSO estimator.</p>
-</section>
-</section>
-<section id="sec-EM" class="level2">
-<h2 class="anchored" data-anchor-id="sec-EM">The EM Algorithm</h2>
-<p>The Expectation-Maximization (EM) algorithm is a widely used iterative method to compute the maximum likelihood estimation, especially when we have some unobserved data <span class="citation" data-cites="Ng2012EMAlgorithm">[@Ng2012EMAlgorithm]</span>. As we mentioned, the key of maximum likelihood estimation is solving equation <span class="math display">\[
-\frac{\partial}{\partial \beta}l=0.
-\]</span> However, challenges often arise from the complex nature of the log-likelihood function, especially with data that is grouped, censored, or truncated. To navigate these difficulties, the EM algorithm introduces an ingenious approach by conceptualizing an equivalent statistical problem that incorporates both observed and unobserved data. Here, <em>augmented data</em>(or complete) refers to the integration of this unobserved component, enhancing the algorithm’s ability to iteratively estimate through two distinct phases: the Expectation step (E-step) and the Maximization step (M-step). The iteration between these steps facilitates the efficient of parameter estimates, making the EM algorithm an essential tool for handling incomplete data sets effectively.</p>
-<section id="the-e-step-and-m-step" class="level3">
-<h3 class="anchored" data-anchor-id="the-e-step-and-m-step">The E-step and M-step</h3>
-<p>Let <span class="math inline">\(\boldsymbol{x}\)</span> denote the vector containing complete data, <span class="math inline">\(\boldsymbol{y}\)</span> denote the observed incomplete data and <span class="math inline">\(\boldsymbol{z}\)</span> denote the vector containing the missing data. Here ‘missing data’ is not necessarily missing, even if it does not at first appear to be missed, we can formulating it to be as such to facilitate the computation (we may see this later) <span class="citation" data-cites="Ng2012EMAlgorithm">[@Ng2012EMAlgorithm]</span>. Also we assume <span class="math inline">\(\boldsymbol{\beta}\)</span> as the parameter we want to estimate over the parameter space <span class="math inline">\(\boldsymbol{\Omega}\)</span>.</p>
-<p>Now denote <span class="math inline">\(f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta})\)</span> as the probability density function (p.d.f.) of the random vector <span class="math inline">\(\boldsymbol{X}\)</span> corresponding to <span class="math inline">\(\boldsymbol{x}\)</span>. Then the complete-data log-likelihood function when complete data is fully observed can be given by</p>
-<p><span class="math display">\[\log L_{\boldsymbol{X}}(\boldsymbol{\beta})=\log f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta}).\]</span></p>
-<p>The EM algorithm approaches the problem of solving the incomplete-data likelihood equation indirectly by proceeding iteratively in terms of <span class="math inline">\(\log L_{\boldsymbol{X}}(\boldsymbol{\beta})\)</span>. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given <span class="math inline">\(\boldsymbol{y}\)</span> and current fit for <span class="math inline">\(\boldsymbol{\beta}\)</span>.</p>
-<p>On the <span class="math inline">\((k+1)^th\)</span> iteration, we have <span class="math display">\[
-\begin{align*}
-&amp;\text{E-step: Compute } Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}):=\mathbb{E}_{\boldsymbol{X}}[\log L_{\boldsymbol{X}}(\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
-&amp;\text{M-step: Update }\boldsymbol{\beta}^{(k+1)} \text{ as }\boldsymbol{{\beta}}^{(k+1)}:=\text{arg}\max_{\boldsymbol{\beta}} Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) \text{ (Original EM)}\\
-&amp; \text{ Or update }\boldsymbol{{\beta}}^{(k+1)} \text{ such that } Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\text{ (Generalized EM)}.
-\end{align*}
-\]</span> We keep iterating between E-step and M-step until convergence, which may be determined by a criteria such as <span class="math inline">\(||\boldsymbol{\beta}^{(k+1)}-\boldsymbol{\beta}^{(k)}||_p\leq \epsilon\)</span> for some p-norm <span class="math inline">\(||\cdot||_p\)</span> and positive <span class="math inline">\(\epsilon\)</span>.</p>
-<p>Meanwhile, the M-step in both original and generalized algorithms defines a mapping from the parameter space <span class="math inline">\(\boldsymbol{\Omega}\)</span> to itself by <span class="math display">\[
-\begin{align*}
-M: \boldsymbol{\Omega} &amp;\to \boldsymbol{\Omega}\\
-   \boldsymbol{\beta}^{(k)} &amp;\mapsto \boldsymbol{\beta}^{(k+1)}.
-\end{align*}
-\]</span></p>
-</section>
-<section id="convergence-of-the-em-algorithm" class="level3">
-<h3 class="anchored" data-anchor-id="convergence-of-the-em-algorithm">Convergence of the EM Algorithm</h3>
-<p>By the definition of conditional likelihood, our likelihood of complete data can be expressed by <span class="math display">\[
-L_{\boldsymbol{X}}(\boldsymbol{\beta}) = f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta})=L_{\boldsymbol{Y}}(\boldsymbol{\beta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}),
-\]</span> and hence the log-likelihood is given by <span class="math display">\[
-\log L_{\boldsymbol{X}}(\boldsymbol{\beta}) = \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}) + \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}).
-\]</span> Take expectation to both sides of the equation with respect to <span class="math inline">\(\boldsymbol{x|y}\)</span> and replace <span class="math inline">\(\boldsymbol{\beta}\)</span> by <span class="math inline">\(\boldsymbol{\beta}^{(k)}\)</span>, we will have <span class="math display">\[
-Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) = \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}) + \mathbb{E}_{\boldsymbol{X}}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].
-\]</span> Now consider the difference of log-likelihood of <span class="math inline">\(\boldsymbol{Y}\)</span> function between two iterations, we have <span class="math display">\[
-\begin{align*}
-  \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}^{(k+1)})-\log L_{\boldsymbol{Y}}(\boldsymbol{\beta}^{(k)}) =
-  &amp;\{Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})-Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\}\\
-  &amp;-\{\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
-  &amp;-\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
-\end{align*}
-\]</span> By the procedure of EM-algorithm, we always have <span class="math inline">\(Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\)</span>. By the Jensen’s inequality, we have <span class="math inline">\(\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].\)</span> Therefore during iterations, the log-likelihood of observed data <span class="math inline">\(\boldsymbol{Y}\)</span> keeps increasing. If the log-likelihood is bounded, then we can promise that it must converge to some maximum.</p>
 </section>
 </section>
 <section id="sec-penEM" class="level2">
