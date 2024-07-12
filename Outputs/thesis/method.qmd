@@ -18,31 +18,44 @@ We also assume
 
 ### The EM Algorithm
 
-We treat the common factor matrix $\boldsymbol{F}$ as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of $(\boldsymbol{Y},\boldsymbol{F})$ given $\boldsymbol{Y}$ and $(\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)})$, where $(\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)})$ is the parameter we got in the $k$-th iteration ($k>1$) and $(\boldsymbol{\Lambda}_{(0)},\boldsymbol{\Psi}_{(0)})$ is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get $(\boldsymbol{\Lambda}_{(k+1)},\boldsymbol{\Psi}_{(k+1)})$.
+We treat the common factor matrix $\boldsymbol{f}$ as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of $(\boldsymbol{y},\boldsymbol{f})$ given $\boldsymbol{y}$ and $\boldsymbol{\theta}_{(t)}$, where $\boldsymbol{\theta}_{(t)}$ is the parameter we got in the $t$-th iteration ($t>1$) and $\boldsymbol{\theta}_{(0)}$ is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get $\boldsymbol{\theta}_{(t + 1)}$.
 
 #### E-Step
 
-First, the joint likelihood of $(\boldsymbol{Y},\boldsymbol{F})$, denoted as $L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})$, is given by
 
-$$
+
+::: {#lem-fa-likelihood}
+
+The joint log-likelihood of $(\boldsymbol{y},\boldsymbol{f})$ is given by
+
+$$\ell(\boldsymbol{\theta}) = -\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i+\text{constant}.$$
+
+:::
+
+::: proof
+
+First, the joint likelihood of $(\boldsymbol{y},\boldsymbol{f})$, denoted as $L_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})$, is given by
+
+
+$$L_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i) =\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)$$
+where $\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})$ and $\boldsymbol{f}_i \sim N(\boldsymbol{0}_k,\boldsymbol{I}_k)$.
+
+:::
+
+
 \begin{align*}
-L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i)\\
-=&\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\\
-=&\prod_{i=1}^nN(\boldsymbol{y}_i;\boldsymbol{\Lambda}\boldsymbol{f}_i,\boldsymbol{\Psi})N(\boldsymbol{f}_i;\boldsymbol{0}_k,\boldsymbol{I}_k)\\
-=&\prod_{i=1}^n[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Psi})^{-\frac{1}{2}}\exp\{-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}\\
-&(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\}][(2\pi)^{-\frac{k}{2}}\det({\boldsymbol{I}_k})^{-\frac{1}{2}}\exp\{-\frac{1}{2}\boldsymbol{f}_i^\top\boldsymbol{I}_k^{-1}\boldsymbol{f}_i\}]\\
-= &(2\pi)^{-\frac{n}{2}(p+k)}(\prod_{i=1}^p\psi_{jj})^{-\frac{n}{2}}\exp\{-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}\}\\
-&\exp\{-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\}.
+\ell(\boldsymbol{\theta})=& \sum_{i=1}^n\log f(\boldsymbol{y}_i|\boldsymbol{f}_i) + \sum_{i=1}^n\log f(\boldsymbol{f}_i)\\
+=& -\frac{np}{2}\log(2\pi)-\frac{n}{2}\log|\boldsymbol{\Psi}|-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\\
+&\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log|\boldsymbol{I}_k|-\frac{1}{2}(\boldsymbol{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_k^{-1}(\boldsymbol{f}_i-\boldsymbol{0}_k)\\
+=& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
+=& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
+=& [FILLME] ...
+
 \end{align*}
-$$
 
-Furthermore, the log-likelihood, denoted as $l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})$, is given by
 
-$$
-l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i+\text{constant}.
-$$ {#eq-loglikelihood}
 
-Now let us deduce the conditional expectation to $\boldsymbol{F}$ given $\boldsymbol{Y},\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)}$, denoted as $El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})$. In @eq-loglikelihood, the first term is independent on $\boldsymbol{F}$, hence stay the same under conditional expectation. The last term is independent on $(\boldsymbol{\Lambda},\boldsymbol{\Psi})$, therefore we can regard it as a constant in $El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})$. We only need to consider the term inside the sum in the second term, more specifically, the numerator, we have
+Now let us deduce the conditional expectation to $\boldsymbol{f}$ given $\boldsymbol{y},\boldsymbol{\theta}_{(t)}$, denoted as $\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)$. In @eq-loglikelihood, the first term is independent on $\boldsymbol{f}$, hence stay the same under conditional expectation. The last term is independent on $(\boldsymbol{\Lambda},\boldsymbol{\Psi})$, therefore we can regard it as a constant in $\mathbf{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)$. We only need to consider the term inside the sum in the second term, more specifically, the numerator, we have
 
 $$
 (y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2 = y_{ij}^2 - 2 y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i + \boldsymbol{\Lambda}(j,)\boldsymbol{f}_i\boldsymbol{f}_i^\top \boldsymbol{\Lambda}^\top(,j).
