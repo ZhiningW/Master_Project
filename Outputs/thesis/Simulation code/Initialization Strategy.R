@@ -169,7 +169,7 @@ subg_method <- function(lambda,psi,Y,j,rho){
 ####################### Main Function to Run Simulation #####################
 
 
-simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
+LASSO_EM_FA <- function(Y, real_loading, real_psi, N, rho, initial_loading, initial_psi){
   #### Input:
   ###    real_loading: the real loading matrix
   ###    N: the number of the sample we want to generate
@@ -189,11 +189,6 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   ## Basic settings
   p <- nrow(real_loading)
   k <- ncol(real_loading)
-  psi_diag <- diag(diag(p)-tcrossprod(real_loading))
-  real_psi <- diag(psi_diag)
-  ## Generate a Data Set
-  # Hirose use this to generate instead of Y = lambda %*% F + epsilon
-  Y <- mvrnorm(n = N, mu = rep(0,p), Sigma = real_psi)  
   ## End the iteration if the error between two steps is less than np_tolerance
   ## and regard as convergent
   pem_tolerance <- 0.01 
@@ -237,12 +232,12 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
     
   }
   ## final result of penalized EM algorithm
+  iter_to_converge <- length(pem_expectation)
   loading_result <- pem_loading_old
   psi_result <- diag(pem_psi)
   plot(pem_expectation[-1])  
   sparsity <- sum(abs(loading_result) < 0.1)
-  AIC_model <- 2 * (p * k + p) - 2 * log(pem_expectation[length(pem_expectation)])
-  result <- list(loading_result,psi_result,sparsity,AIC_model)
+  result <- list(loading_result,psi_result,sparsity,iter_to_converge)
   return (result)
 }
 
@@ -250,23 +245,36 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
 ################## Simulation ##############################################
 
 set.seed(126)
+N = 2000
+
 Model_A <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow=6, ncol=2, byrow = TRUE)
+p <- nrow(Model_A)
+k <- ncol(Model_A)
+
+psi_diag <- diag(diag(p)-tcrossprod(Model_A))
+real_psi <- diag(psi_diag)
+## Generate a Data Set
+Y <- mvrnorm(n = N, mu = rep(0,p), Sigma = real_psi)  
 # Model_B <- 
 
-initial_loading <- matrix(c(1,0,2,3,2,1,2,1,2,0,2,1), nrow=6, ncol=2)
+
+## different initialization 
+initial_loading_random <- matrix(c(1,0,2,3,2,1,2,1,2,0,2,1), nrow=6, ncol=2)
+tradition_result <- factanal(x = Y, factors = k, 
+                                            scores = 'regression', rotation = 'varimax')
+initial_loading_nonpenalized <- as.matrix(tradition_result$loadings)
 initial_psi <- diag(rep(0.1,6))
-pho_range <- seq(4, 5, by = 0.1)
-AIC_select <- numeric(length(pho_range))
-idex <- 1
-for (pho in pho_range){
-  AIC_select[idex] <- simula_Hirose(Model_A,2000,pho,initial_loading,initial_psi)[[4]]
-  idex <- idex + 1
+
+initial_loading_box <- list(initial_loading_random,initial_loading_nonpenalized)
+num_to_converge <- numeric(length(initial_loading_box))
+
+i<-1
+
+for (initial_loading in initial_loading_box){
+  num_to_converge[i] <- LASSO_EM_FA(Y, Model_A, real_psi,N,2,initial_loading,initial_psi)[[4]]
+  i <- i + 1
 }
-plot(pho_range,AIC_select)
-min_AIC_index <- which.min(AIC_select)
-best_pho <- pho_range[min_AIC_index]
-simula_Hirose(Model_A,2000,best_pho,initial_loading,initial_psi)
-print(best_pho)
+plot(num_to_converge)
 print(Model_A)
 print(diag(diag((nrow(Model_A))) - tcrossprod(Model_A)))
 

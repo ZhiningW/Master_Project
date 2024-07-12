@@ -9,7 +9,9 @@ library(MASS)
 ###############################################################################
 
 ### Functions may be used in the simulation
-
+rm(list = ls())
+################### Functions may be used in the simulation ####################
+## To calculate A in article
 A <- function(lambda, psi) {
   # Input: lambda: loading matrix of size p*k we have now
   #        psi: the variance matrix of size p*p of common factor we have now
@@ -28,6 +30,62 @@ B <- function(lambda, psi) {
   result <- diag(rep(1, k)) - t(lambda) %*% inv_mat %*% lambda
   return(result)
 }
+
+
+
+psi_update <- function(lambda,psi,Y,j){
+  # Input: lambda: loading matrix of size p*k we have now
+  #        psi: the variance matrix of size p*p of common factor we have now
+  #        Y: the response matrix of size n*p
+  #        j: the element in (j,j) entry of matrix psi to update
+  # Output: Updated psi[j,j]
+  
+  n <- nrow(Y)
+  mat_A <- A(lambda,psi)
+  mat_B <- B(lambda, psi)
+  lambda_j <- lambda[j,,drop=FALSE]
+  
+  # Start calculating
+  first_term <- (1/n) * sum(Y[,j]*Y[,j])
+  second_term <- -(2/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
+                                                         %*% Y[,j, drop=FALSE]),ncol=1)
+  third_term <- (1/n) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
+                                      %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
+  return(first_term + second_term + third_term)
+}
+
+psi_valid <- function(lambda,psi,Y){
+  # Input: lambda: loading matrix of size p*k we have now
+  #        psi: the variance matrix of size p*p of common factor we have now
+  #        Y: the response matrix of size n*p
+  # Output: True if psi is good to iterate (i.e in the concave region), False otherwise
+  
+  n <- nrow(Y)
+  p <- ncol(Y)
+  mat_A <- A(lambda,psi)
+  mat_B <- B(lambda, psi)
+  constraint <- numeric(length=p)
+  for (j in 1:p){
+    lambda_j <- lambda[j,,drop=FALSE]
+    
+    # Start calculating
+    first_term <- (2/n) * sum(Y[,j]*Y[,j])
+    second_term <- -(4/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
+                                                           %*% Y[,j, drop=FALSE]),ncol=1)
+    third_term <- (2/n) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
+                                        %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
+    constraint[j]<- first_term + second_term + third_term
+  }
+  
+  return(diag(psi)<=constraint)
+}
+
+pem_E <- function(lambda,psi,Y,rho){
+  Out <- npem_E(lambda,psi,Y)-1/2*rho*sum(abs(lambda))
+  return(Out)
+}
+
+
 
 npem_E <- function(lambda,psi,Y){
   # Input: lambda: loading matrix of size p*k we have now
@@ -53,7 +111,7 @@ npem_E <- function(lambda,psi,Y){
       lambda_j <- t(as.matrix(lambda[j,]))
       Y_i <- t(as.matrix(Y[i,]))
       second_term <- second_term 
-      + (yij^2 + 2 * yij * lambda_j %*% mat_A %*% t(Y_i))/psi[j,j]
+      + (yij^2 - 2 * yij * lambda_j %*% mat_A %*% t(Y_i))/psi[j,j]
     }
     
   }
@@ -74,33 +132,6 @@ npem_E <- function(lambda,psi,Y){
   return(first_term + second_term + third_term)
 }
 
-psi_update <- function(lambda,psi,Y,j){
-  # Input: lambda: loading matrix of size p*k we have now
-  #        psi: the variance matrix of size p*p of common factor we have now
-  #        Y: the response matrix of size n*p
-  #        j: the element in (j,j) entry of matrix psi to update
-  # Output: Updated psi[j,j]
-  
-  n <- nrow(Y)
-  mat_A <- A(lambda,psi)
-  mat_B <- B(lambda, psi)
-  
-  # Start calculating
-  first_term <- (1/n) * sum(Y[,j]*Y[,j])
-  second_term <- 0
-  lambda_j <- t(as.matrix(lambda[j,]))
-  for (i in 1:n){
-    Y_i <- t(as.matrix(Y[i,]))
-    second_term <- second_term + 2 * Y[i,j] * lambda_j %*% mat_A %*% t(Y_i)
-  }
-  second_term <- 1/n * second_term
-  third_term <- 0
-  for(i in 1:n){
-    third_term <- third_term + lambda_j %*% (mat_B + mat_A %*% t(Y_i) %*% Y_i %*% t(mat_A)) %*% t(lambda_j)
-  } 
-  third_term <- 1/n * third_term
-  return(first_term + second_term + third_term)
-}
 
 loading_update <- function(lambda,psi,Y,j){
   # Input: lambda: loading matrix of size p*k we have now
@@ -119,7 +150,7 @@ loading_update <- function(lambda,psi,Y,j){
   factor1 <- matrix(0, nrow = k, ncol = 1)
   for (i in 1:n){
     Y_i <- as.matrix(Y[i,])
-    factor1 <- factor1 + 2 * Y[i,j] * mat_A %*% Y_i 
+    factor1 <- factor1 - 2 * Y[i,j] * mat_A %*% Y_i 
   }
   
   
@@ -132,60 +163,6 @@ loading_update <- function(lambda,psi,Y,j){
   
   
   return(- t(factor1) %*% t(solve(factor2)))
-}
-
-
-pem_E <- function(lambda,psi,Y,rho){
-  Out <- npem_E(lambda,psi,Y)-1/2*rho*sum(abs(lambda))
-  return(Out)
-}
-
-subgradient <- function(lambda,psi,Y,epsilon,j,rho){
-  ### to find the subgradient
-  mat_A <- A(lambda,psi)
-  mat_B <- B(lambda,psi)
-  lambda_j <- lambda[j,]
-  first_term <- 0
-  for (i in 1:n){
-    first_term <- first_term + 2 * Y[i,j] * tcrossprod(mat_A ,Y[i, ,drop = FALSE])
-  }
-  first_term <- first_term/psi[j,j]
-  second_term <- 0
-  for (i in 1:n){
-    # use tcrossprod
-    second_term <- second_term+ (2 * mat_B + 2 * mat_A %*% t(Y[i, , drop=FALSE]) %*% Y[i, , drop=FALSE] %*% t(mat_A)) %*% t(lambda_j)
-  }
-  second_term <- second_term/psi[j,j]
-  third_term <- rho * sign(t(lambda_j)) 
-  return(first_term+second_term+third_term)
-}
-  
-  
-  
-  
-subg_method <- function(lambda,psi,Y,epsilon,j,rho){
-  ### Input:  lambda: loading matrix
-  ###         psi: the variance matrix of size p*p of common factor we have now
-  ###         Y: response 
-  ###         epsilon: the torlance for the subgradient method regarded as convergent
-  ###         j: the j-th row we want to update
-  ###         rho: the penalization parameter
-  ### Output: the j-th row after updating
-  n <- nrow(Y)
-  mat_A <- A(lambda,psi)
-  mat_B <- B(lambda,psi)
-  lambda_j_old <- lambda[j, ,drop= FALSE]
-  error <- 10000
-  iteration <- 0
-  while(error>epsilon){
-    subg <- subgradient(lambda,psi,Y,epsilon,j,rho)
-    t <- 1/ ((iteration + 1)*norm(subg,type='2'))# step size
-    lambda_j_new <- lambda_j_old - t * t(subg)
-    iteration <- iteration + 1
-    error <- norm(lambda_j_new-lambda_j_old,type='2')
-    lambda_j_old <- lambda_j_new
-  }
-  return(lambda_j_old)
 }
   
 ###############################################################################
