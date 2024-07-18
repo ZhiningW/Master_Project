@@ -2,15 +2,6 @@
 
 As described in @sec-bg, there are various methods to fit a factor analytic model to multivariate data. 
 
-Suppose we have the $n$ centralized observations, $\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}$, where $\boldsymbol{y}_j\in \mathbb{R}^p$ and hence the mean, $\boldsymbol{\mu}_j=\boldsymbol{0}_p$ ($j=1,2,\dots,n$). For each of the observation $\boldsymbol{y}_j$, the common factor and unique factor are $\boldsymbol{f}_j$ and $\boldsymbol{\epsilon}_j$ respectively. Denote the response matrix as $\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top$, the common factor matrix as $\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top$, and the unique factor matrix as $\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top$. Then the model can be written as $$\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\hat\epsilon}.$$\
-We also assume
-
-1.  $\boldsymbol{\epsilon}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{\Psi}$ for $j=1,2,\dots,n$, where $\boldsymbol{\Psi}$ is a diagonal matrix defined by $\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})$.
-
-2.  $\boldsymbol{f}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{I}_k$ for $j=1,2,\dots,n$.
-
-3.  $\boldsymbol{y}_j$ follows a normal distribution with mean $0$ and variance $\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}$ for $j=1,2,\dots,n$. Those $\boldsymbol{y}_j$ are pairwisely independent.
-
 
 ## Parameter estimation
 
@@ -28,16 +19,16 @@ We treat the common factor matrix $\boldsymbol{f}$ as the latent variable. In E-
 
 The joint log-likelihood of $(\boldsymbol{y},\boldsymbol{f})$ is given by
 
-$$\ell(\boldsymbol{\theta}) = -\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i+\text{constant}.$$
+$$\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\$$
 
 :::
 
 ::: proof
 
-First, the joint likelihood of $(\boldsymbol{y},\boldsymbol{f})$, denoted as $L_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})$, is given by
+First, the joint log-likelihood of $(\boldsymbol{y},\boldsymbol{f})$ is given by
 
 
-$$L_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i) =\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)$$
+$$\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)$$
 where $\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})$ and $\boldsymbol{f}_i \sim N(\boldsymbol{0}_k,\boldsymbol{I}_k)$.
 
 :::
@@ -49,7 +40,7 @@ where $\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{
 &\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log|\boldsymbol{I}_k|-\frac{1}{2}(\boldsymbol{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_k^{-1}(\boldsymbol{f}_i-\boldsymbol{0}_k)\\
 =& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
 =& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
-=& [FILLME] ...
+=& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
 
 \end{align*}
 
