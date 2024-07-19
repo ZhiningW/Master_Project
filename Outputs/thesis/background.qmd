@@ -75,7 +75,7 @@ $$
 L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta}) = \prod^n_{i=1}f_{\boldsymbol{y}_i}(\boldsymbol{y}_i;\boldsymbol{\theta}) =  \prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].
 $$ {#eq-likelihood}
 
-The maximum likelihood estimate (MLE) of $\boldsymbol{\theta}$, denoted as $\hat{\boldsymbol{\theta}}$, is found by finding $\boldsymbol{\theta}$ that maximises @eq-likelihood. However, it is often more convenient to maximise the log likelihood function. 
+The maximum likelihood estimate (MLE) of $\boldsymbol{\theta}$, denoted as $\hat{\boldsymbol{\theta}}$, is found by finding $\boldsymbol{\theta}$ that maximizes @eq-likelihood. However, it is often more convenient to maximize the log likelihood function. To be more computational friendly, a better form of log likelihood is given by
 
 ::: {#lem-MLE}
 
@@ -88,15 +88,23 @@ where $\boldsymbol{S}$ is the sample covariance defined as $\boldsymbol{S}=\frac
 :::
 
 ::: {.proof}
-
+$$
 \begin{align*}
 \ell(\boldsymbol{\theta})=& \sum^n_{i=1}\left[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
-=& -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
-=& -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right],
+=& -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\frac{1}{n}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
+=& -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right].
 \end{align*}
-
-[TODO: show step from line 2 to 3].
-
+$$
+The last equality holds from the following fact:
+$$
+\begin{align*}
+&\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\\
+\Leftrightarrow \ & \boldsymbol{\Sigma}^{-1}\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\\
+\Leftrightarrow \ & \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n} \sum^n_{i=1} \text{tr} (\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top)\\
+\Leftrightarrow \ & \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})
+\end{align*}
+$$
+Q.E.D
 :::
 
 
@@ -108,9 +116,117 @@ The MLE is obtained by seeking the roots of equation system (provided the likeli
 \frac{\partial}{\partial \boldsymbol{\Psi}}\ell(\boldsymbol{\theta})&= 0.
 \end{align}
 
-However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximisation (EM) algorithm [@Rubin1982EMAlgorithms]. 
+However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximization (EM) algorithm [@Rubin1982EMAlgorithms], we will discuss this algorithm in the last part of background. 
 
 
+
+## Rotation Techniques
+After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method [@hiroseSparseEstimationNonconcave2015].
+
+Suppose $Q(\boldsymbol{\Lambda})$ is an criterion for $\boldsymbol{\Lambda}$ in the rotation procedure, and we may express it as $Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})$ where $P(\cdot)$ is some loss function[@hiroseSparseEstimationNonconcave2015]. Specifically, if we set $P(\cdot)=|\cdot|$, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as [@Jennrich2004Rotation]
+
+\begin{align*}
+&\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
+&\text{subject to } \boldsymbol{\Lambda}=\boldsymbol{\Lambda}_0\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
+\end{align*}
+
+where $\boldsymbol{\Lambda}_0$ is an initial guess. Since we execute this technique after obtaining the MLE of parameters, therefore what we want is 
+
+\begin{align*}
+&\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
+&\text{subject to } \boldsymbol{\Lambda}=\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
+\end{align*}
+
+where $\hat{\boldsymbol{\Lambda}}_{\text{MLE}}$ is the maximum likelihood estimator.
+
+### Discussion about two-step method
+
+The traditional two-step method faces significant shortcomings, primarily its unsuitability [@hiroseSparseEstimationNonconcave2015]. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by
+$$
+\boldsymbol{\Lambda}=
+\begin{bmatrix}
+0.8 & 0 \\
+0 & 0.8 \\
+0.6 & 0\\
+0 & 0.7\\
+0 & 0.6\\
+\end{bmatrix}.
+$$
+and the real $\boldsymbol{\Psi}$ is given by 
+$$
+\boldsymbol{\Psi}=\text{diag}(0.1,0.2,0.2,0.1,0.1).
+$$
+We generate $\boldsymbol{Y}\in \mathbb{R}^{{10000}\times 5}$ from a multivariate normal distribution with mean $\mathbb{0}_{5}$ and covariance $\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}$. We utilize the R-function `factanal()` to produce the loading matrix via MLE, where this R-function will unitize varimax method to achieve rotation automatically. What we finally get is
+
+$$
+\hat{\boldsymbol{\Lambda}}=
+\begin{bmatrix}
+0 & 0.997\\
+0.872 & 0\\
+0 & 0.748\\
+0.915 & 0\\
+0.882 & 0\\
+\end{bmatrix},
+\hat{\boldsymbol{\Psi}}=\text{diag}(0.005,0.240,0.440,0.163,0.223)
+$$
+This result gives the same sparsity result. However, the result of loading matrix in the first and last two dimensions are much larger than the real one, which implies overfitness.
+
+
+Simulation code:
+
+```{r}
+set.seed(123)
+n <- 10000 # Number of observations
+# True loading matrix
+true_loading <- matrix(c(0.8,0,0.6,0,0,0,0.8,0,0.7,0.6),nrow=5,ncol=2) 
+# True psi matrix
+true_psi <- diag(c(0.1,0.2,0.2,0.1,0.1))
+# Generate samples from multivariate normal distribution
+samples <- MASS::mvrnorm(n = n, mu = rep(0, 5), 
+                         Sigma = true_loading %*% t(true_loading) + true_psi)
+# Traditional two step procedure
+# the function factanal has already used varimax method to get the optimal loading
+fa_result <- factanal(factors = 2, covmat = cor(samples))
+# Result
+fa_result
+```
+
+
+
+
+Another problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model [@mardiaMultivariateAnalysis1979]. We have
+\begin{align*}
+  &&&H_k: k \text{ common factors are sufficient to describe the data } \\
+  \longleftrightarrow &&&H_a: \text{ Otherwise}.
+\end{align*}
+The test statistics is given by $\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\boldsymbol{\Psi}})$ which has an asymptotic $\chi^2_s$ distribution with $s=\frac{1}{2}(p-k)^2-(p+k)$ by the property of MLE, where $F$ is given by (@mardiaMultivariateAnalysis1979)
+$$
+F(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})-\log(\det(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}))-p.
+$$
+Typically, the test is conducted at a $5\%$ significant level. We can start the procedure from a very small $k$, say, $k=1$ or $k=2$ and then increase $k$ until the null hypothesis is not rejected.
+
+
+
+## Penalized Likelihood Method
+
+Penalized likelihood method can be viewed as a generalization of two-step method mentioned above [@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
+$$
+ \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}l_p := l(\boldsymbol{\Lambda},\boldsymbol{\Psi})-\rho\sum^p_{i=1}\sum^k_{j=1}P(|\boldsymbol{\Lambda}_{ij}|).
+$$
+where we call $l_p$ as the penalized likelihood, $\rho$ is called regularization parameter and we can treat $P(\cdot)$ as a penalized function. There are many types of penalized functions developed, such as LASSO ($P(\cdot)=|\cdot|$) and MC+ ($P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)$) [@hiroseSparseEstimationNonconcave2015]. In this article, we will mainly focus on the LASSO penalty.
+
+### LASSO penalty and LASSO estimator
+
+Again, recall that the LASSO penalized likelihood is given by
+$$l_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|$$
+and the LASSO estimator, denoted as $(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*)$, can be obtained via
+
+\begin{align*}
+(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|\\
+&=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|.
+\end{align*}
+
+An E-M algorithm can be applied for evaluating the LASSO estimator.
 
 ## The EM Algorithm {#sec-EM}
 
@@ -162,116 +278,8 @@ $$
   &-\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
 \end{align*}
 $$
-By the procedure of EM-algorithm, we always have $Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})$. By the Jensen's inequality, we have $\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].$
+By the procedure of EM-algorithm, we always have $Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})$. By the Gibbs's inequality, we have $\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].$
 Therefore during iterations, the log-likelihood of observed data $\boldsymbol{Y}$ keeps increasing. If the log-likelihood is bounded, then we can promise that it must converge to some maximum.
 
 :::
-
-
-## Rotation techniques
-After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method [@hiroseSparseEstimationNonconcave2015].
-
-Suppose $Q(\boldsymbol{\Lambda})$ is an criterion for $\boldsymbol{\Lambda}$ in the rotation procedure, and we may express it as $Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})$ where $P(\cdot)$ is some loss function[@hiroseSparseEstimationNonconcave2015]. Specifically, if we set $P(\cdot)=|\cdot|$, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as [@Jennrich2004Rotation]
-
-\begin{align*}
-&\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
-&\text{subject to } \boldsymbol{\Lambda}=\boldsymbol{\Lambda}_0\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
-\end{align*}
-
-where $\boldsymbol{\Lambda}_0$ is an initial guess. Since we execute this technique after obtaining the MLE of parameters, therefore what we want is 
-
-\begin{align*}
-&\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
-&\text{subject to } \boldsymbol{\Lambda}=\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
-\end{align*}
-
-where $\hat{\boldsymbol{\Lambda}}_{\text{MLE}}$ is the maximum likelihood estimator.
-
-### Discussion about two-step method
-
-The traditional two-step method faces significant shortcomings, primarily its unsuitability [@hiroseSparseEstimationNonconcave2015]. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by
-$$
-\boldsymbol{\Lambda}=
-\begin{bmatrix}
-0.8 & 0 \\
-0 & 0.8 \\
-0 & 0\\
-0 & 0\\
-0 & 0\\
-\end{bmatrix}.
-$$
-We generate $\boldsymbol{Y}\in \mathbb{R}^{{100}\times 5}$ using common factor $\boldsymbol{f}\in \mathbb{R}^{{100}\times 2}$ where each factor is generated randomly from standard normal distribution $N(0,1)$. We utilize the R-function `factanal()` to produce the loading matrix via MLE and then call varimax() to rotate our loading matrix. What we finally get is
-
-$$
-\hat{\boldsymbol{\Lambda}}=
-\begin{bmatrix}
--0.158 & 0.985\\
-0 & 0\\
-0.997 & 0\\
-0.207 & 0\\
-0 & 0\\
-\end{bmatrix},
-$$
-which is neither precise nor sparse.
-
-Simulation code:
-
-```{r}
-set.seed(123)
-n <- 100 # Number of observations
-p <- 5   # Number of features
-
-factor1 <- rnorm(n, 0, 1) # set factors
-factor2 <- rnorm(n, 0, 1)
-
-X <- matrix(NA, nrow=n, ncol=p)
-X[,1] <- 0.8*factor1 + rnorm(n, 0, 1)  # Strong loading
-X[,2] <- 0.8*factor2 + rnorm(n, 0, 1)  # Strong loading
-X[,3] <- rnorm(n, 0, 1)  # Noise, no strong loading on any factor
-X[,4] <- rnorm(n, 0, 1)  
-X[,5] <- rnorm(n, 0, 1) 
-
-fa_result <- factanal(factors = 2, covmat = cor(X))
-rotated_fa <- varimax(fa_result$loadings)
-
-```
-
-
-
-
-Another problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model [@mardiaMultivariateAnalysis1979]. We have
-\begin{align*}
-  &&&H_k: k \text{ common factors are sufficient to describe the data } \\
-  \longleftrightarrow &&&H_a: \text{ Otherwise}.
-\end{align*}
-The test statistics is given by $\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\boldsymbol{\Psi}})$ which has an asymptotic $\chi^2_s$ distribution with $s=\frac{1}{2}(p-k)^2-(p+k)$ by the property of MLE, where $F$ is given by (@mardiaMultivariateAnalysis1979)
-$$
-F(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})-\log(\det(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}))-p.
-$$
-Typically, the test is conducted at a $5\%$ significant level. We can start the procedure from a very small $k$, say, $k=1$ or $k=2$ and then increase $k$ until the null hypothesis is not rejected.
-
-
-
-## Penalized Likelihood Method
-
-Penalized likelihood method can be viewed as a generalization of two-step method mentioned above [@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
-$$
- \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}l_p := l(\boldsymbol{\Lambda},\boldsymbol{\Psi})-\rho\sum^p_{i=1}\sum^k_{j=1}P(|\boldsymbol{\Lambda}_{ij}|).
-$$
-where we call $l_p$ as the penalized likelihood, $\rho$ is called regularization parameter and we can treat $P(\cdot)$ as a penalized function. There are many types of penalized functions developed, such as LASSO ($P(\cdot)=|\cdot|$) and MC+ ($P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)$) [@hiroseSparseEstimationNonconcave2015]. In this article, we will mainly focus on the LASSO penalty.
-
-### LASSO penalty and LASSO estimator
-
-Again, recall that the LASSO penalized likelihood is given by
-$$l_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|$$
-and the LASSO estimator, denoted as $(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*)$, can be obtained via
-
-\begin{align*}
-(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|\\
-&=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|.
-\end{align*}
-
-An E-M algorithm can be applied for evaluating the LASSO estimator.
-
-
 

@@ -239,10 +239,9 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   ## final result of penalized EM algorithm
   loading_result <- pem_loading_old
   psi_result <- diag(pem_psi)
-  plot(pem_expectation[-1])  
   sparsity <- sum(abs(loading_result) < 0.1)
   AIC_model <- 2 * (p * k + p) - 2 * log(pem_expectation[length(pem_expectation)])
-  result <- list(loading_result,psi_result,sparsity,AIC_model)
+  result <- list(pem_expectation, loading_result,psi_result,sparsity,AIC_model)
   return (result)
 }
 
@@ -262,6 +261,8 @@ for (pho in pho_range){
   AIC_select[idex] <- simula_Hirose(Model_A,2000,pho,initial_loading,initial_psi)[[4]]
   idex <- idex + 1
 }
+# pem_expectation <- 
+plot(pem_expectation[-1]) 
 plot(pho_range,AIC_select)
 min_AIC_index <- which.min(AIC_select)
 best_pho <- pho_range[min_AIC_index]
@@ -270,8 +271,7 @@ print(best_pho)
 print(Model_A)
 print(diag(diag((nrow(Model_A))) - tcrossprod(Model_A)))
 
-
-
+saveRDS()
 
 
 
