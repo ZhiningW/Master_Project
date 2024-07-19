@@ -149,30 +149,38 @@ Indeterminacy of the loading matrix
 <p><span id="eq-likelihood"><span class="math display">\[
 L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta}) = \prod^n_{i=1}f_{\boldsymbol{y}_i}(\boldsymbol{y}_i;\boldsymbol{\theta}) =  \prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].
 \tag{1}\]</span></span></p>
-<p>The maximum likelihood estimate (MLE) of <span class="math inline">\(\boldsymbol{\theta}\)</span>, denoted as <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>, is found by finding <span class="math inline">\(\boldsymbol{\theta}\)</span> that maximises <a href="#eq-likelihood" class="quarto-xref">Equation&nbsp;1</a>. However, it is often more convenient to maximise the log likelihood function.</p>
+<p>The maximum likelihood estimate (MLE) of <span class="math inline">\(\boldsymbol{\theta}\)</span>, denoted as <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>, is found by finding <span class="math inline">\(\boldsymbol{\theta}\)</span> that maximizes <a href="#eq-likelihood" class="quarto-xref">Equation&nbsp;1</a>. However, it is often more convenient to maximize the log likelihood function. To be more computational friendly, a better form of log likelihood is given by</p>
 <div id="lem-MLE" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lemma 1</strong></span> The log-likelihood is given by</p>
 <p><span id="eq-loglikelihood"><span class="math display">\[\ell(\boldsymbol{\theta}) =  -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right] \tag{2}\]</span></span></p>
 <p>where <span class="math inline">\(\boldsymbol{S}\)</span> is the sample covariance defined as <span class="math inline">\(\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span><span class="math display">\[\begin{align*}
+<p><span class="proof-title"><em>Proof</em>. </span><span class="math display">\[
+\begin{align*}
 \ell(\boldsymbol{\theta})=&amp; \sum^n_{i=1}\left[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
-=&amp; -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
-=&amp; -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right],
-\end{align*}\]</span></p>
-<p>[TODO: show step from line 2 to 3].</p>
+=&amp; -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\frac{1}{n}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
+=&amp; -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right].
+\end{align*}
+\]</span> The last equality holds from the following fact: <span class="math display">\[
+\begin{align*}
+&amp;\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\\
+\Leftrightarrow \ &amp; \boldsymbol{\Sigma}^{-1}\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\\
+\Leftrightarrow \ &amp; \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n} \sum^n_{i=1} \text{tr} (\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top)\\
+\Leftrightarrow \ &amp; \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})
+\end{align*}
+\]</span> Q.E.D</p>
 </div>
 <p>The MLE is obtained by seeking the roots of equation system (provided the likelihood is compact)</p>
 <p><span class="math display">\[\begin{align}
 \frac{\partial}{\partial \boldsymbol{\Lambda}}\ell(\boldsymbol{\theta})&amp;=0 \\
 \frac{\partial}{\partial \boldsymbol{\Psi}}\ell(\boldsymbol{\theta})&amp;= 0.
 \end{align}\]</span></p>
-<p>However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximisation (EM) algorithm <span class="citation" data-cites="Rubin1982EMAlgorithms">[@Rubin1982EMAlgorithms]</span>.</p>
+<p>However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximization (EM) algorithm <span class="citation" data-cites="Rubin1982EMAlgorithms">[@Rubin1982EMAlgorithms]</span>, we will discuss this algorithm in the last part of background.</p>
 </section>
 </section>
 <section id="rotation-techniques" class="level2">
-<h2 class="anchored" data-anchor-id="rotation-techniques">Rotation techniques</h2>
+<h2 class="anchored" data-anchor-id="rotation-techniques">Rotation Techniques</h2>
 <p>After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>.</p>
 <p>Suppose <span class="math inline">\(Q(\boldsymbol{\Lambda})\)</span> is an criterion for <span class="math inline">\(\boldsymbol{\Lambda}\)</span> in the rotation procedure, and we may express it as <span class="math inline">\(Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})\)</span> where <span class="math inline">\(P(\cdot)\)</span> is some loss function<span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>. Specifically, if we set <span class="math inline">\(P(\cdot)=|\cdot|\)</span>, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as <span class="citation" data-cites="Jennrich2004Rotation">[@Jennrich2004Rotation]</span></p>
 <p><span class="math display">\[\begin{align*}
@@ -198,32 +206,32 @@ L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsym
 \end{bmatrix}.
 \]</span> and the real <span class="math inline">\(\boldsymbol{\Psi}\)</span> is given by <span class="math display">\[
 \boldsymbol{\Psi}=\text{diag}(0.1,0.2,0.2,0.1,0.1).
-\]</span> We generate <span class="math inline">\(\boldsymbol{Y}\in \mathbb{R}^{{1000}\times 5}\)</span> from a multivariate normal distribution with mean <span class="math inline">\(\mathbb{0}_{5}\)</span> and covariance <span class="math inline">\(\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}\)</span>. We utilize the R-function <code>factanal()</code> to produce the loading matrix via MLE and then call varimax() to rotate our loading matrix. What we finally get is</p>
+\]</span> We generate <span class="math inline">\(\boldsymbol{Y}\in \mathbb{R}^{{10000}\times 5}\)</span> from a multivariate normal distribution with mean <span class="math inline">\(\mathbb{0}_{5}\)</span> and covariance <span class="math inline">\(\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}\)</span>. We utilize the R-function <code>factanal()</code> to produce the loading matrix via MLE, where this R-function will unitize varimax method to achieve rotation automatically. What we finally get is</p>
 <p><span class="math display">\[
 \hat{\boldsymbol{\Lambda}}=
 \begin{bmatrix}
-0 &amp; 0.814\\
-0.873 &amp; 0\\
-0 &amp; 0.926\\
-0.912 &amp; 0\\
-0.881 &amp; 0\\
+0 &amp; 0.997\\
+0.872 &amp; 0\\
+0 &amp; 0.748\\
+0.915 &amp; 0\\
+0.882 &amp; 0\\
 \end{bmatrix},
-\hat{\boldsymbol{\Psi}}=\text{diag}(0.333,0.238,0.138,0.166,0.224)
-\]</span> This result gives the same sparsity result, however, it overloads on the last three dimension of responses.</p>
+\hat{\boldsymbol{\Psi}}=\text{diag}(0.005,0.240,0.440,0.163,0.223)
+\]</span> This result gives the same sparsity result. However, the result of loading matrix in the first and last two dimensions are much larger than the real one, which implies overfitness.</p>
 <p>Simulation code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># Number of observations</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10000</span> <span class="co"># Number of observations</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># True loading matrix</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>true_loading <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.8</span>,<span class="dv">0</span>,<span class="fl">0.6</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">0.8</span>,<span class="dv">0</span>,<span class="fl">0.7</span>,<span class="fl">0.6</span>),<span class="at">nrow=</span><span class="dv">5</span>,<span class="at">ncol=</span><span class="dv">2</span>) </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># True psi matrix</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>true_psi <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>,<span class="fl">0.1</span>,<span class="fl">0.1</span>))</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate samples from multivariate normal distribution</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">mu =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> n, <span class="at">mu =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), </span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Sigma =</span> true_loading <span class="sc">%*%</span> <span class="fu">t</span>(true_loading) <span class="sc">+</span> true_psi)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Traditional two step procedure</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>fa_result <span class="ot">&lt;-</span> <span class="fu">factanal</span>(<span class="at">factors =</span> <span class="dv">2</span>, <span class="at">covmat =</span> <span class="fu">cor</span>(samples))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>rotated_fa <span class="ot">&lt;-</span> <span class="fu">varimax</span>(fa_result<span class="sc">$</span>loadings)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># the function factanal has already used varimax method to get the optimal loading</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>fa_result <span class="ot">&lt;-</span> <span class="fu">factanal</span>(<span class="at">factors =</span> <span class="dv">2</span>, <span class="at">covmat =</span> <span class="fu">cor</span>(samples))</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Result</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>fa_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -232,44 +240,22 @@ Call:
 factanal(factors = 2, covmat = cor(samples))
 
 Uniquenesses:
-[1] 0.333 0.238 0.138 0.166 0.224
+[1] 0.005 0.240 0.440 0.163 0.222
 
 Loadings:
      Factor1 Factor2
-[1,]          0.814 
-[2,]  0.873         
-[3,]          0.926 
-[4,]  0.912         
-[5,]  0.881         
+[1,]          0.997 
+[2,]  0.872         
+[3,]          0.748 
+[4,]  0.915         
+[5,]  0.882         
 
                Factor1 Factor2
-SS loadings      2.376   1.523
-Proportion Var   0.475   0.305
-Cumulative Var   0.475   0.780
+SS loadings      2.375   1.555
+Proportion Var   0.475   0.311
+Cumulative Var   0.475   0.786
 
-The degrees of freedom for the model is 1 and the fit was 0.0023 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rotated_fa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$loadings
-
-Loadings:
-     Factor1 Factor2
-[1,]          0.814 
-[2,]  0.873         
-[3,]          0.926 
-[4,]  0.912         
-[5,]  0.881         
-
-               Factor1 Factor2
-SS loadings      2.376   1.524
-Proportion Var   0.475   0.305
-Cumulative Var   0.475   0.780
-
-$rotmat
-             [,1]          [,2]
-[1,] 0.9999999812 -0.0001940998
-[2,] 0.0001940998  0.9999999812</code></pre>
+The degrees of freedom for the model is 1 and the fit was 2e-04 </code></pre>
 </div>
 </div>
 <p>Another problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span>. We have <span class="math display">\[\begin{align*}
