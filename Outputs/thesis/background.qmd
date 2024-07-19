@@ -211,9 +211,9 @@ Typically, the test is conducted at a $5\%$ significant level. We can start the 
 
 Penalized likelihood method can be viewed as a generalization of two-step method mentioned above [@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
 $$
- \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}l_p := l(\boldsymbol{\Lambda},\boldsymbol{\Psi})-\rho\sum^p_{i=1}\sum^k_{j=1}P(|\boldsymbol{\Lambda}_{ij}|).
+ \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}l_p := l(\boldsymbol{\Lambda},\boldsymbol{\Psi})-\rho\sum^p_{i=1}\sum^k_{j=1}P(\lambda}_{ij}).
 $$
-where we call $l_p$ as the penalized likelihood, $\rho$ is called regularization parameter and we can treat $P(\cdot)$ as a penalized function. There are many types of penalized functions developed, such as LASSO ($P(\cdot)=|\cdot|$) and MC+ ($P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)$) [@hiroseSparseEstimationNonconcave2015]. In this article, we will mainly focus on the LASSO penalty.
+where we call $l_p$ as the penalized likelihood, $\rho$ is called regularization parameter and we can treat $P(\cdot)$ as a penalized function. There are many types of penalized functions developed, such as LASSO ($P(\cdot)=|\cdot|$) and MC+ ($P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)$) [@hiroseSparseEstimationNonconcave2015]，where $\gamma$ is ..... In this article, we will mainly focus on the LASSO penalty.
 
 ### LASSO penalty and LASSO estimator
 

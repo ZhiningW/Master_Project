@@ -78,13 +78,6 @@ window.Quarto = {
 <section id="sec-method" class="level1">
 <h1>Method</h1>
 <p>As described in <strong>?@sec-bg</strong>, there are various methods to fit a factor analytic model to multivariate data.</p>
-<p>Suppose we have the <span class="math inline">\(n\)</span> centralized observations, <span class="math inline">\(\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}\)</span>, where <span class="math inline">\(\boldsymbol{y}_j\in \mathbb{R}^p\)</span> and hence the mean, <span class="math inline">\(\boldsymbol{\mu}_j=\boldsymbol{0}_p\)</span> (<span class="math inline">\(j=1,2,\dots,n\)</span>). For each of the observation <span class="math inline">\(\boldsymbol{y}_j\)</span>, the common factor and unique factor are <span class="math inline">\(\boldsymbol{f}_j\)</span> and <span class="math inline">\(\boldsymbol{\epsilon}_j\)</span> respectively. Denote the response matrix as <span class="math inline">\(\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top\)</span>, the common factor matrix as <span class="math inline">\(\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top\)</span>, and the unique factor matrix as <span class="math inline">\(\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top\)</span>. Then the model can be written as <span class="math display">\[\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\hat\epsilon}.\]</span><br>
-We also assume</p>
-<ol type="1">
-<li><p><span class="math inline">\(\boldsymbol{\epsilon}_j\)</span> follows a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\boldsymbol{\Psi}\)</span> for <span class="math inline">\(j=1,2,\dots,n\)</span>, where <span class="math inline">\(\boldsymbol{\Psi}\)</span> is a diagonal matrix defined by <span class="math inline">\(\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})\)</span>.</p></li>
-<li><p><span class="math inline">\(\boldsymbol{f}_j\)</span> follows a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\boldsymbol{I}_k\)</span> for <span class="math inline">\(j=1,2,\dots,n\)</span>.</p></li>
-<li><p><span class="math inline">\(\boldsymbol{y}_j\)</span> follows a normal distribution with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}\)</span> for <span class="math inline">\(j=1,2,\dots,n\)</span>. Those <span class="math inline">\(\boldsymbol{y}_j\)</span> are pairwisely independent.</p></li>
-</ol>
 <section id="parameter-estimation" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-estimation">Parameter estimation</h2>
 <section id="the-em-algorithm" class="level3">
@@ -94,11 +87,11 @@ We also assume</p>
 <h4 class="anchored" data-anchor-id="e-step">E-Step</h4>
 <div id="lem-fa-likelihood" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lemma 1</strong></span> The joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by</p>
-<p><span class="math display">\[\ell(\boldsymbol{\theta}) = -\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i+\text{constant}.\]</span></p>
+<p><span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\\]</span></p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>First, the joint likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span>, denoted as <span class="math inline">\(L_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})\)</span>, is given by</p>
-<p><span class="math display">\[L_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i) =\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\]</span> where <span class="math inline">\(\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})\)</span> and <span class="math inline">\(\boldsymbol{f}_i \sim N(\boldsymbol{0}_k,\boldsymbol{I}_k)\)</span>.</p>
+<p><span class="proof-title"><em>Proof</em>. </span>First, the joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by</p>
+<p><span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)\]</span> where <span class="math inline">\(\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})\)</span> and <span class="math inline">\(\boldsymbol{f}_i \sim N(\boldsymbol{0}_k,\boldsymbol{I}_k)\)</span>.</p>
 </div>
 <p><span class="math display">\[\begin{align*}
 \ell(\boldsymbol{\theta})=&amp; \sum_{i=1}^n\log f(\boldsymbol{y}_i|\boldsymbol{f}_i) + \sum_{i=1}^n\log f(\boldsymbol{f}_i)\\
@@ -106,7 +99,7 @@ We also assume</p>
 &amp;\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log|\boldsymbol{I}_k|-\frac{1}{2}(\boldsymbol{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_k^{-1}(\boldsymbol{f}_i-\boldsymbol{0}_k)\\
 =&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
 =&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
-=&amp; [FILLME] ...
+=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
 
 \end{align*}\]</span></p>
 <p>Now let us deduce the conditional expectation to <span class="math inline">\(\boldsymbol{f}\)</span> given <span class="math inline">\(\boldsymbol{y},\boldsymbol{\theta}_{(t)}\)</span>, denoted as <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. In <strong>?@eq-loglikelihood</strong>, the first term is independent on <span class="math inline">\(\boldsymbol{f}\)</span>, hence stay the same under conditional expectation. The last term is independent on <span class="math inline">\((\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>, therefore we can regard it as a constant in <span class="math inline">\(\mathbf{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. We only need to consider the term inside the sum in the second term, more specifically, the numerator, we have</p>
