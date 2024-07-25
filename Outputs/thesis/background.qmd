@@ -69,7 +69,7 @@ model.
 
 Suppose we have $n$ independent and identically distributed observations
 $\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n$ from a $p$-dimensional
-multi-variate normal distribution $N_p(\boldsymbol{\mu},\boldsymbol{\Sigma})$. Now denote $f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta})$ as the probability density function of the random vector $\boldsymbol{Y}$ corresponding to $\boldsymbol{y}$. Then the likelihood is given by
+multi-variate normal distribution $\mathcal{N}_p(\boldsymbol{\mu},\boldsymbol{\Sigma})$. Now denote $f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta})$ as the probability density function of the random vector $\boldsymbol{Y}$ corresponding to $\boldsymbol{y}$. Then the likelihood is given by
 
 $$
 L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta}) = \prod^n_{i=1}f_{\boldsymbol{y}_i}(\boldsymbol{y}_i;\boldsymbol{\theta}) =  \prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].

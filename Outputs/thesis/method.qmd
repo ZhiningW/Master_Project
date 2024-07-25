@@ -5,16 +5,20 @@ As described in @sec-bg, there are various methods to fit a factor analytic mode
 
 ### The EM Algorithm
 We treat the common factor matrix $\boldsymbol{f}$ as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of $(\boldsymbol{y},\boldsymbol{f})$ given $\boldsymbol{y}$ and $\boldsymbol{\theta}_{(t)}$, where $\boldsymbol{\theta}_{(t)}$ is the parameter we got in the $t$-th iteration ($t>1$) and $\boldsymbol{\theta}_{(0)}$ is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get $\boldsymbol{\theta}_{(t + 1)}$.
+
 #### E-Step
+
 ::: {#lem-fa-likelihood}
 The joint log-likelihood of $(\boldsymbol{y},\boldsymbol{f})$ is given by
 $$\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\$$
 :::
+
 ::: proof
 First, the joint log-likelihood of $(\boldsymbol{y},\boldsymbol{f})$ is given by
 $$\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)$$
-where $\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})$ and $\boldsymbol{f}_i \sim N(\boldsymbol{0}_k,\boldsymbol{I}_k)$.
-:::
+where $\boldsymbol{y}_i|\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})$ and $\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{0}_k,\boldsymbol{I}_k)$ Therefore we have
+
+$$
 \begin{align*}
 \ell(\boldsymbol{\theta})=& \sum_{i=1}^n\log f(\boldsymbol{y}_i|\boldsymbol{f}_i) + \sum_{i=1}^n\log f(\boldsymbol{f}_i)\\
 =& -\frac{np}{2}\log(2\pi)-\frac{n}{2}\log|\boldsymbol{\Psi}|-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\\
@@ -23,8 +27,9 @@ where $\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{
 =& -\frac{(n+m)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
 
 \end{align*}
+$$
 
-
+:::
 
 Now let us deduce the conditional expectation to $\boldsymbol{f}$ given $\boldsymbol{y},\boldsymbol{\theta}_{(t)}$, denoted as $\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)$. In @eq-loglikelihood, the first term is independent on $\boldsymbol{f}$, hence stay the same under conditional expectation. The last term is independent on $(\boldsymbol{\Lambda},\boldsymbol{\Psi})$, therefore we can regard it as a constant in $\mathbf{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)$. We only need to consider the term inside the sum in the second term, more specifically, the numerator, we have
 
@@ -41,12 +46,47 @@ El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=& \ \text{constant}-\frac{n}{2}
 \end{align*}
 $$
 
-To deal with $\mathbb{E}[\boldsymbol{f}_i|_{(k)}]$ and $\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]$, we only need to know the mean and variance of conditional distribution $\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}$, or equivalently $\boldsymbol{f}_i|\boldsymbol{y}_i,\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}$ because of the independency of $\boldsymbol{f}_i$ to $\boldsymbol{y}_j$ for ($i\neq j$). This is because we can always treat $\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]$ as
+To deal with $\mathbb{E}[\boldsymbol{f}_i|_{(k)}]$ and $\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]$, we only need to know the mean and variance of conditional distribution $\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}$, or equivalently $\boldsymbol{f}_i|\boldsymbol{y}_i,\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}$ because of the independency of $\boldsymbol{f}_i$ to $\boldsymbol{y}_j$ for $i\neq j$. This is because we can always treat $\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]$ as
 
 $$
 \mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]= \mathbb{V}[\boldsymbol{f}_i|_{(k)}]+ \mathbb{E}[\boldsymbol{f}_i|_{(k)}]\mathbb{E}[\boldsymbol{f}_i|_{(k)}]^\top.
 $$ 
-where $\mathbb{V}[\boldsymbol{f}_i|_{(k)}]$ is the variance of conditional distribution. 
+where $\mathbb{V}[\boldsymbol{f}_i|_{(k)}]$ is the variance of conditional distribution. To deal with this, wed need the following lemma.
+
+::: {#lem-con-distribution}
+Let $\boldsymbol{x}\sim \mathcal{N}(\boldsymbol{\mu}_1,\boldsymbol{\Sigma}_1)$ and $\boldsymbol{y}\sim \mathcal{N}(\boldsymbol{\mu}_2,\boldsymbol{\Sigma}_2)$, by definition of multivariate normal distribution, we have 
+$$
+\begin{pmatrix}
+\boldsymbol{x}\\
+\boldsymbol{y}
+\end{pmatrix}
+\sim \mathcal{N}(
+\begin{pmatrix}
+\boldsymbol{\mu_x}\\
+\boldsymbol{\mu_y}
+\end{pmatrix}
+,
+\begin{pmatrix}
+\boldsymbol{\Sigma_{xx}} & \boldsymbol{\Sigma_{xy}}\\
+\boldsymbol{\Sigma_{yx}} & \boldsymbol{\Sigma_{yy}}
+\end{pmatrix}
+).
+$$
+The conditional distribution $\boldsymbol{x}|\boldsymbol{y}$ is then given by 
+$$
+\boldsymbol{x}|\boldsymbol{y} \sim \mathcal{N}(\boldsymbol{\mu_{x|y}},\boldsymbol{\Sigma_{x|y}}),
+$$
+where
+$$
+\begin{align*}
+& \boldsymbol{\mu_{x|y}} = \boldsymbol{\mu_x}+\boldsymbol{\Sigma_{xy}}\boldsymbol{\Sigma_{yy}}^{-1}(\boldsymbol{y}-\boldsymbol{\mu_y})\\
+& \boldsymbol{\Sigma_{x|y}} = \boldsymbol{\Sigma_{xx}}-\boldsymbol{\Sigma_{xy}}\boldsymbol{\Sigma_{yy}}^{-1}\boldsymbol{\Sigma_{yx}}
+\end{align*}.
+$$
+:::
+::: proof
+See Appendix A.
+:::
 
 
 In our scenario, using @lem-cond, we have 
