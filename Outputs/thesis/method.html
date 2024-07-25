@@ -82,24 +82,12 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="parameter-estimation">Parameter estimation</h2>
 <section id="the-em-algorithm" class="level3">
 <h3 class="anchored" data-anchor-id="the-em-algorithm">The EM Algorithm</h3>
-<p>We treat the common factor matrix <span class="math inline">\(\boldsymbol{f}\)</span> as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> given <span class="math inline">\(\boldsymbol{y}\)</span> and <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span>, where <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span> is the parameter we got in the <span class="math inline">\(t\)</span>-th iteration (<span class="math inline">\(t&gt;1\)</span>) and <span class="math inline">\(\boldsymbol{\theta}_{(0)}\)</span> is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get <span class="math inline">\(\boldsymbol{\theta}_{(t + 1)}\)</span>.</p>
-<section id="e-step" class="level4">
-<h4 class="anchored" data-anchor-id="e-step">E-Step</h4>
-<div id="lem-fa-likelihood" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 1</strong></span> The joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by</p>
-<p><span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\\]</span></p>
-</div>
-<div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>First, the joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by</p>
-<p><span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)\]</span> where <span class="math inline">\(\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})\)</span> and <span class="math inline">\(\boldsymbol{f}_i \sim N(\boldsymbol{0}_k,\boldsymbol{I}_k)\)</span>.</p>
-</div>
-<p><span class="math display">\[\begin{align*}
+<p>We treat the common factor matrix <span class="math inline">\(\boldsymbol{f}\)</span> as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> given <span class="math inline">\(\boldsymbol{y}\)</span> and <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span>, where <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span> is the parameter we got in the <span class="math inline">\(t\)</span>-th iteration (<span class="math inline">\(t&gt;1\)</span>) and <span class="math inline">\(\boldsymbol{\theta}_{(0)}\)</span> is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get <span class="math inline">\(\boldsymbol{\theta}_{(t + 1)}\)</span>. #### E-Step ::: {#lem-fa-likelihood} The joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by <span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\\]</span> ::: ::: proof First, the joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by <span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)\]</span> where <span class="math inline">\(\boldsymbol{y}_i|\boldsymbol{f}_i \sim N(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})\)</span> and <span class="math inline">\(\boldsymbol{f}_i \sim N(\boldsymbol{0}_k,\boldsymbol{I}_k)\)</span>. ::: <span class="math display">\[\begin{align*}
 \ell(\boldsymbol{\theta})=&amp; \sum_{i=1}^n\log f(\boldsymbol{y}_i|\boldsymbol{f}_i) + \sum_{i=1}^n\log f(\boldsymbol{f}_i)\\
 =&amp; -\frac{np}{2}\log(2\pi)-\frac{n}{2}\log|\boldsymbol{\Psi}|-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\\
-&amp;\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log|\boldsymbol{I}_k|-\frac{1}{2}(\boldsymbol{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_k^{-1}(\boldsymbol{f}_i-\boldsymbol{0}_k)\\
-=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
-=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
-=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
+&amp;\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log|\boldsymbol{I}_m|-\frac{1}{2}(\boldsymbol{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_m^{-1}(\boldsymbol{f}_i-\boldsymbol{0}_m)\\
+=&amp; -\frac{(n+m)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
+=&amp; -\frac{(n+m)p}{2}\log(2\pi)-\frac{n}{2}\log \sum_{j=1}^p\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2\\
 
 \end{align*}\]</span></p>
 <p>Now let us deduce the conditional expectation to <span class="math inline">\(\boldsymbol{f}\)</span> given <span class="math inline">\(\boldsymbol{y},\boldsymbol{\theta}_{(t)}\)</span>, denoted as <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. In <strong>?@eq-loglikelihood</strong>, the first term is independent on <span class="math inline">\(\boldsymbol{f}\)</span>, hence stay the same under conditional expectation. The last term is independent on <span class="math inline">\((\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>, therefore we can regard it as a constant in <span class="math inline">\(\mathbf{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. We only need to consider the term inside the sum in the second term, more specifically, the numerator, we have</p>
@@ -157,7 +145,6 @@ El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= &amp; -\frac{n}{2}\sum_{j=1}^p
 &amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\Psi_{jj}}+\text{constant}.
 \end{align*}
 \]</span></p>
-</section>
 <section id="m-step" class="level4">
 <h4 class="anchored" data-anchor-id="m-step">M-step</h4>
 <p>In M-step, we need to maximize so called <span class="math inline">\(Q\)</span>-function with respect to parameters where <span class="math inline">\(Q\)</span>-function is penalized conditional expectation of the log-likelihood, i.e. <span class="math display">\[
@@ -188,8 +175,11 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(k)}(\boldsymbol{\Lambda},\bolds
 \begin{equation}
 \psi_{jj,(k+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2-\frac{2}{n}\sum_{i=1}^ny_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top.
 \end{equation}
-\]</span></p>
-<p>For step 2, let us revise the update formula, we have</p>
+\]</span> But notice that the <span class="math inline">\(Q\)</span>-function is not concave globally, therefore we may update <span class="math inline">\(\boldsymbol{\Psi}\)</span> selectively. More specifically, we only update <span class="math inline">\(\psi_{jj}\)</span> when it satisfies <span class="math display">\[
+\frac{\partial^2}{\partial\psi_{jj}^2}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})\leq 0,
+\]</span> i.e. <span class="math display">\[
+\psi_{jj}\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top].
+\]</span> For step 2, let us revise the update formula, we have</p>
 <p><span class="math display">\[\begin{align*}
 \boldsymbol{\Lambda}_{(k+1)}=&amp;\arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)})\\
 =&amp;\arg \max_{\boldsymbol{\Lambda}} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
@@ -213,7 +203,7 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(k)}(\boldsymbol{\Lambda},\bolds
 \end{align*}
 \]</span> We have</p>
 <div id="lem-subd" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 2</strong></span> For the set <span class="math inline">\(\partial||\boldsymbol{\Lambda}(j,)||_1\)</span>, we have <span class="math display">\[
+<p><span class="theorem-title"><strong>Lemma 1</strong></span> For the set <span class="math inline">\(\partial||\boldsymbol{\Lambda}(j,)||_1\)</span>, we have <span class="math display">\[
 \text{sign}(\boldsymbol{\Lambda}(j,)^\top)\in \partial||\boldsymbol{\Lambda}(j,)^\top||_1,
 \]</span> where the sign function is given by <span class="math inline">\(\text{sign}(x)=
 \begin{cases}

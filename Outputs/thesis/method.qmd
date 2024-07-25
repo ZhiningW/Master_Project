@@ -142,7 +142,14 @@ $$
 \psi_{jj,(k+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2-\frac{2}{n}\sum_{i=1}^ny_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top.
 \end{equation}
 $$
-
+But notice that the $Q$-function is not concave globally, therefore we may update $\boldsymbol{\Psi}$ selectively. More specifically, we only update $\psi_{jj}$ when it satisfies
+$$
+\frac{\partial^2}{\partial\psi_{jj}^2}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})\leq 0,
+$$
+i.e.
+$$
+\psi_{jj}\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top].
+$$
 For step 2, let us revise the update formula, we have 
 
 
