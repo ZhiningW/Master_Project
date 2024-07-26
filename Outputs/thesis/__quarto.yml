@@ -22,6 +22,7 @@ book:
      - background.qmd
      - method.qmd
      - results.qmd
+     - appendix.qmd
      #- chapter1.qmd
      #- chapter2.qmd
      #- chapter3.qmd
@@ -45,7 +46,8 @@ supervisor:
   - Dr. Qinian Jin 
 
 format:
-  html: default
+  html: 
+    css: style.css
   #anu-thesis-html: default
   #anu-thesis-pdf:
   #  keep-tex: false

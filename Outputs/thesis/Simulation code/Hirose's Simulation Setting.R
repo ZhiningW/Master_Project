@@ -153,7 +153,7 @@ subg_method <- function(lambda,psi,Y,j,rho){
   # while(error>0.1 && iteration < 100){
   while(error>0.1 & iteration < 100){
     subg <- subgradient(lambda,psi,Y,epsilon,j,rho)
-    t <- 1/ ((iteration + 1)*norm(subg,type='2'))# step size
+    t <- 0.1/ ((iteration + 1)*norm(subg,type='2'))# step size
     lambda_j_new <- lambda_j_old - t * t(subg)
     iteration <- iteration + 1
     error <- norm(lambda_j_new-lambda_j_old,type='2')
@@ -271,7 +271,7 @@ print(best_pho)
 print(Model_A)
 print(diag(diag((nrow(Model_A))) - tcrossprod(Model_A)))
 
-saveRDS()
+
 
 
 
