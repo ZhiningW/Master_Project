@@ -1,0 +1,56 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+   title: "{{< var title >}}"
+   #subtitle: "{{< var subtitle >}}"
+   author: "{{< var author >}}"
+   date: today
+   output-file: "thesis"
+   #downloads: pdf
+   repo-url: https://github.com/ZhiningW/Master_Project
+   repo-actions: [edit, issue]
+   #cover-image: images/example-html.png
+   #cover-image-alt: "This is a cover image."
+   chapters:
+     - index.qmd
+     #- abstract.qmd
+     #- disclaimer.qmd # omit this if honours or masters by coursework
+     #- acknowledgements.qmd
+     - intro.qmd
+     - background.qmd
+     - method.qmd
+     - results.qmd
+     - appendix.qmd
+     #- chapter1.qmd
+     #- chapter2.qmd
+     #- chapter3.qmd
+     - references.qmd
+   #appendices:
+   #   - tools.qmd
+   page-footer: "Copyright © 2024, Zhining Wang"
+
+toc-depth: 3
+bibliography: ref.bib
+
+comments:
+  hypothesis: true
+degree: "{{< var degree >}}"
+school: "{{< var school >}}"
+date-start: "{{< var date-start >}}"
+date-end: "{{< var date-end >}}"
+titlepage-supervisor: true
+supervisor:
+  - Dr. Emi Tanaka
+  - Dr. Qinian Jin 
+
+format:
+  html: 
+    css: style.css
+  #anu-thesis-html: default
+  #anu-thesis-pdf:
+  #  keep-tex: false
+    #classoption: twoside
+
+engine: knitr
