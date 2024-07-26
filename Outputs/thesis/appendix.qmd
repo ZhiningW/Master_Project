@@ -21,3 +21,40 @@ $$
 \end{align*}
 $$
 :::
+
+
+
+::: {#lem-con-distribution}
+Let $\boldsymbol{x}\sim \mathcal{N}(\boldsymbol{\mu}_1,\boldsymbol{\Sigma}_1)$ and $\boldsymbol{y}\sim \mathcal{N}(\boldsymbol{\mu}_2,\boldsymbol{\Sigma}_2)$, by definition of multivariate normal distribution, we have 
+$$
+\begin{pmatrix}
+\boldsymbol{x}\\
+\boldsymbol{y}
+\end{pmatrix}
+\sim \mathcal{N}(
+\begin{pmatrix}
+\boldsymbol{\mu_x}\\
+\boldsymbol{\mu_y}
+\end{pmatrix}
+,
+\begin{pmatrix}
+\boldsymbol{\Sigma_{xx}} & \boldsymbol{\Sigma_{xy}}\\
+\boldsymbol{\Sigma_{yx}} & \boldsymbol{\Sigma_{yy}}
+\end{pmatrix}
+).
+$$
+The conditional distribution $\boldsymbol{x}|\boldsymbol{y}$ is then given by 
+$$
+\boldsymbol{x}|\boldsymbol{y} \sim \mathcal{N}(\boldsymbol{\mu_{x|y}},\boldsymbol{\Sigma_{x|y}}),
+$$
+where
+$$
+\begin{align*}
+& \boldsymbol{\mu_{x|y}} = \boldsymbol{\mu_x}+\boldsymbol{\Sigma_{xy}}\boldsymbol{\Sigma_{yy}}^{-1}(\boldsymbol{y}-\boldsymbol{\mu_y})\\
+& \boldsymbol{\Sigma_{x|y}} = \boldsymbol{\Sigma_{xx}}-\boldsymbol{\Sigma_{xy}}\boldsymbol{\Sigma_{yy}}^{-1}\boldsymbol{\Sigma_{yx}}
+\end{align*}.
+$$
+:::
+::: proof
+See Appendix A.
+:::
