@@ -102,7 +102,6 @@ npem_E <- function(lambda,psi,Y){
       second_term <- second_term 
       + (yij^2 - 2 * yij * lambda_j %*% mat_A %*% t(Y_i))/psi[j,j]
     }
-    
   }
   second_term <- -1/2 * second_term
   
@@ -112,12 +111,10 @@ npem_E <- function(lambda,psi,Y){
     for (j in 1:p){
       Y_i <- t(as.matrix(Y[i,]))
       lambda_j <- t(as.matrix(lambda[j,]))
-      third_term <- third_term 
-      + (lambda_j %*% (mat_B + mat_A %*% t(Y_i) %*% Y_i %*% t(mat_A)) %*% t(lambda_j))/psi[j,j]
+      third_term <- third_term + (lambda_j %*% (mat_B + mat_A %*% t(Y_i) %*% Y_i %*% t(mat_A)) %*% t(lambda_j))/psi[j,j]
     }
   }
   third_term <- -1/2 * third_term
-  
   return(first_term + second_term + third_term)
 }
 
@@ -129,7 +126,6 @@ subgradient <- function(lambda,psi,Y,epsilon,j,rho){
   mat_B <- B(lambda,psi)
   lambda_j <- lambda[j, , drop = FALSE]
   first_term <- - as.matrix(rowSums(tcrossprod(mat_A,Y)%*%Y[,j, drop = FALSE]*2/psi[j,j]),ncol=1) 
-  
   second_term <- 2 * ( n * mat_B %*% t(lambda[j, ,drop= FALSE ]) + tcrossprod(mat_A,Y) %*% tcrossprod(Y,mat_A) %*% t(lambda[j, ,drop= FALSE ]) ) /psi[j,j]
   third_term <- rho * sign(t(lambda_j)) 
   return(first_term+second_term+third_term)
@@ -150,7 +146,6 @@ subg_method <- function(lambda,psi,Y,j,rho){
   error <- 10000
   iteration <- 0
   
-  # while(error>0.1 && iteration < 100){
   while(error>0.1 & iteration < 300){
     subg <- subgradient(lambda,psi,Y,epsilon,j,rho)
     t <- 0.3/ ((iteration + 1)*norm(subg,type='2'))# step size
@@ -165,24 +160,22 @@ subg_method <- function(lambda,psi,Y,j,rho){
 }
 
 
-gradient <- function(lambda,psi,Y,epsilon,j){
+gradient <- function(lambda,psi,Y,j){
   ### to find the gradient
   n <- nrow(Y)
   mat_A <- A(lambda,psi)
   mat_B <- B(lambda,psi)
-  print(dim(mat_A))
-  print(dim(Y))
-  print(dim(Y[,j, drop = FALSE]))
-  #first_term <- - mat_A %*% t(Y) %*%Y[,j, drop = FALSE]/psi[j,j]
-  first_term <- - as.matrix(rowSums(tcrossprod(mat_A,Y)%*%Y[,j, drop = FALSE]*2/psi[j,j]),ncol=1) 
+  first_term <- -2 * mat_A %*% t(Y) %*%Y[,j, drop = FALSE]/psi[j,j]
+  #first_term <- -2* as.matrix(rowSums(tcrossprod(mat_A,Y)%*%Y[,j, drop = FALSE]*2/psi[j,j]),ncol=1) 
   second_term <- 2 * ( n * mat_B %*% t(lambda[j, ,drop= FALSE ]) + tcrossprod(mat_A,Y) %*% tcrossprod(Y,mat_A) %*% t(lambda[j, ,drop= FALSE ]) ) /psi[j,j]
-  return(2*first_term+second_term)
+  return(first_term+second_term)
 }
 
 proximal_method <- function(lambda,psi,Y,j,rho){
   lambda_j_old <- lambda[j,,drop=FALSE]
-  xi <- lambda_j_old - rho * t(gradient(lambda,psi,Y,j))
-  lambda_j_new <- sign(xi) * max(abs(xi)-rho,0)
+  gamma <- 0.1
+  xi <- lambda_j_old - gamma * t(gradient(lambda,psi,Y,j))
+  lambda_j_new <- sign(xi*gamma*rho) * max(abs(xi)-rho*gamma,0)
   return(lambda_j_new)
 }
 ####################### Main Function to Run Simulation #####################
@@ -220,7 +213,6 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   ## Set the parameters for iteration
   pem_step <- 0 # record the number of iterations
   pem_loading_diff <- 1000 # Set a big difference in case smaller than tolerance at very beginning
-  pem_psi_diff <- 1000
   pem_expectation <- numeric(length = n_max_iter) # Record expectations during iteration
   
   # update iteratively
@@ -238,7 +230,6 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
     }
     print(diag(pem_psi))
     ## Update loading matrix using current psi rowwisely
-    
     pem_loading_new <- matrix(0, nrow = p, ncol = k)
     for (j in 1:p){
       pem_loading_new[j,] <- proximal_method(pem_loading_old,pem_psi,Y,j,rho)
@@ -253,7 +244,6 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
       cli::cli_alert_warning('Failed to converge!')
       break
     }
-    
   }
   ## final result of penalized EM algorithm
   loading_result <- pem_loading_old
@@ -273,7 +263,7 @@ Model_A <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow=6, ncol=2, byr
 # Model_B <- 
 
 initial_loading <- matrix(c(1,0,2,3,2,1,2,1,2,0,2,1), nrow=6, ncol=2)
-initial_psi <- diag(rep(0.1,6))
+initial_psi <- diag(c(0.1,0.2,0.2,0.3,0.4,0.1))
 #pho_range <- seq(4, 5, by = 0.1)
 #AIC_select <- numeric(length(pho_range))
 #idex <- 1
@@ -286,7 +276,7 @@ initial_psi <- diag(rep(0.1,6))
 #plot(pho_range,AIC_select)
 #min_AIC_index <- which.min(AIC_select)
 #best_pho <- pho_range[min_AIC_index]
-simula_Hirose(Model_A,2000,2,initial_loading,initial_psi)
+simula_Hirose(Model_A,2000,1,initial_loading,initial_psi)
 #print(best_pho)
 print(Model_A)
 print(diag(diag((nrow(Model_A))) - tcrossprod(Model_A)))
