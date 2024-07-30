@@ -30,7 +30,19 @@ Alternatively, we can write the model as
 
 
 $$\boldsymbol{y} = (\mathbf{I}_n \otimes \boldsymbol{\Lambda})\boldsymbol{f} + \boldsymbol{\epsilon}$$
-where $\boldsymbol{y} = (\boldsymbol{y}_1, \boldsymbol{y}_2, \cdots,  \boldsymbol{y}_n)$, $\boldsymbol{f} = (\boldsymbol{f}_1, \boldsymbol{f}_2, \cdots,  \boldsymbol{f}_n)$ and $\boldsymbol{\epsilon} = (\boldsymbol{\epsilon}_1, \boldsymbol{\epsilon}_2, \cdots,  \boldsymbol{\epsilon}_n)$. Thus we have
+where $\boldsymbol{y} = 
+\begin{pmatrix}
+\boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_n
+\end{pmatrix}
+$, $\boldsymbol{f} =
+\begin{pmatrix}
+\boldsymbol{f}_1 \\ \boldsymbol{f}_2 \\ \vdots \\  \boldsymbol{f}_n
+\end{pmatrix}
+$ and $\boldsymbol{\epsilon} = 
+\begin{pmatrix}
+\boldsymbol{\epsilon}_1 \\ \boldsymbol{\epsilon}_2 \\ \vdots \\  \boldsymbol{\epsilon}_n
+\end{pmatrix}
+$. Thus we have
 
 
 $$\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_{nk}\\\boldsymbol{0}_{np}\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_{nk} & \mathbf{0}_{nk\times np}\\\mathbf{0}_{np\times nk} & \mathbf{I}_n \otimes \mathbf{\Psi}\end{bmatrix}.$$

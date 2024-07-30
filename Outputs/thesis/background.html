@@ -123,7 +123,16 @@ window.Quarto = {
 <p>where <span class="math inline">\(\boldsymbol{\Psi}\)</span> is a <span class="math inline">\(p\times p\)</span> diagonal matrix where we denote the <span class="math inline">\(i\)</span>-th diagonal entry as <span class="math inline">\(\psi_{ii}\)</span>. Based on this assumption, the covariance of observable vector <span class="math inline">\(\boldsymbol{y}_i\)</span> can be modelled by</p>
 <p><span class="math display">\[\mathbb{V}(\boldsymbol{y}_i|\boldsymbol{\Lambda},\boldsymbol{\Psi} )=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.\]</span></p>
 <p>Alternatively, we can write the model as</p>
-<p><span class="math display">\[\boldsymbol{y} = (\mathbf{I}_n \otimes \boldsymbol{\Lambda})\boldsymbol{f} + \boldsymbol{\epsilon}\]</span> where <span class="math inline">\(\boldsymbol{y} = (\boldsymbol{y}_1, \boldsymbol{y}_2, \cdots,  \boldsymbol{y}_n)\)</span>, <span class="math inline">\(\boldsymbol{f} = (\boldsymbol{f}_1, \boldsymbol{f}_2, \cdots,  \boldsymbol{f}_n)\)</span> and <span class="math inline">\(\boldsymbol{\epsilon} = (\boldsymbol{\epsilon}_1, \boldsymbol{\epsilon}_2, \cdots,  \boldsymbol{\epsilon}_n)\)</span>. Thus we have</p>
+<p><span class="math display">\[\boldsymbol{y} = (\mathbf{I}_n \otimes \boldsymbol{\Lambda})\boldsymbol{f} + \boldsymbol{\epsilon}\]</span> where <span class="math inline">\(\boldsymbol{y} =
+\begin{pmatrix}
+\boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_n
+\end{pmatrix}\)</span>, <span class="math inline">\(\boldsymbol{f} =
+\begin{pmatrix}
+\boldsymbol{f}_1 \\ \boldsymbol{f}_2 \\ \vdots \\  \boldsymbol{f}_n
+\end{pmatrix}\)</span> and <span class="math inline">\(\boldsymbol{\epsilon} =
+\begin{pmatrix}
+\boldsymbol{\epsilon}_1 \\ \boldsymbol{\epsilon}_2 \\ \vdots \\  \boldsymbol{\epsilon}_n
+\end{pmatrix}\)</span>. Thus we have</p>
 <p><span class="math display">\[\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_{nk}\\\boldsymbol{0}_{np}\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_{nk} &amp; \mathbf{0}_{nk\times np}\\\mathbf{0}_{np\times nk} &amp; \mathbf{I}_n \otimes \mathbf{\Psi}\end{bmatrix}.\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
