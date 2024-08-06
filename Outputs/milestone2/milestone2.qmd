@@ -1,0 +1,29 @@
+---
+title: "Model Selection in Factor Analysis"
+author: "Zhining Wang"
+supervisors:
+  - "Dr. Emi Tanaka"
+  - "Dr. Qinian Jin (co-supervisor)"
+date: today
+format: 
+  pdf: 
+    documentclass: amsart
+    fontsize: 12pt
+    template-partials:
+      - partials/before-body.tex
+      - partials/after-body.tex
+    include-in-header:
+      text: |
+        \usepackage{fullpage}
+        \usepackage{enumitem}
+bibliography: ref.bib
+editor: 
+  markdown: 
+    wrap: 72
+---
+# Current Work Results
+I have completed the introduction to the factor analysis model and the EM algorithm, including a brief proof of the algorithm's correctness. Following this, I introduced the concept of the penalized EM algorithm and explained its application within the context of factor analysis. I dedicated an entire chapter to proposing the LASSO-penalized EM algorithm for factor analysis, detailing the procedures for both the E-step and the M-step. In the M-step, I employed a proximal gradient method.
+
+# Future Expectations
+
+This semester, I will primarily focus on the simulation aspect, exploring various interesting points such as simulation settings, parameter tuning, and order selection. I plan to implement the entire algorithm using R and visualize the results in my thesis. I will leave at least a month to polish my notations, language and typesetting.

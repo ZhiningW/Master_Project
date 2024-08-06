@@ -173,9 +173,17 @@ gradient <- function(lambda,psi,Y,j){
 
 proximal_method <- function(lambda,psi,Y,j,rho){
   lambda_j_old <- lambda[j,,drop=FALSE]
-  gamma <- 0.1
+  gamma <- 0.01  # step size
+  epsilon <- 0.1
+  error <- 0
+  iteration <- 0
+  while(error < epsilon && iteration < 200){
   xi <- lambda_j_old - gamma * t(gradient(lambda,psi,Y,j))
   lambda_j_new <- sign(xi*gamma*rho) * max(abs(xi)-rho*gamma,0)
+  error <- norm(lambda_j_new - lambda_j_old, type = 'F')
+  lambda_j_old <- lambda_j_new
+  iteration <- iteration +1
+  }
   return(lambda_j_new)
 }
 ####################### Main Function to Run Simulation #####################
@@ -276,7 +284,7 @@ initial_psi <- diag(c(0.1,0.2,0.2,0.3,0.4,0.1))
 #plot(pho_range,AIC_select)
 #min_AIC_index <- which.min(AIC_select)
 #best_pho <- pho_range[min_AIC_index]
-simula_Hirose(Model_A,2000,1,initial_loading,initial_psi)
+simula_Hirose(Model_A,2000,0.7,initial_loading,initial_psi)
 #print(best_pho)
 print(Model_A)
 print(diag(diag((nrow(Model_A))) - tcrossprod(Model_A)))
