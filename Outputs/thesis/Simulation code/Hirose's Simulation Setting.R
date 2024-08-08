@@ -179,7 +179,7 @@ proximal_method <- function(lambda,psi,Y,j,rho){
   iteration <- 0
   while(error < epsilon && iteration < 200){
   xi <- lambda_j_old - gamma * t(gradient(lambda,psi,Y,j))
-  lambda_j_new <- sign(xi*gamma*rho) * max(abs(xi)-rho*gamma,0)
+  lambda_j_new <- sign(xi*gamma*rho) * pmax(abs(xi)-rho*gamma,0)
   error <- norm(lambda_j_new - lambda_j_old, type = 'F')
   lambda_j_old <- lambda_j_new
   iteration <- iteration +1
@@ -226,6 +226,7 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   # update iteratively
   pem_loading_old <- initial_loading
   pem_psi <- initial_psi
+  loading_saving <-
   
   while(pem_loading_diff >= pem_tolerance){
     pem_step <- pem_step + 1

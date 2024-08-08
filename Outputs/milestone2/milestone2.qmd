@@ -21,9 +21,20 @@ editor:
   markdown: 
     wrap: 72
 ---
+# Introduction of Factor Analytic Models
+Factor analysis (FA) is a statistical method which attempts to use fewer
+underlying factors to explain the correlation between a large set of
+observed variables. Suppose we have an observable random vector $\boldsymbol{y}_i\in \mathbb{R}^p$ for the $i$-th subject
+with mean $\mathbb{E}(\boldsymbol{y}_i)=\boldsymbol{\mu}$ and variance
+$\mathbb{V}(\boldsymbol{y}_i)=\boldsymbol{\Sigma}$. Then a $k$-order factor analysis model
+for $\boldsymbol{y}_i$ can be given by \begin{equation}
+\boldsymbol{y}_i=\boldsymbol{\mu}+\boldsymbol{\Lambda} \boldsymbol{f}_i+\boldsymbol{\epsilon}_i,
+\end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$,   $\boldsymbol{f}_i \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon}_i \in \mathbb{R}^{p}$ are called the _loading matrix_, _common factors_  and _unique (or specific) factors_, respectively. The order $k$ is usually much smaller than $p$. For simplicity, we can assume that $\boldsymbol{\mu} = \boldsymbol{0}_p$.
+We also assume that the common factors and the unique factors are independent. We aim to find a _sparse_ loading matrix as well as estimate the diagonal covariance matrix of the unique factor.
+
 # Current Work Results
-I have completed the introduction to the factor analysis model and the EM algorithm, including a brief proof of the algorithm's correctness. Following this, I introduced the concept of the penalized EM algorithm and explained its application within the context of factor analysis. I dedicated an entire chapter to proposing the LASSO-penalized EM algorithm for factor analysis, detailing the procedures for both the E-step and the M-step. In the M-step, I employed a proximal gradient method.
+I have completed the introduction to the factor analysis model and reviewed the traditional two-step procedure for obtaining the sparse loading matrix. However, this traditional method has been criticized for potentially causing overfitting and producing overly dense solutions. I conducted a small simulation to demonstrate these issues. Following this, I introduced the concept of penalized factor analysis and the EM algorithm, including a brief proof of the algorithm's correctness. I dedicated an entire chapter to proposing the LASSO-penalized EM algorithm for factor analysis, detailing the procedures for both the E-step and the M-step. In the M-step, I employed a proximal gradient method. I implemented the EM algorithm using R and visualized the results as well.
 
 # Future Expectations
 
-This semester, I will primarily focus on the simulation aspect, exploring various interesting points such as simulation settings, parameter tuning, and order selection. I plan to implement the entire algorithm using R and visualize the results in my thesis. I will leave at least a month to polish my notations, language and typesetting.
+This semester, I will continue polishing my code, including bug fixes and stability enhancements. I will also focus on the simulation settings, exploring various interesting aspects such as initialization strategies, parameter tuning, and order selection. I plan to implement these elements using R and visualize the results in my thesis. Additionally, I will discuss the results and highlight the limitations of the model or algorithm. I intend to allocate at least a month to polish my notations, language, and typesetting.
