@@ -22,7 +22,7 @@ editor:
     wrap: 72
 ---
 # Introduction of Factor Analytic Models
-Factor analysis (FA) is a statistical method which attempts to use fewer
+Factor analysis is a statistical method which attempts to use fewer
 underlying factors to explain the correlation between a large set of
 observed variables. Suppose we have an observable random vector $\boldsymbol{y}_i\in \mathbb{R}^p$ for the $i$-th subject
 with mean $\mathbb{E}(\boldsymbol{y}_i)=\boldsymbol{\mu}$ and variance
@@ -30,10 +30,10 @@ $\mathbb{V}(\boldsymbol{y}_i)=\boldsymbol{\Sigma}$. Then a $k$-order factor anal
 for $\boldsymbol{y}_i$ can be given by \begin{equation}
 \boldsymbol{y}_i=\boldsymbol{\mu}+\boldsymbol{\Lambda} \boldsymbol{f}_i+\boldsymbol{\epsilon}_i,
 \end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$,   $\boldsymbol{f}_i \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon}_i \in \mathbb{R}^{p}$ are called the _loading matrix_, _common factors_  and _unique (or specific) factors_, respectively. The order $k$ is usually much smaller than $p$. For simplicity, we can assume that $\boldsymbol{\mu} = \boldsymbol{0}_p$.
-We also assume that the common factors and the unique factors are independent. We aim to find a _sparse_ loading matrix as well as estimate the diagonal covariance matrix of the unique factor.
+We also assume that the common factors and the unique factors are independent. We aim to estimate a _sparse_ loading matrix as well as estimate the diagonal covariance matrix of the unique factor.
 
 # Current Work Results
-I have completed the introduction to the factor analysis model and reviewed the traditional two-step procedure for obtaining the sparse loading matrix. However, this traditional method has been criticized for potentially causing overfitting and producing overly dense solutions. I conducted a small simulation to demonstrate these issues. Following this, I introduced the concept of penalized factor analysis and the EM algorithm, including a brief proof of the algorithm's correctness. I dedicated an entire chapter to proposing the LASSO-penalized EM algorithm for factor analysis, detailing the procedures for both the E-step and the M-step. In the M-step, I employed a proximal gradient method. I implemented the EM algorithm using R and visualized the results as well.
+I have completed the introduction to the factor analysis model and reviewed the traditional two-step procedure for obtaining the sparse loading matrix. However, this traditional method has been criticized for potentially causing overfitting and producing overly dense solutions. I conducted a small simulation to demonstrate these issues. Following this, I explored Expecation-Maximisation (EM) algorithm and penalised likelihood approaches to fitting factor analytic models, including a brief proof of the algorithm's correctness. I detailed extensively procedures for both the E-step and the M-step in the aforementioned algorithm. In the M-step, I employed a proximal gradient method. I implemented the algorithm (that is still in work-in-progress) in the statistical software, R.
 
 # Future Expectations
 
