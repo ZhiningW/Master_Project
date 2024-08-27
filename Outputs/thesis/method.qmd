@@ -71,7 +71,7 @@ $$
 and also 
 
 $$
-\boldsymbol{Cov}(\boldsymbol{y_i},\boldsymbol{f_i})=\boldsymbol{Cov}(\boldsymbol{\Lambda f}_i+\boldsymbol{\epsilon}_i,\boldsymbol{f}_i)=\boldsymbol{\Lambda}^\top.
+\text{Cov}(\boldsymbol{y}_i,\boldsymbol{f}_i)=\text{Cov}(\boldsymbol{\Lambda f}_i+\boldsymbol{\epsilon}_i,\boldsymbol{f}_i)=\boldsymbol{\Lambda}^\top.
 $$ 
 
 Therefore we have 

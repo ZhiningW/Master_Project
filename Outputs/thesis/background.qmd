@@ -13,9 +13,14 @@ psychology where certain variables, like intelligence, cannot be directly measur
 Suppose we have an observable random vector $\boldsymbol{y}_i\in \mathbb{R}^p$ for the $i$-th subject
 with mean $\mathbb{E}(\boldsymbol{y}_i)=\boldsymbol{\mu}$ and variance
 $\mathbb{V}(\boldsymbol{y}_i)=\boldsymbol{\Sigma}$. Then a $k$-order factor analysis model
-for $\boldsymbol{y}_i$ can be given by \begin{equation}
+for $\boldsymbol{y}_i$ can be given by 
+$$
+\begin{equation}
 \boldsymbol{y}_i=\boldsymbol{\mu}+\boldsymbol{\Lambda} \boldsymbol{f}_i+\boldsymbol{\epsilon}_i,
-\end{equation} where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$,   $\boldsymbol{f}_i \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon}_i \in \mathbb{R}^{p}$ are called the _loading matrix_, _common factors_  and _unique (or specific) factors_, respectively. The order $k$ is usually much smaller than $p$. For simplicity, we can assume that $\boldsymbol{\mu} = \boldsymbol{0}_p$.
+\end{equation} 
+$$
+
+where $\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}$,   $\boldsymbol{f}_i \in \mathbb{R}^{k}$ is and $\boldsymbol{\epsilon}_i \in \mathbb{R}^{p}$ are called the _loading matrix_, _common factors_  and _unique (or specific) factors_, respectively. The order $k$ is usually much smaller than $p$. For simplicity, we conduct a centralization to those $\boldsymbol{y}_i$ and assume that $\boldsymbol{\mu} = \boldsymbol{0}_p$.
 
 To make the model well-defined, we may assume
 
@@ -30,7 +35,8 @@ Alternatively, we can write the model as
 
 
 $$\boldsymbol{y} = (\mathbf{I}_n \otimes \boldsymbol{\Lambda})\boldsymbol{f} + \boldsymbol{\epsilon}$$
-where $\boldsymbol{y} = 
+where 
+$\boldsymbol{y} = 
 \begin{pmatrix}
 \boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_n
 \end{pmatrix}
@@ -41,15 +47,12 @@ $, $\boldsymbol{f} =
 $ and $\boldsymbol{\epsilon} = 
 \begin{pmatrix}
 \boldsymbol{\epsilon}_1 \\ \boldsymbol{\epsilon}_2 \\ \vdots \\  \boldsymbol{\epsilon}_n
-\end{pmatrix}
-$. Thus we have
+\end{pmatrix}$. Thus we have
 
 
 $$\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_{nk}\\\boldsymbol{0}_{np}\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_{nk} & \mathbf{0}_{nk\times np}\\\mathbf{0}_{np\times nk} & \mathbf{I}_n \otimes \mathbf{\Psi}\end{bmatrix}.$$
 
 
-
-::: callout-note
 
 ## Indeterminacy of the loading matrix
 
@@ -62,11 +65,6 @@ $$\mathbb{V}[\boldsymbol{y}]=(\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\
 Therefore a rotated loading matrix $\boldsymbol{\Lambda}\boldsymbol{M}$ is still a valid
 loading matrix for a factor analytic model. Sometimes we resolve this problem by making the loading matrix to satisfy some constraints like [@mardiaMultivariateAnalysis1979]
 $$\boldsymbol{\Lambda}^\top \boldsymbol{\Psi}^{-1} \boldsymbol{\Lambda} \text{ is diagonal.}$$
-
-::: 
-
-
-
 
 ## Parameter Estimation
 
@@ -116,17 +114,18 @@ $$
 \Leftrightarrow \ & \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})
 \end{align*}
 $$
-Q.E.D
 :::
 
 
 
 The MLE is obtained by seeking the roots of equation system (provided the likelihood is compact)
 
-\begin{align}
+$$
+\begin{align*}
 \frac{\partial}{\partial \boldsymbol{\Lambda}}\ell(\boldsymbol{\theta})&=0 \\
 \frac{\partial}{\partial \boldsymbol{\Psi}}\ell(\boldsymbol{\theta})&= 0.
-\end{align}
+\end{align*}
+$$ {#eq-solveMLE}
 
 However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximization (EM) algorithm [@Rubin1982EMAlgorithms], we will discuss this algorithm in the last part of background. 
 
@@ -137,17 +136,21 @@ After estimation, we want to rotate the loading matrix to possess a sparse matri
 
 Suppose $Q(\boldsymbol{\Lambda})$ is an criterion for $\boldsymbol{\Lambda}$ in the rotation procedure, and we may express it as $Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})$ where $P(\cdot)$ is some loss function[@hiroseSparseEstimationNonconcave2015]. Specifically, if we set $P(\cdot)=|\cdot|$, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as [@Jennrich2004Rotation]
 
+$$
 \begin{align*}
 &\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
 &\text{subject to } \boldsymbol{\Lambda}=\boldsymbol{\Lambda}_0\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
 \end{align*}
+$$
 
 where $\boldsymbol{\Lambda}_0$ is an initial guess. Since we execute this technique after obtaining the MLE of parameters, therefore what we want is 
 
+$$
 \begin{align*}
 &\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
 &\text{subject to } \boldsymbol{\Lambda}=\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
 \end{align*}
+$$
 
 where $\hat{\boldsymbol{\Lambda}}_{\text{MLE}}$ is the maximum likelihood estimator.
 
@@ -223,22 +226,24 @@ Typically, the test is conducted at a $5\%$ significant level. We can start the 
 
 Penalized likelihood method can be viewed as a generalization of two-step method mentioned above [@hiroseSparseEstimationNonconcave2015]. A penalized factor analytic model can be obtained by solving following optimization problem
 $$
- \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}\ell_p := \ell(\boldsymbol{\theta})-\rho\sum^p_{i=1}\sum^k_{j=1}P(\lambda_{ij}).
+ \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}\ell_p := \ell(\boldsymbol{\theta})-P(\boldsymbol{\theta};\rho).
 $$
-where we call $l_p$ as the penalized likelihood, $\rho$ is called regularization parameter and we can treat $P(\cdot)$ as a penalized function. There are many types of penalized functions developed, such as LASSO ($P(\cdot)=|\cdot|$) and MC+ ($P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)$) [@hiroseSparseEstimationNonconcave2015]，where $\gamma$ is ..... In this article, we will mainly focus on the LASSO penalty.
+where we call $\ell_p$ as the penalized likelihood, $\rho$ is called regularization parameter or tuning parameter, and we treat $P(\boldsymbol{\theta};\rho)$ as the penalty. There are many types of penalized functions developed, such as LASSO ($P(\boldsymbol{\Lambda})=\sum_{i=1}^p\sum_{j=1}^k|\lambda_{ij}|$) and MC+ ($P(\boldsymbol{\theta};\rho;\gamma)=\sum_{i=1}^p\sum_{j=1}^k \{ n(|\lambda_{ij}|-\frac{\lambda_{ij}^2}{2\rho\gamma})I(|\lambda_{ij}|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\lambda_{ij}|\geq\rho\gamma)\} $)[@hiroseSparseEstimationNonconcave2015]，where $\gamma$ is another tuning parameter to keep a balance between unbiasedness and concavity. In this article, we will mainly focus on the LASSO penalty.
 
 ### LASSO penalty and LASSO estimator
 
 Again, recall that the LASSO penalized likelihood is given by
-$$\ell_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|$$
+$$\ell_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|$$
 and the LASSO estimator, denoted as $(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*)$, can be obtained via
 
+$$
 \begin{align*}
-(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|\\
-&=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|.
+(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|\\
+&=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|.
 \end{align*}
+$$
+Nevertheless, the objective function is non_differentiable at some point because of the penalization term. Therefore we need to find other approaches to obtain the estimator instead of solving  
 
-An E-M algorithm can be applied for evaluating the LASSO estimator.
 
 ## The EM Algorithm {#sec-EM}
 
@@ -255,13 +260,14 @@ The M-step may be replaced with updating $\boldsymbol{\theta}^{(t+1)}$ such that
 We iterate between E-step and M-step until convergence. The convergence may be determined by a criteria such as $||\boldsymbol{\theta}^{(t+1)}-\boldsymbol{\theta}^{(t)}||_p\leq \epsilon$ for some $p$-norm $||\cdot||_p$ and $\epsilon > 0$.
 
 
-
 The EM algorithm approaches the problem of solving the likelihood equation indirectly by proceeding iteratively in terms of $\ell(\boldsymbol{\theta};\boldsymbol{y})$. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given $\boldsymbol{y}$ and current fit for $\boldsymbol{\theta}$.
+
+Now we need to show the correctness of the EM-algorithm. In other words, by iteratively processing the EM-algorithm, the likelihood will keep increasing (at least non-decreasing). First we need to show the following lemma.
 
 ::: {#lem-convergence}
 
 ## Convergence of the EM Algorithm
-For all $\epsilon > 0$, there exists $t > t_0$ such that
+Suppose the likelihood is upper-bounded. Then for all $\epsilon > 0$, there exists $t > t_0$ such that
 $||\boldsymbol{\theta}^{(t)} - \hat{\boldsymbol{\theta}}|| < \epsilon$ where $\hat{\boldsymbol{\theta}}$ is the MLE.
 
 :::
@@ -269,29 +275,34 @@ $||\boldsymbol{\theta}^{(t)} - \hat{\boldsymbol{\theta}}|| < \epsilon$ where $\h
 ::: proof
 
 
-By the definition of conditional likelihood, our likelihood of complete data can be expressed by
+By the definition of conditional likelihood, our likelihood of complete data, i.e. the observable and unobservable data,  can be expressed by
 $$
-L_{\boldsymbol{X}}(\boldsymbol{\beta}) = f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta})=L_{\boldsymbol{Y}}(\boldsymbol{\beta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}),
+L_{\boldsymbol{X}}(\boldsymbol{\theta}) = f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\theta})=L_{\boldsymbol{Y}}(\boldsymbol{\theta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}),
 $$
 and hence the log-likelihood is given by
 $$
-\log L_{\boldsymbol{X}}(\boldsymbol{\beta}) = \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}) + \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}).
+\log L_{\boldsymbol{X}}(\boldsymbol{\theta}) = \ell_{\boldsymbol{y}}(\boldsymbol{\theta}) + \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}).
 $$
-Take expectation to both sides of the equation with respect to $\boldsymbol{x|y}$ and replace $\boldsymbol{\beta}$ by $\boldsymbol{\beta}^{(k)}$, we will have 
+Take expectation to both sides of the equation with respect to $\boldsymbol{x|y}$ and replace $\boldsymbol{\theta}$ by $\boldsymbol{\theta}^{(k)}$, we will have 
 $$
-Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) = \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}) + \mathbb{E}_{\boldsymbol{X}}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].
+Q(\boldsymbol{\theta};\boldsymbol{\theta}^{(k)}) = \ell_{\boldsymbol{y}}(\boldsymbol{\theta}) + \mathbb{E}_{\boldsymbol{X}}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}].
 $$
 Now consider the difference of log-likelihood of $\boldsymbol{Y}$ function between two iterations, we have
 $$
 \begin{align*}
-  \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}^{(k+1)})-\log L_{\boldsymbol{Y}}(\boldsymbol{\beta}^{(k)}) =
-  &\{Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})-Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\}\\
-  &-\{\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
-  &-\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
+  \ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k+1)})-\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k)}) =
+  &\{Q(\boldsymbol{\theta}^{(k+1)};\boldsymbol{\theta}^{(k)})-Q(\boldsymbol{\theta}^{(k)};\boldsymbol{\theta}^{(k)})\}\\
+  &-\{\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}]\\
+  &-\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k)}|\boldsymbol{y},\boldsymbol{\theta}^{(k)}]\}.
 \end{align*}
 $$
-By the procedure of EM-algorithm, we always have $Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})$. By the Gibbs's inequality, we have $\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].$
-Therefore during iterations, the log-likelihood of observed data $\boldsymbol{Y}$ keeps increasing. If the log-likelihood is bounded, then we can promise that it must converge to some maximum.
+By the procedure of EM-algorithm, we always have $Q(\boldsymbol{\theta}^{(k+1)};\boldsymbol{\theta}^{(k)})\geq Q(\boldsymbol{\theta}^{(k)};\boldsymbol{\theta}^{(k)})$. By the Gibbs's inequality, we have $\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k)}|\boldsymbol{y},\boldsymbol{\theta}^{(k)}].$
+Therefore during iterations, the sequnence of log-likelihood of observed data $\boldsymbol{Y}$ given by $\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(n)})\}_{n\geq 1}:=\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(1)}),\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(2)}),\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(3)}),\dots\}$, is increasing. Now replace the term $\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k+1)})$ by $\ell_{\boldsymbol{y}}(\hat{\boldsymbol{{\theta}}})$, we will have 
+$$
+\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k)}) \leq \ell_{\boldsymbol{y}}(\hat{\boldsymbol{{\theta}}})
+$$
+for all $k=1,2,\dots$. Therefore the upper-bound of the sequence $\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(n)})\}_{n\geq 1}$ is $\ell_{\boldsymbol{y}}(\hat{\boldsymbol{\theta}})$.
+By the monotone convergence theorem, and the definition of convergence, we finished. 
 
 :::
 

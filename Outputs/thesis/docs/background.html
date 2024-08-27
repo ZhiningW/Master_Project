@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>background</title>
+<title>2&nbsp; Background – {{&lt; var title &gt;}}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -54,21 +54,82 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="background_files/libs/clipboard/clipboard.min.js"></script>
-<script src="background_files/libs/quarto-html/quarto.js"></script>
-<script src="background_files/libs/quarto-html/popper.min.js"></script>
-<script src="background_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="background_files/libs/quarto-html/anchor.min.js"></script>
-<link href="background_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="background_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="background_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="background_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="background_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./method.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -98,61 +159,183 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body class="fullcontent">
+<body class="nav-sidebar floating">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./background.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Model Selection for Factor Analysis</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ZhiningW/Master_Project" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./background.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./method.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Method</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./results.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Results</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Appendix</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#factor-analytic-model" id="toc-factor-analytic-model" class="nav-link active" data-scroll-target="#factor-analytic-model"><span class="header-section-number">2.1</span> Factor analytic model</a></li>
+  <li><a href="#indeterminacy-of-the-loading-matrix" id="toc-indeterminacy-of-the-loading-matrix" class="nav-link" data-scroll-target="#indeterminacy-of-the-loading-matrix"><span class="header-section-number">2.2</span> Indeterminacy of the loading matrix</a></li>
+  <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link" data-scroll-target="#parameter-estimation"><span class="header-section-number">2.3</span> Parameter Estimation</a>
+  <ul class="collapse">
+  <li><a href="#maximum-likelihood-estimation" id="toc-maximum-likelihood-estimation" class="nav-link" data-scroll-target="#maximum-likelihood-estimation"><span class="header-section-number">2.3.1</span> Maximum Likelihood Estimation</a></li>
+  </ul></li>
+  <li><a href="#rotation-techniques" id="toc-rotation-techniques" class="nav-link" data-scroll-target="#rotation-techniques"><span class="header-section-number">2.4</span> Rotation Techniques</a>
+  <ul class="collapse">
+  <li><a href="#discussion-about-two-step-method" id="toc-discussion-about-two-step-method" class="nav-link" data-scroll-target="#discussion-about-two-step-method"><span class="header-section-number">2.4.1</span> Discussion about two-step method</a></li>
+  </ul></li>
+  <li><a href="#penalized-likelihood-method" id="toc-penalized-likelihood-method" class="nav-link" data-scroll-target="#penalized-likelihood-method"><span class="header-section-number">2.5</span> Penalized Likelihood Method</a>
+  <ul class="collapse">
+  <li><a href="#lasso-penalty-and-lasso-estimator" id="toc-lasso-penalty-and-lasso-estimator" class="nav-link" data-scroll-target="#lasso-penalty-and-lasso-estimator"><span class="header-section-number">2.5.1</span> LASSO penalty and LASSO estimator</a></li>
+  </ul></li>
+  <li><a href="#sec-EM" id="toc-sec-EM" class="nav-link" data-scroll-target="#sec-EM"><span class="header-section-number">2.6</span> The EM Algorithm</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ZhiningW/Master_Project/edit/main/background.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ZhiningW/Master_Project/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-bg" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Background</span></span></h1>
+</div>
 
 
 
-<section id="sec-bg" class="level1">
-<h1>Background</h1>
-<section id="factor-analytic-model" class="level2">
-<h2 class="anchored" data-anchor-id="factor-analytic-model">Factor analytic model</h2>
-<p>Factor analysis (FA) is a statistical method which attempts to use fewer underlying factors to explain the correlation between a large set of observed variables <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span>. FA provides a useful tool for exploring the covariance structure among observable variables <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>.</p>
-<p>An FA model assumes that the observations are explained by a small number of underlying factors. This assumption is suited to many areas, e.g.&nbsp;in psychology where certain variables, like intelligence, cannot be directly measured <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span>.</p>
-<p>Suppose we have an observable random vector <span class="math inline">\(\boldsymbol{y}_i\in \mathbb{R}^p\)</span> for the <span class="math inline">\(i\)</span>-th subject with mean <span class="math inline">\(\mathbb{E}(\boldsymbol{y}_i)=\boldsymbol{\mu}\)</span> and variance <span class="math inline">\(\mathbb{V}(\boldsymbol{y}_i)=\boldsymbol{\Sigma}\)</span>. Then a <span class="math inline">\(k\)</span>-order factor analysis model for <span class="math inline">\(\boldsymbol{y}_i\)</span> can be given by <span class="math display">\[\begin{equation}
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="factor-analytic-model" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="factor-analytic-model"><span class="header-section-number">2.1</span> Factor analytic model</h2>
+<p>Factor analysis (FA) is a statistical method which attempts to use fewer underlying factors to explain the correlation between a large set of observed variables <span class="citation" data-cites="mardiaMultivariateAnalysis1979">(<a href="references.html#ref-mardiaMultivariateAnalysis1979" role="doc-biblioref">Mardia, Kent, and Bibby 1979</a>)</span>. FA provides a useful tool for exploring the covariance structure among observable variables <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">(<a href="references.html#ref-hiroseSparseEstimationNonconcave2015" role="doc-biblioref">Hirose and Yamamoto 2015</a>)</span>.</p>
+<p>An FA model assumes that the observations are explained by a small number of underlying factors. This assumption is suited to many areas, e.g.&nbsp;in psychology where certain variables, like intelligence, cannot be directly measured <span class="citation" data-cites="mardiaMultivariateAnalysis1979">(<a href="references.html#ref-mardiaMultivariateAnalysis1979" role="doc-biblioref">Mardia, Kent, and Bibby 1979</a>)</span>.</p>
+<p>Suppose we have an observable random vector <span class="math inline">\(\boldsymbol{y}_i\in \mathbb{R}^p\)</span> for the <span class="math inline">\(i\)</span>-th subject with mean <span class="math inline">\(\mathbb{E}(\boldsymbol{y}_i)=\boldsymbol{\mu}\)</span> and variance <span class="math inline">\(\mathbb{V}(\boldsymbol{y}_i)=\boldsymbol{\Sigma}\)</span>. Then a <span class="math inline">\(k\)</span>-order factor analysis model for <span class="math inline">\(\boldsymbol{y}_i\)</span> can be given by <span class="math display">\[
+\begin{equation}
 \boldsymbol{y}_i=\boldsymbol{\mu}+\boldsymbol{\Lambda} \boldsymbol{f}_i+\boldsymbol{\epsilon}_i,
-\end{equation}\]</span> where <span class="math inline">\(\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}\)</span>, <span class="math inline">\(\boldsymbol{f}_i \in \mathbb{R}^{k}\)</span> is and <span class="math inline">\(\boldsymbol{\epsilon}_i \in \mathbb{R}^{p}\)</span> are called the <em>loading matrix</em>, <em>common factors</em> and <em>unique (or specific) factors</em>, respectively. The order <span class="math inline">\(k\)</span> is usually much smaller than <span class="math inline">\(p\)</span>. For simplicity, we can assume that <span class="math inline">\(\boldsymbol{\mu} = \boldsymbol{0}_p\)</span>.</p>
+\end{equation}
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}\)</span>, <span class="math inline">\(\boldsymbol{f}_i \in \mathbb{R}^{k}\)</span> is and <span class="math inline">\(\boldsymbol{\epsilon}_i \in \mathbb{R}^{p}\)</span> are called the <em>loading matrix</em>, <em>common factors</em> and <em>unique (or specific) factors</em>, respectively. The order <span class="math inline">\(k\)</span> is usually much smaller than <span class="math inline">\(p\)</span>. For simplicity, we conduct a centralization to those <span class="math inline">\(\boldsymbol{y}_i\)</span> and assume that <span class="math inline">\(\boldsymbol{\mu} = \boldsymbol{0}_p\)</span>.</p>
 <p>To make the model well-defined, we may assume</p>
 <p><span class="math display">\[\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}_i\\\boldsymbol{\epsilon}_i\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_k\\\boldsymbol{0}_p\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}_i\\\boldsymbol{\epsilon}_i\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_k &amp; \mathbf{0}_{k\times p}\\\mathbf{0}_{p\times k} &amp; \mathbf{\Psi}\end{bmatrix},\]</span></p>
 <p>where <span class="math inline">\(\boldsymbol{\Psi}\)</span> is a <span class="math inline">\(p\times p\)</span> diagonal matrix where we denote the <span class="math inline">\(i\)</span>-th diagonal entry as <span class="math inline">\(\psi_{ii}\)</span>. Based on this assumption, the covariance of observable vector <span class="math inline">\(\boldsymbol{y}_i\)</span> can be modelled by</p>
 <p><span class="math display">\[\mathbb{V}(\boldsymbol{y}_i|\boldsymbol{\Lambda},\boldsymbol{\Psi} )=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.\]</span></p>
 <p>Alternatively, we can write the model as</p>
-<p><span class="math display">\[\boldsymbol{y} = (\mathbf{I}_n \otimes \boldsymbol{\Lambda})\boldsymbol{f} + \boldsymbol{\epsilon}\]</span> where <span class="math inline">\(\boldsymbol{y} = (\boldsymbol{y}_1, \boldsymbol{y}_2, \cdots,  \boldsymbol{y}_n)\)</span>, <span class="math inline">\(\boldsymbol{f} = (\boldsymbol{f}_1, \boldsymbol{f}_2, \cdots,  \boldsymbol{f}_n)\)</span> and <span class="math inline">\(\boldsymbol{\epsilon} = (\boldsymbol{\epsilon}_1, \boldsymbol{\epsilon}_2, \cdots,  \boldsymbol{\epsilon}_n)\)</span>. Thus we have</p>
+<p><span class="math display">\[\boldsymbol{y} = (\mathbf{I}_n \otimes \boldsymbol{\Lambda})\boldsymbol{f} + \boldsymbol{\epsilon}\]</span> where <span class="math inline">\(\boldsymbol{y} =
+\begin{pmatrix}
+\boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_n
+\end{pmatrix}\)</span>, <span class="math inline">\(\boldsymbol{f} =
+\begin{pmatrix}
+\boldsymbol{f}_1 \\ \boldsymbol{f}_2 \\ \vdots \\  \boldsymbol{f}_n
+\end{pmatrix}\)</span> and <span class="math inline">\(\boldsymbol{\epsilon} =
+\begin{pmatrix}
+\boldsymbol{\epsilon}_1 \\ \boldsymbol{\epsilon}_2 \\ \vdots \\  \boldsymbol{\epsilon}_n
+\end{pmatrix}\)</span>. Thus we have</p>
 <p><span class="math display">\[\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_{nk}\\\boldsymbol{0}_{np}\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_{nk} &amp; \mathbf{0}_{nk\times np}\\\mathbf{0}_{np\times nk} &amp; \mathbf{I}_n \otimes \mathbf{\Psi}\end{bmatrix}.\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Indeterminacy of the loading matrix
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>One can easily see that if our factor analytic model is given by (1), then it can also be modelled as <span class="math display">\[\boldsymbol{y}=(\boldsymbol{\Lambda}\boldsymbol{M})(\boldsymbol{M}^\top\boldsymbol{f}) +\boldsymbol{\mu}+\boldsymbol{\epsilon}\]</span> where the matrix <span class="math inline">\(\boldsymbol{M}\)</span> is orthogonal and simultaneously the variance of <span class="math inline">\(\boldsymbol{y}\)</span> given by (2) still holds, since <span class="math display">\[\mathbb{V}[\boldsymbol{y}]=(\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\top)\mathbb{V}[\boldsymbol{f}](\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\top)^\top+\boldsymbol{\Psi}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.\]</span> Therefore a rotated loading matrix <span class="math inline">\(\boldsymbol{\Lambda}\boldsymbol{M}\)</span> is still a valid loading matrix for a factor analytic model. Sometimes we resolve this problem by making the loading matrix to satisfy some constraints like <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span> <span class="math display">\[\boldsymbol{\Lambda}^\top \boldsymbol{\Psi}^{-1} \boldsymbol{\Lambda} \text{ is diagonal.}\]</span></p>
-</div>
-</div>
 </section>
-<section id="parameter-estimation" class="level2">
-<h2 class="anchored" data-anchor-id="parameter-estimation">Parameter Estimation</h2>
+<section id="indeterminacy-of-the-loading-matrix" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="indeterminacy-of-the-loading-matrix"><span class="header-section-number">2.2</span> Indeterminacy of the loading matrix</h2>
+<p>One can easily see that if our factor analytic model is given by (1), then it can also be modelled as <span class="math display">\[\boldsymbol{y}=(\boldsymbol{\Lambda}\boldsymbol{M})(\boldsymbol{M}^\top\boldsymbol{f}) +\boldsymbol{\mu}+\boldsymbol{\epsilon}\]</span> where the matrix <span class="math inline">\(\boldsymbol{M}\)</span> is orthogonal and simultaneously the variance of <span class="math inline">\(\boldsymbol{y}\)</span> given by (2) still holds, since <span class="math display">\[\mathbb{V}[\boldsymbol{y}]=(\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\top)\mathbb{V}[\boldsymbol{f}](\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\top)^\top+\boldsymbol{\Psi}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.\]</span> Therefore a rotated loading matrix <span class="math inline">\(\boldsymbol{\Lambda}\boldsymbol{M}\)</span> is still a valid loading matrix for a factor analytic model. Sometimes we resolve this problem by making the loading matrix to satisfy some constraints like <span class="citation" data-cites="mardiaMultivariateAnalysis1979">(<a href="references.html#ref-mardiaMultivariateAnalysis1979" role="doc-biblioref">Mardia, Kent, and Bibby 1979</a>)</span> <span class="math display">\[\boldsymbol{\Lambda}^\top \boldsymbol{\Psi}^{-1} \boldsymbol{\Lambda} \text{ is diagonal.}\]</span></p>
+</section>
+<section id="parameter-estimation" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="parameter-estimation"><span class="header-section-number">2.3</span> Parameter Estimation</h2>
 <p>We denote the set of parameters by <span class="math inline">\(\boldsymbol{\theta} = \{\text{vec}(\boldsymbol{\Lambda}), \text{diag}(\boldsymbol{\Psi})\}\)</span> where <span class="math inline">\(\text{vec}(\cdot)\)</span> is the vectorisation of the input matrix and <span class="math inline">\(\text{diag}(\cdot)\)</span> is the diagonal elements of the input matrix.</p>
 <p>Traditionally, a two-step procedure is used to construct a factor analytic model: estimate parameters by maximum likelihood estimation (aka, MLE) and then use rotation techniques to find an interpretable model.</p>
-<section id="maximum-likelihood-estimation" class="level3">
-<h3 class="anchored" data-anchor-id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h3>
-<p>Suppose we have <span class="math inline">\(n\)</span> independent and identically distributed observations <span class="math inline">\(\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\)</span> from a <span class="math inline">\(p\)</span>-dimensional multi-variate normal distribution <span class="math inline">\(N_p(\boldsymbol{\mu},\boldsymbol{\Sigma})\)</span>. Now denote <span class="math inline">\(f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta})\)</span> as the probability density function of the random vector <span class="math inline">\(\boldsymbol{Y}\)</span> corresponding to <span class="math inline">\(\boldsymbol{y}\)</span>. Then the likelihood is given by</p>
+<section id="maximum-likelihood-estimation" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="maximum-likelihood-estimation"><span class="header-section-number">2.3.1</span> Maximum Likelihood Estimation</h3>
+<p>Suppose we have <span class="math inline">\(n\)</span> independent and identically distributed observations <span class="math inline">\(\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\)</span> from a <span class="math inline">\(p\)</span>-dimensional multi-variate normal distribution <span class="math inline">\(\mathcal{N}_p(\boldsymbol{\mu},\boldsymbol{\Sigma})\)</span>. Now denote <span class="math inline">\(f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta})\)</span> as the probability density function of the random vector <span class="math inline">\(\boldsymbol{Y}\)</span> corresponding to <span class="math inline">\(\boldsymbol{y}\)</span>. Then the likelihood is given by</p>
 <p><span id="eq-likelihood"><span class="math display">\[
 L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta}) = \prod^n_{i=1}f_{\boldsymbol{y}_i}(\boldsymbol{y}_i;\boldsymbol{\theta}) =  \prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].
-\tag{1}\]</span></span></p>
-<p>The maximum likelihood estimate (MLE) of <span class="math inline">\(\boldsymbol{\theta}\)</span>, denoted as <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>, is found by finding <span class="math inline">\(\boldsymbol{\theta}\)</span> that maximizes <a href="#eq-likelihood" class="quarto-xref">Equation&nbsp;1</a>. However, it is often more convenient to maximize the log likelihood function. To be more computational friendly, a better form of log likelihood is given by</p>
+\tag{2.1}\]</span></span></p>
+<p>The maximum likelihood estimate (MLE) of <span class="math inline">\(\boldsymbol{\theta}\)</span>, denoted as <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>, is found by finding <span class="math inline">\(\boldsymbol{\theta}\)</span> that maximizes <a href="#eq-likelihood" class="quarto-xref">Equation&nbsp;<span>2.1</span></a>. However, it is often more convenient to maximize the log likelihood function. To be more computational friendly, a better form of log likelihood is given by</p>
 <div id="lem-MLE" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 1</strong></span> The log-likelihood is given by</p>
-<p><span id="eq-loglikelihood"><span class="math display">\[\ell(\boldsymbol{\theta}) =  -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right] \tag{2}\]</span></span></p>
+<p><span class="theorem-title"><strong>Lemma 2.1</strong></span> The log-likelihood is given by</p>
+<p><span id="eq-loglikelihood"><span class="math display">\[\ell(\boldsymbol{\theta}) =  -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right] \tag{2.2}\]</span></span></p>
 <p>where <span class="math inline">\(\boldsymbol{S}\)</span> is the sample covariance defined as <span class="math inline">\(\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\)</span>.</p>
 </div>
 <div class="proof">
@@ -169,33 +352,39 @@ L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsym
 \Leftrightarrow \ &amp; \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n} \sum^n_{i=1} \text{tr} (\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top)\\
 \Leftrightarrow \ &amp; \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})
 \end{align*}
-\]</span> Q.E.D</p>
+\]</span></p>
 </div>
 <p>The MLE is obtained by seeking the roots of equation system (provided the likelihood is compact)</p>
-<p><span class="math display">\[\begin{align}
+<p><span id="eq-solveMLE"><span class="math display">\[
+\begin{align*}
 \frac{\partial}{\partial \boldsymbol{\Lambda}}\ell(\boldsymbol{\theta})&amp;=0 \\
 \frac{\partial}{\partial \boldsymbol{\Psi}}\ell(\boldsymbol{\theta})&amp;= 0.
-\end{align}\]</span></p>
-<p>However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximization (EM) algorithm <span class="citation" data-cites="Rubin1982EMAlgorithms">[@Rubin1982EMAlgorithms]</span>, we will discuss this algorithm in the last part of background.</p>
+\end{align*}
+\tag{2.3}\]</span></span></p>
+<p>However, there is no closed form of the roots. Many iterative algorithms are developed to get the roots of the equation, like Expectation-Maximization (EM) algorithm <span class="citation" data-cites="Rubin1982EMAlgorithms">(<a href="references.html#ref-Rubin1982EMAlgorithms" role="doc-biblioref">Rubin and Thayer 1982</a>)</span>, we will discuss this algorithm in the last part of background.</p>
 </section>
 </section>
-<section id="rotation-techniques" class="level2">
-<h2 class="anchored" data-anchor-id="rotation-techniques">Rotation Techniques</h2>
-<p>After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>.</p>
-<p>Suppose <span class="math inline">\(Q(\boldsymbol{\Lambda})\)</span> is an criterion for <span class="math inline">\(\boldsymbol{\Lambda}\)</span> in the rotation procedure, and we may express it as <span class="math inline">\(Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})\)</span> where <span class="math inline">\(P(\cdot)\)</span> is some loss function<span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>. Specifically, if we set <span class="math inline">\(P(\cdot)=|\cdot|\)</span>, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as <span class="citation" data-cites="Jennrich2004Rotation">[@Jennrich2004Rotation]</span></p>
-<p><span class="math display">\[\begin{align*}
+<section id="rotation-techniques" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="rotation-techniques"><span class="header-section-number">2.4</span> Rotation Techniques</h2>
+<p>After estimation, we want to rotate the loading matrix to possess a sparse matrix in order to interpret the observable variables by underlying factors better. Also there are many method to achieve rotation as well such as the varimax method and the promax method <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">(<a href="references.html#ref-hiroseSparseEstimationNonconcave2015" role="doc-biblioref">Hirose and Yamamoto 2015</a>)</span>.</p>
+<p>Suppose <span class="math inline">\(Q(\boldsymbol{\Lambda})\)</span> is an criterion for <span class="math inline">\(\boldsymbol{\Lambda}\)</span> in the rotation procedure, and we may express it as <span class="math inline">\(Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})\)</span> where <span class="math inline">\(P(\cdot)\)</span> is some loss function<span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">(<a href="references.html#ref-hiroseSparseEstimationNonconcave2015" role="doc-biblioref">Hirose and Yamamoto 2015</a>)</span>. Specifically, if we set <span class="math inline">\(P(\cdot)=|\cdot|\)</span>, we have LASSO to generate a theoretically sparse loading matrix. If we rewrite this in a optimization problem, it can be given as <span class="citation" data-cites="Jennrich2004Rotation">(<a href="references.html#ref-Jennrich2004Rotation" role="doc-biblioref">Jennrich 2004</a>)</span></p>
+<p><span class="math display">\[
+\begin{align*}
 &amp;\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
 &amp;\text{subject to } \boldsymbol{\Lambda}=\boldsymbol{\Lambda}_0\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
-\end{align*}\]</span></p>
+\end{align*}
+\]</span></p>
 <p>where <span class="math inline">\(\boldsymbol{\Lambda}_0\)</span> is an initial guess. Since we execute this technique after obtaining the MLE of parameters, therefore what we want is</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="math display">\[
+\begin{align*}
 &amp;\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
 &amp;\text{subject to } \boldsymbol{\Lambda}=\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
-\end{align*}\]</span></p>
+\end{align*}
+\]</span></p>
 <p>where <span class="math inline">\(\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\)</span> is the maximum likelihood estimator.</p>
-<section id="discussion-about-two-step-method" class="level3">
-<h3 class="anchored" data-anchor-id="discussion-about-two-step-method">Discussion about two-step method</h3>
-<p>The traditional two-step method faces significant shortcomings, primarily its unsuitability <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by <span class="math display">\[
+<section id="discussion-about-two-step-method" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="discussion-about-two-step-method"><span class="header-section-number">2.4.1</span> Discussion about two-step method</h3>
+<p>The traditional two-step method faces significant shortcomings, primarily its unsuitability <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">(<a href="references.html#ref-hiroseSparseEstimationNonconcave2015" role="doc-biblioref">Hirose and Yamamoto 2015</a>)</span>. Similar to challenges in regression models, MLE can result in overfitting, and rotation techniques might not yield a sufficiently sparse loading matrix. See this as an example: Suppose the true loading matrix is given by <span class="math display">\[
 \boldsymbol{\Lambda}=
 \begin{bmatrix}
 0.8 &amp; 0 \\
@@ -258,31 +447,32 @@ Cumulative Var   0.475   0.786
 The degrees of freedom for the model is 1 and the fit was 2e-04 </code></pre>
 </div>
 </div>
-<p>Another problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model <span class="citation" data-cites="mardiaMultivariateAnalysis1979">[@mardiaMultivariateAnalysis1979]</span>. We have <span class="math display">\[\begin{align*}
+<p>Another problem is that the absence of model selection complicates efficient modeling by making it difficult to determine the precise number of underlying factors, that is, the order of the factor analytic model. A usual but troublesome method is conducting a hypothesis test for the model <span class="citation" data-cites="mardiaMultivariateAnalysis1979">(<a href="references.html#ref-mardiaMultivariateAnalysis1979" role="doc-biblioref">Mardia, Kent, and Bibby 1979</a>)</span>. We have <span class="math display">\[\begin{align*}
   &amp;&amp;&amp;H_k: k \text{ common factors are sufficient to describe the data } \\
   \longleftrightarrow &amp;&amp;&amp;H_a: \text{ Otherwise}.
-\end{align*}\]</span> The test statistics is given by <span class="math inline">\(\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\boldsymbol{\Psi}})\)</span> which has an asymptotic <span class="math inline">\(\chi^2_s\)</span> distribution with <span class="math inline">\(s=\frac{1}{2}(p-k)^2-(p+k)\)</span> by the property of MLE, where <span class="math inline">\(F\)</span> is given by (<span class="citation" data-cites="mardiaMultivariateAnalysis1979">@mardiaMultivariateAnalysis1979</span>) <span class="math display">\[
+\end{align*}\]</span> The test statistics is given by <span class="math inline">\(\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\boldsymbol{\Psi}})\)</span> which has an asymptotic <span class="math inline">\(\chi^2_s\)</span> distribution with <span class="math inline">\(s=\frac{1}{2}(p-k)^2-(p+k)\)</span> by the property of MLE, where <span class="math inline">\(F\)</span> is given by (<span class="citation" data-cites="mardiaMultivariateAnalysis1979">Mardia, Kent, and Bibby (<a href="references.html#ref-mardiaMultivariateAnalysis1979" role="doc-biblioref">1979</a>)</span>) <span class="math display">\[
 F(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})-\log(\det(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}))-p.
 \]</span> Typically, the test is conducted at a <span class="math inline">\(5\%\)</span> significant level. We can start the procedure from a very small <span class="math inline">\(k\)</span>, say, <span class="math inline">\(k=1\)</span> or <span class="math inline">\(k=2\)</span> and then increase <span class="math inline">\(k\)</span> until the null hypothesis is not rejected.</p>
 </section>
 </section>
-<section id="penalized-likelihood-method" class="level2">
-<h2 class="anchored" data-anchor-id="penalized-likelihood-method">Penalized Likelihood Method</h2>
-<p>Penalized likelihood method can be viewed as a generalization of two-step method mentioned above <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>. A penalized factor analytic model can be obtained by solving following optimization problem <span class="math display">\[
-\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}\ell_p := \ell(\boldsymbol{\theta})-\rho\sum^p_{i=1}\sum^k_{j=1}P(\lambda_{ij}).
-\]</span> where we call <span class="math inline">\(l_p\)</span> as the penalized likelihood, <span class="math inline">\(\rho\)</span> is called regularization parameter and we can treat <span class="math inline">\(P(\cdot)\)</span> as a penalized function. There are many types of penalized functions developed, such as LASSO (<span class="math inline">\(P(\cdot)=|\cdot|\)</span>) and MC+ (<span class="math inline">\(P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|&lt;\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)\)</span>) <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">[@hiroseSparseEstimationNonconcave2015]</span>，where <span class="math inline">\(\gamma\)</span> is ….. In this article, we will mainly focus on the LASSO penalty.</p>
-<section id="lasso-penalty-and-lasso-estimator" class="level3">
-<h3 class="anchored" data-anchor-id="lasso-penalty-and-lasso-estimator">LASSO penalty and LASSO estimator</h3>
-<p>Again, recall that the LASSO penalized likelihood is given by <span class="math display">\[\ell_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|\]</span> and the LASSO estimator, denoted as <span class="math inline">\((\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*)\)</span>, can be obtained via</p>
-<p><span class="math display">\[\begin{align*}
-(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &amp;= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|\\
-&amp;=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|.
-\end{align*}\]</span></p>
-<p>An E-M algorithm can be applied for evaluating the LASSO estimator.</p>
+<section id="penalized-likelihood-method" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="penalized-likelihood-method"><span class="header-section-number">2.5</span> Penalized Likelihood Method</h2>
+<p>Penalized likelihood method can be viewed as a generalization of two-step method mentioned above <span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">(<a href="references.html#ref-hiroseSparseEstimationNonconcave2015" role="doc-biblioref">Hirose and Yamamoto 2015</a>)</span>. A penalized factor analytic model can be obtained by solving following optimization problem <span class="math display">\[
+\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}\ell_p := \ell(\boldsymbol{\theta})-P(\boldsymbol{\theta};\rho).
+\]</span> where we call <span class="math inline">\(\ell_p\)</span> as the penalized likelihood, <span class="math inline">\(\rho\)</span> is called regularization parameter or tuning parameter, and we treat <span class="math inline">\(P(\boldsymbol{\theta};\rho)\)</span> as the penalty. There are many types of penalized functions developed, such as LASSO (<span class="math inline">\(P(\boldsymbol{\Lambda})=\sum_{i=1}^p\sum_{j=1}^k|\lambda_{ij}|\)</span>) and MC+ ($P(;;)=<em>{i=1}^p</em>{j=1}^k { n(|<em>{ij}|-)I(|</em>{ij}|&lt;)+I(|_{ij}|)} $)<span class="citation" data-cites="hiroseSparseEstimationNonconcave2015">(<a href="references.html#ref-hiroseSparseEstimationNonconcave2015" role="doc-biblioref">Hirose and Yamamoto 2015</a>)</span>，where <span class="math inline">\(\gamma\)</span> is another tuning parameter to keep a balance between unbiasedness and concavity. In this article, we will mainly focus on the LASSO penalty.</p>
+<section id="lasso-penalty-and-lasso-estimator" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="lasso-penalty-and-lasso-estimator"><span class="header-section-number">2.5.1</span> LASSO penalty and LASSO estimator</h3>
+<p>Again, recall that the LASSO penalized likelihood is given by <span class="math display">\[\ell_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|\]</span> and the LASSO estimator, denoted as <span class="math inline">\((\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*)\)</span>, can be obtained via</p>
+<p><span class="math display">\[
+\begin{align*}
+(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &amp;= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|\\
+&amp;=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|.
+\end{align*}
+\]</span> Nevertheless, the objective function is non_differentiable at some point because of the penalization term. Therefore we need to find other approaches to obtain the estimator instead of solving</p>
 </section>
 </section>
-<section id="sec-EM" class="level2">
-<h2 class="anchored" data-anchor-id="sec-EM">The EM Algorithm</h2>
+<section id="sec-EM" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="sec-EM"><span class="header-section-number">2.6</span> The EM Algorithm</h2>
 <p>The Expectation-Maximization (EM) algorithm is a widely used iterative method to find the MLE, especially when the model depends on latent variables. The EM algorithm iteratively apply two distinct steps: the Expectation step (E-step) and the Maximization step (M-step). More specifically, we define</p>
 <p><span class="math display">\[Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}) = \mathbb{E}\left(\ell (\boldsymbol{\theta}; \boldsymbol{y})\bigg|\boldsymbol{y},\boldsymbol{\theta}^{(t)}\right).\]</span> Then for the <span class="math inline">\((t + 1)\)</span>-th interation, the steps involve:</p>
 <ul>
@@ -292,30 +482,47 @@ F(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\text{tr}(\boldsymbol{\Sigma}^{-1}\bol
 <p>The M-step may be replaced with updating <span class="math inline">\(\boldsymbol{\theta}^{(t+1)}\)</span> such that <span class="math inline">\(Q(\boldsymbol{\theta}^{(t+1)}|\boldsymbol{\theta}^{(t)}) \geq Q(\boldsymbol{\theta}^{(t)}|\boldsymbol{\theta}^{(t)})\)</span>.</p>
 <p>We iterate between E-step and M-step until convergence. The convergence may be determined by a criteria such as <span class="math inline">\(||\boldsymbol{\theta}^{(t+1)}-\boldsymbol{\theta}^{(t)}||_p\leq \epsilon\)</span> for some <span class="math inline">\(p\)</span>-norm <span class="math inline">\(||\cdot||_p\)</span> and <span class="math inline">\(\epsilon &gt; 0\)</span>.</p>
 <p>The EM algorithm approaches the problem of solving the likelihood equation indirectly by proceeding iteratively in terms of <span class="math inline">\(\ell(\boldsymbol{\theta};\boldsymbol{y})\)</span>. But it is unobservable since it includes missing part of the data, then we use the conditional expectation given <span class="math inline">\(\boldsymbol{y}\)</span> and current fit for <span class="math inline">\(\boldsymbol{\theta}\)</span>.</p>
+<p>Now we need to show the correctness of the EM-algorithm. In other words, by iteratively processing the EM-algorithm, the likelihood will keep increasing (at least non-decreasing). First we need to show the following lemma.</p>
 <div id="lem-convergence" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 2 (Convergence of the EM Algorithm)</strong></span> For all <span class="math inline">\(\epsilon &gt; 0\)</span>, there exists <span class="math inline">\(t &gt; t_0\)</span> such that <span class="math inline">\(||\boldsymbol{\theta}^{(t)} - \hat{\boldsymbol{\theta}}|| &lt; \epsilon\)</span> where <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span> is the MLE.</p>
+<p><span class="theorem-title"><strong>Lemma 2.2 (Convergence of the EM Algorithm)</strong></span> Suppose the likelihood is upper-bounded. Then for all <span class="math inline">\(\epsilon &gt; 0\)</span>, there exists <span class="math inline">\(t &gt; t_0\)</span> such that <span class="math inline">\(||\boldsymbol{\theta}^{(t)} - \hat{\boldsymbol{\theta}}|| &lt; \epsilon\)</span> where <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span> is the MLE.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>By the definition of conditional likelihood, our likelihood of complete data can be expressed by <span class="math display">\[
-L_{\boldsymbol{X}}(\boldsymbol{\beta}) = f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\beta})=L_{\boldsymbol{Y}}(\boldsymbol{\beta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}),
+<p><span class="proof-title"><em>Proof</em>. </span>By the definition of conditional likelihood, our likelihood of complete data, i.e.&nbsp;the observable and unobservable data, can be expressed by <span class="math display">\[
+L_{\boldsymbol{X}}(\boldsymbol{\theta}) = f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\theta})=L_{\boldsymbol{Y}}(\boldsymbol{\theta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}),
 \]</span> and hence the log-likelihood is given by <span class="math display">\[
-\log L_{\boldsymbol{X}}(\boldsymbol{\beta}) = \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}) + \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}).
-\]</span> Take expectation to both sides of the equation with respect to <span class="math inline">\(\boldsymbol{x|y}\)</span> and replace <span class="math inline">\(\boldsymbol{\beta}\)</span> by <span class="math inline">\(\boldsymbol{\beta}^{(k)}\)</span>, we will have <span class="math display">\[
-Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) = \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}) + \mathbb{E}_{\boldsymbol{X}}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].
+\log L_{\boldsymbol{X}}(\boldsymbol{\theta}) = \ell_{\boldsymbol{y}}(\boldsymbol{\theta}) + \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}).
+\]</span> Take expectation to both sides of the equation with respect to <span class="math inline">\(\boldsymbol{x|y}\)</span> and replace <span class="math inline">\(\boldsymbol{\theta}\)</span> by <span class="math inline">\(\boldsymbol{\theta}^{(k)}\)</span>, we will have <span class="math display">\[
+Q(\boldsymbol{\theta};\boldsymbol{\theta}^{(k)}) = \ell_{\boldsymbol{y}}(\boldsymbol{\theta}) + \mathbb{E}_{\boldsymbol{X}}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}].
 \]</span> Now consider the difference of log-likelihood of <span class="math inline">\(\boldsymbol{Y}\)</span> function between two iterations, we have <span class="math display">\[
 \begin{align*}
-  \log L_{\boldsymbol{Y}}(\boldsymbol{\beta}^{(k+1)})-\log L_{\boldsymbol{Y}}(\boldsymbol{\beta}^{(k)}) =
-  &amp;\{Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})-Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\}\\
-  &amp;-\{\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
-  &amp;-\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
+  \ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k+1)})-\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k)}) =
+  &amp;\{Q(\boldsymbol{\theta}^{(k+1)};\boldsymbol{\theta}^{(k)})-Q(\boldsymbol{\theta}^{(k)};\boldsymbol{\theta}^{(k)})\}\\
+  &amp;-\{\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}]\\
+  &amp;-\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k)}|\boldsymbol{y},\boldsymbol{\theta}^{(k)}]\}.
 \end{align*}
-\]</span> By the procedure of EM-algorithm, we always have <span class="math inline">\(Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\)</span>. By the Gibbs’s inequality, we have <span class="math inline">\(\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].\)</span> Therefore during iterations, the log-likelihood of observed data <span class="math inline">\(\boldsymbol{Y}\)</span> keeps increasing. If the log-likelihood is bounded, then we can promise that it must converge to some maximum.</p>
+\]</span> By the procedure of EM-algorithm, we always have <span class="math inline">\(Q(\boldsymbol{\theta}^{(k+1)};\boldsymbol{\theta}^{(k)})\geq Q(\boldsymbol{\theta}^{(k)};\boldsymbol{\theta}^{(k)})\)</span>. By the Gibbs’s inequality, we have <span class="math inline">\(\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k)}|\boldsymbol{y},\boldsymbol{\theta}^{(k)}].\)</span> Therefore during iterations, the sequnence of log-likelihood of observed data <span class="math inline">\(\boldsymbol{Y}\)</span> given by <span class="math inline">\(\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(n)})\}_{n\geq 1}:=\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(1)}),\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(2)}),\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(3)}),\dots\}\)</span>, is increasing. Now replace the term <span class="math inline">\(\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k+1)})\)</span> by <span class="math inline">\(\ell_{\boldsymbol{y}}(\hat{\boldsymbol{{\theta}}})\)</span>, we will have <span class="math display">\[
+\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k)}) \leq \ell_{\boldsymbol{y}}(\hat{\boldsymbol{{\theta}}})
+\]</span> for all <span class="math inline">\(k=1,2,\dots\)</span>. Therefore the upper-bound of the sequence <span class="math inline">\(\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(n)})\}_{n\geq 1}\)</span> is <span class="math inline">\(\ell_{\boldsymbol{y}}(\hat{\boldsymbol{\theta}})\)</span>. By the monotone convergence theorem, and the definition of convergence, we finished.</p>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-hiroseSparseEstimationNonconcave2015" class="csl-entry" role="listitem">
+Hirose, Kei, and Michio Yamamoto. 2015. <span>“Sparse Estimation via Nonconcave Penalized Likelihood in Factor Analysis Model.”</span> <em>Statistics and Computing</em> 25 (5): 863–75. <a href="https://doi.org/10.1007/s11222-014-9458-0">https://doi.org/10.1007/s11222-014-9458-0</a>.
+</div>
+<div id="ref-Jennrich2004Rotation" class="csl-entry" role="listitem">
+Jennrich, R. I. 2004. <span>“Rotation to Simple Loadings Using Component Loss Functions: The Orthogonal Case.”</span> <em>Psychometrika</em> 69: 257–73.
+</div>
+<div id="ref-mardiaMultivariateAnalysis1979" class="csl-entry" role="listitem">
+Mardia, K. V., J. T. Kent, and J. M. Bibby. 1979. <em>Multivariate Analysis</em>. Probability and Mathematical Statistics. London ; New York: Academic Press.
+</div>
+<div id="ref-Rubin1982EMAlgorithms" class="csl-entry" role="listitem">
+Rubin, Donald B., and Dorothy T. Thayer. 1982. <span>“EM Algorithms for ML Factor Analysis.”</span> <em>Psychometrika</em> 47: 69–76.
+</div>
 </div>
 </section>
-</section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -351,18 +558,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -394,7 +590,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -402,7 +620,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -725,7 +943,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./method.html" class="pagination-link" aria-label="Method">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Method</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright © 2024, Zhining Wang</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ZhiningW/Master_Project/edit/main/background.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ZhiningW/Master_Project/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
 
 
 
