@@ -7,7 +7,8 @@
   oneside,
   openany,
   12pt,
-  onecolumn]{book}
+  onecolumn,
+  twoside]{book}
 
 \usepackage{amsmath,amssymb}
 \usepackage{setspace}
@@ -70,6 +71,46 @@
 \fi
 \makeatother
 
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
@@ -165,6 +206,7 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
+
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -175,7 +217,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Model Selection in Factor Analysis},
+  pdftitle={Model Selection for Factor Analysis},
   pdfauthor={Zhining Wang},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
@@ -235,9 +277,10 @@
 \usepackage{float}
 
 
-\title{Model Selection in Factor Analysis}
+
+\title{Model Selection for Factor Analysis}
 \author{Zhining Wang}
-\date{27th June 2024}
+\date{28th August 2024}
 
 \begin{document}
   \begin{frontmatter}
@@ -251,9 +294,9 @@
       {\small A thesis submitted for the degree of {\it Master of
   Mathematical Science}}
       \rule[1ex]{\textwidth}{1pt}\\
-      {\fontsize{9}{0} 27th June 2024}\\
+      {\fontsize{9}{0} 28th August 2024}\\
       \vspace{25mm}
-      {\fontsize{40}{44}\bfseries Model Selection in Factor
+      {\fontsize{40}{44}\bfseries Model Selection for Factor
   Analysis\par}
         \vspace{12mm}
         \vfill
@@ -276,7 +319,7 @@
      {\bf Master of Mathematical Science Thesis} & \\[2mm]
      {\bf Author:} & Zhining Wang\\[2mm]
      {\bf Supervisors:} & Dr.~Emi Tanaka, Dr.~Qinian Jin\\[2mm]
-     
+     {\bf URL:} & true\\[2mm]
      {\bf Project period:} & 2024-03-01 -- 2024-10-01 \\[2mm]
    \end{tabular}\\[2mm]
 
@@ -307,6 +350,7 @@
 \listoffigures
 \phantomsection\addcontentsline{toc}{section}{List of Tables}
 \listoftables
+
 \setstretch{1.2}
 \mainmatter
 \bookmarksetup{startatroot}
@@ -320,230 +364,30 @@
 
 \chapter{Introduction}\label{introduction}
 
-Notation is presented in Table~\ref{tbl-notation}.
+Multivariate data, where each observational unit consists of multiple
+outcomes, are abundant across multitude of disciplines (e.g.~in
+psychology, multiple test scores from different courses for a student;
+in agriculture, yield measurements at different environments for the
+same crop variety; and in biology, gene expressions from genes of the
+same organism). A key analysis of multivariate data include
+understanding or predicting the characteristics of observational units.
+A simple analysis may assess one outcome at a time using some univariate
+technique, however, a more sophisticated form of an analysis would
+consider multiple outcomes simultaneously and exploit the correlated
+structure within the data. While the latter analysis would be more
+desirable to make the most out of the data, there are several challenges
+as explained next.
 
-\section{What is factor analysis and why is it
-important?}\label{what-is-factor-analysis-and-why-is-it-important}
+Suppose we have a multivariate data denoted as a \(n \times p\) matrix,
+\(\textbf{Y}\), where \(n \in \mathbb{Z}^+\) is the number of
+observational units and \(p \in \mathbb{Z}^+\) is the number of
+dependent variables. The entry in the \(i\)-th row and \(j\)-th column
+of \(\textbf{Y}\) is written as \(y_{ij}\). We may write the matrix as
+\(\mathbf{Y} = (y_{ij})\),
+\(\mathbf{Y} = \begin{bmatrix}\boldsymbol{y}_{(1)} & \cdots & \boldsymbol{y}_{(p)}\end{bmatrix}\).
 
-Factor analysis is a mathematical model which tries to use fewer
-underlying factors to explain the correlation between a large set of
-observed variables \citep{mardiaMultivariateAnalysis1979}. It provides a
-useful tool for exploring the covariance structure among observable
-variables \citep{hiroseSparseEstimationNonconcave2015}. One of the major
-assumptions that factor analytic model stands on is that it is
-impossible for us to observe those underlying factors directly. This
-assumption is especially suited to subjects like psychology where we
-cannot observe exactly some concept like how intelligent our subjects
-are \citep{mardiaMultivariateAnalysis1979}.
-
-Suppose we have a observable random vector
-\(\boldsymbol{y}\in \mathbb{R}^p\) with mean
-\(\mathbb{E}[\boldsymbol{y}]=\boldsymbol{\mu}\) and variance
-\(\mathbb{V}[\boldsymbol{y}]=\boldsymbol{\Sigma}\). Then a \(k\)-order
-factor analysis model for \(\boldsymbol{y}\) can be given by
-\begin{equation}
-\boldsymbol{y}=\boldsymbol{\Lambda} \boldsymbol{f}+\boldsymbol{\mu}+\boldsymbol{\epsilon},
-\end{equation} where
-\(\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}\) is called
-\emph{loading matrix}, we call \(\boldsymbol{f} \in \mathbb{R}^{k}\) as
-\emph{common factors} and \(\boldsymbol{\epsilon} \in \mathbb{R}^{p}\)
-is \emph{unique factors}. To make the model well-defined, we may assume
-\[\mathbb{E}[\boldsymbol{f}]=\boldsymbol{0}_k, \mathbb{V}[\boldsymbol{f}]=\boldsymbol{I}_{k\times k}, \mathbb{E}[\boldsymbol{\epsilon}]=\boldsymbol{0}_p, \mathbb{V}[\boldsymbol{\epsilon}]=:\boldsymbol{\Psi}=\text{diag}(\Psi_{11},\dots,\Psi_{pp})\]
-and also the independence between any elements from \(\boldsymbol{f}\)
-and \(\boldsymbol{\epsilon}\) separately, i.e.
-\[Cov[f_i,\epsilon_j]=0, \text{for all } i\in\{1,2,\dots,k\} \text{ and } j \in \{1,2,\dots,p\}\]
-Straightforwardly, the covariance of observable vector
-\(\boldsymbol{y}\) can be modelled by\\
-\begin{equation}
-\mathbb{V}[\boldsymbol{y}]=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
-\end{equation}
-
-\section{Indeterminacy of the loading
-matrix}\label{indeterminacy-of-the-loading-matrix}
-
-One can easily see that if our factor analytic model is given by (1),
-then it can also be modelled as
-\[\boldsymbol{y}=(\boldsymbol{\Lambda}\boldsymbol{M})(\boldsymbol{M}^\top\boldsymbol{f}) +\boldsymbol{\mu}+\boldsymbol{\epsilon}\]
-where the matrix \(\boldsymbol{M}\) is orthogonal and simultaneously the
-variance of \(\boldsymbol{y}\) given by (2) still holds, since
-\[\mathbb{V}[\boldsymbol{y}]=(\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\top)\mathbb{V}[\boldsymbol{f}](\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\top)^\top+\boldsymbol{\Psi}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.\]
-Therefore a rotated loading matrix
-\(\boldsymbol{\Lambda}\boldsymbol{M}\) is still a valid loading matrix
-for a factor analytic model. Sometimes we resolve this problem by making
-the loading matrix to satisfy some constraints like
-\citep{mardiaMultivariateAnalysis1979}
-\[\boldsymbol{\Lambda}^\top \boldsymbol{\Psi}^{-1} \boldsymbol{\Lambda} \text{ is diagonal.}\]
-
-\section{Traditional Estimation of Parameters in Factor Analytic
-Models}\label{traditional-estimation-of-parameters-in-factor-analytic-models}
-
-We denote the set of parameters by
-\(\beta := \{\text{vec}(\boldsymbol{\Lambda}),\text{vec}(\boldsymbol{\Psi})\}\)
-where \(\text{vec}(\cdot)\) is the vectorisation of the input.
-
-Traditionally, a two-step procedure is used to construct a factor
-analytic model: estimate parameters by maximum likelihood estimation
-(aka, MLE) and then use rotation techniques to find an interpretable
-model.
-
-\subsection{Maximum Likelihood
-Estimation}\label{maximum-likelihood-estimation}
-
-Suppose we have \(n\) independent and identically distributed
-observations
-\(\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_N\) from a
-p-dimensional multi-variate normal distribution
-\(N_p(\boldsymbol{\mu},\boldsymbol{\Sigma})\) and by our hypothesis, we
-have
-\(\boldsymbol{\Sigma}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}\).
-Then the likelihood function is given by
-\[L(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].\]
-and hence the log-likelihood is given by \begin{align*}
-l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=& \sum^n_{i=1}[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})]\\
-&= -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})],
-\end{align*} where \(\boldsymbol{S}\) is the sample covariance defined
-as
-\(\boldsymbol{S}:=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\).
-To get the MLE of parameters, we seek the roots of equation system
-
-\begin{cases}
-\frac{\partial}{\partial \boldsymbol{\Lambda}}l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=0 \\
-\frac{\partial}{\partial \boldsymbol{\Psi}}l(\boldsymbol{\Lambda},\boldsymbol{\Psi})=0.
-\end{cases}
-
-However, there is no closed form of the roots. Many iterative algorithms
-are developed to get the roots of the equation, like EM algorithm
-developed by Rubin\citep{Rubin1982EMAlgorithms}.
-
-\subsection{Rotation techniques}\label{rotation-techniques}
-
-After estimation, we want to rotate the loading matrix to possess a
-sparse matrix in order to interpret the observable variables by
-underlying factors better. Also there are many method to achieve
-rotation as well such as the varimax method and the promax method
-\citep{hiroseSparseEstimationNonconcave2015}.
-
-Suppose \(Q(\boldsymbol{\Lambda})\) is an criterion for
-\(\boldsymbol{\Lambda}\) in the rotation procedure, and we may express
-it as
-\(Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})\)
-where \(P(\cdot)\) is some loss
-function\citep{hiroseSparseEstimationNonconcave2015}. Specifically, if
-we set \(P(\cdot)=|\cdot|\), we have LASSO to generate a theoretically
-sparse loading matrix. If we rewrite this in a optimization problem, it
-can be given as \citep{Jennrich2004Rotation} \begin{align*}
-&\min_\boldsymbol{\Lambda} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
-&\text{subject to } \boldsymbol{\Lambda}=\boldsymbol{\Lambda}_0\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
-\end{align*} where \(\boldsymbol{\Lambda}_0\) is an initial guess. Since
-we execute this technique after obtaining the MLE of parameters,
-therefore what we want is \begin{align*}
-&\min_\boldsymbol{\Lambda} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
-&\text{subject to } \boldsymbol{\Lambda}=\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
-\end{align*} where \(\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\) is the
-maximum likelihood estimator.
-
-\subsection{Discussion about two-step
-method}\label{discussion-about-two-step-method}
-
-The traditional two-step method faces significant shortcomings,
-primarily its unsuitability\citep{hiroseSparseEstimationNonconcave2015}.
-Similar to challenges in regression models, MLE can result in
-overfitting, and rotation techniques might not yield a sufficiently
-sparse loading matrix. See this as an example: Suppose the true loading
-matrix is given by \[
-\boldsymbol{\Lambda}=
-\begin{bmatrix}
-0.8 & 0 \\
-0 & 0.8 \\
-0 & 0\\
-0 & 0\\
-0 & 0\\
-\end{bmatrix}.
-\] We generate \(\boldsymbol{Y}\in \mathbb{R}^{{100}\times 5}\) using
-common factor \(\boldsymbol{f}\in \mathbb{R}^{{100}\times 2}\) where
-each factor is generated randomly from standard normal distribution
-\(N(0,1)\). We utilize the R-function factanal() to produce the loading
-matrix via MLE and then call varimax() to rotate our loading matrix.
-What we finally get is \[
-\hat{\boldsymbol{\Lambda}}=
-\begin{bmatrix}
--0.158 & 0.985\\
-0 & 0\\
-0.997 & 0\\
-0.207 & 0\\
-0 & 0\\
-\end{bmatrix},
-\] which is neither precise nor sparse.
-
-Simulation code:
-
-\begin{verbatim}
-set.seed(123)
-n <- 100 # Number of observations
-p <- 5   # Number of features
-
-factor1 <- rnorm(n, 0, 1) # set factors
-factor2 <- rnorm(n, 0, 1)
-
-X <- matrix(NA, nrow=n, ncol=p)
-X[,1] <- 0.8*factor1 + rnorm(n, 0, 1)  # Strong loading
-X[,2] <- 0.8*factor2 + rnorm(n, 0, 1)  # Strong loading
-X[,3] <- rnorm(n, 0, 1)  # Noise, no strong loading on any factor
-X[,4] <- rnorm(n, 0, 1)  
-X[,5] <- rnorm(n, 0, 1) 
-
-fa_result <- factanal(factors = 2, covmat = cor(X))
-rotated_fa <- varimax(fa_result$loadings)
-\end{verbatim}
-
-Another problem is that the absence of model selection complicates
-efficient modeling by making it difficult to determine the precise
-number of underlying factors, that is, the order of the factor analytic
-model. A usual but troublesome method is conducting a hypothesis test
-for the model\citep{mardiaMultivariateAnalysis1979}. We have
-\begin{align*}
-  &&&H_k: k \text{ common factors are sufficient to describe the data } \\
-  \longleftrightarrow &&&H_a: \text{ Otherwise}.
-\end{align*} The test statistics is given by
-\(\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\boldsymbol{\Psi}})\)
-which has an asymptotic \(\chi^2_s\) distribution with
-\(s=\frac{1}{2}(p-k)^2-(p+k)\) by the property of MLE, where \(F\) is
-given by (\citet{mardiaMultivariateAnalysis1979}) \[
-F(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})-\log(\det(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}))-p.
-\] Typically, the test is conducted at a \(5\%\) significant level. We
-can start the procedure from a very small \(k\), say, \(k=1\) or \(k=2\)
-and then increase \(k\) until the null hypothesis is not rejected.
-
-\section{Penalized Likelihood Method}\label{penalized-likelihood-method}
-
-Penalized likelihood method can be viewed as a generalization of
-two-step method mentioned
-above\citep{hiroseSparseEstimationNonconcave2015}. A penalized factor
-analytic model can be obtained by solving following optimization problem
-\[
- \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}l_p := l(\boldsymbol{\Lambda},\boldsymbol{\Psi})-\rho\sum^p_{i=1}\sum^k_{j=1}P(|\boldsymbol{\Lambda}_{ij}|).
-\] where we call \(l_p\) as the penalized likelihood, \(\rho\) is called
-regularization parameter and we can treat \(P(\cdot)\) as a penalized
-function. There are many types of penalized functions developed, such as
-LASSO (\(P(\cdot)=|\cdot|\)) and MC+
-(\(P(|\theta|;\rho;\gamma)=n(|\theta|-\frac{\theta^2}{2\rho\gamma})I(|\theta|<\rho\gamma)+\frac{\rho^2\gamma}{2}I(|\theta|\geq\rho\gamma)\))\citep{hiroseSparseEstimationNonconcave2015}.
-In this article, we will mainly focus on the LASSO penalty.
-
-\section{LASSO penalty and LASSO
-estimator}\label{lasso-penalty-and-lasso-estimator}
-
-Again, recall that the LASSO penalized likelihood is given by
-\[l_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|\]
-and the LASSO estimator, denoted as
-\((\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*)\), can be obtained via
-\begin{align*}
-(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|\\
-&=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\Lambda_{ij}|.
-\end{align*}
-
-An E-M algorithm can be applied for evaluating the LASSO estimator.
-
-\section{Appendix}\label{appendix}
+Notation used throughout this thesis is presented in
+Table~\ref{tbl-notation}.
 
 \begin{longtable}[]{@{}
   >{\raggedleft\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.1600}}
@@ -570,271 +414,560 @@ Description
 \endlastfoot
 \(\boldsymbol{A}^\top\) & the transpose of the matrix (or vector)
 \(A\) \\
-\(\mathbb{R}^{p}\) & the space of all p-dimensional real column vectors
-like \([a_1,a_2,\dots,a_p]^\top\) \\
+\(\mathbb{R}^{p}\) & the space of all \(p\)-dimensional real column
+vectors like \([a_1,a_2,\dots,a_p]^\top\) \\
 \(\mathbb{R}^{p\times q}\) & the space of all real matrices with size
 \(p\times q\) \\
-\(\mathbb{E}[\cdot]\) & the expectation, or mean of a random variable \\
-\(\mathbb{V}[\cdot]\) & the variance, or covariance of a random
+\(\mathbb{E}(\cdot)\) & the expectation, or mean of a random variable \\
+\(\mathbb{V}(\cdot)\) & the variance, or covariance of a random
 variable \\
-\(\boldsymbol{Cov}[\cdot , \cdot]\) & the covariance of two random
+\(\boldsymbol{Cov}(\cdot , \cdot)\) & the covariance of two random
 variables \\
 \(\boldsymbol{0}_{p}\) and \(\boldsymbol{0}_{p\times q}\) & the
-p-dimensional \(0\) vector or \(0\) matrix in size \(p\times q\)
+\(p\)-dimensional \(0\) vector or \(0\) matrix in size \(p\times q\)
 respectively \\
 \(\boldsymbol{I}_p\) & the identity matrix in size \(p\times p\) \\
 \(\det(\cdot)\) & the determinant of a matrix \\
-\(M(i,)\) & the \(i^{th}\) row of the matrix \(M\) \\
-\(M(,j)\) & the \(j^{th}\) row of the matrix \(M\) \\
+\(\boldsymbol{m}_i\) & the \(i^{th}\) row of the matrix
+\(\textbf{M}\) \\
+\(\boldsymbol{m}_{(j)}\) & the \(j^{th}\) column of the matrix
+\(\textbf{M}\) \\
 \end{longtable}
 
+This thesis is structured as follows. Chapter~\ref{sec-bg} outlines the
+background information on factor analytics models, EM algorithm, and
+penalised likelihood estimation. Chapter~\ref{sec-method} describe the
+methods and simulation settings. Chapter~\ref{sec-results} presents the
+results from the simulation with discussion.
+
+This thesis is written reproducibly using the Quarto system
+\citep{quarto} and all the code to reproduce the thesis and results can
+be found at \url{https://github.com/ZhiningW/Master_Project}.
+
 \bookmarksetup{startatroot}
 
-\chapter{References}\label{references}
+\chapter{Background}\label{sec-bg}
 
-\bookmarksetup{startatroot}
+\section{Factor analytic model}\label{factor-analytic-model}
 
-\chapter{The EM Algorithm}\label{sec-EM}
+Factor analysis (FA) is a statistical method which attempts to use fewer
+underlying factors to explain the correlation between a large set of
+observed variables \citep{mardiaMultivariateAnalysis1979}. FA provides a
+useful tool for exploring the covariance structure among observable
+variables \citep{hiroseSparseEstimationNonconcave2015}.
 
-\section{A brief introduction about the EM
-algorithm}\label{a-brief-introduction-about-the-em-algorithm}
+An FA model assumes that the observations are explained by a small
+number of underlying factors. This assumption is suited to many areas,
+e.g.~in psychology where certain variables, like intelligence, cannot be
+directly measured \citep{mardiaMultivariateAnalysis1979}.
 
-The Expectation-Maximization (EM) algorithm is a widely used iterative
-method to compute the maximum likelihood estimation, especially when we
-have some unobserved data\citep{Ng2012EMAlgorithm}. As we mentioned, the
-key of maximum likelihood estimation is solving equation \[
-\frac{\partial}{\partial \beta}l=0.
-\] However, challenges often arise from the complex nature of the
-log-likelihood function, especially with data that is grouped, censored,
-or truncated. To navigate these difficulties, the EM algorithm
-introduces an ingenious approach by conceptualizing an equivalent
-statistical problem that incorporates both observed and unobserved data.
-Here, \emph{augmented data}(or complete) refers to the integration of
-this unobserved component, enhancing the algorithm's ability to
-iteratively estimate through two distinct phases: the Expectation step
-(E-step) and the Maximization step (M-step). The iteration between these
-steps facilitates the efficient of parameter estimates, making the EM
-algorithm an essential tool for handling incomplete data sets
-effectively.
-
-\section{The E-step and M-step}\label{the-e-step-and-m-step}
-
-Let \(\boldsymbol{x}\) denote the vector containing complete data,
-\(\boldsymbol{y}\) denote the observed incomplete data and
-\(\boldsymbol{z}\) denote the vector containing the missing data. Here
-`missing data' is not necessarily missing, even if it does not at first
-appear to be missed, we can formulating it to be as such to facilitate
-the computation (we may see this later)\citep{Ng2012EMAlgorithm}. Also
-we assume \(\boldsymbol{\beta}\) as the parameter we want to estimate
-over the parameter space \(\boldsymbol{\Omega}\).
-
-Now denote \(f_\boldsymbol{X}(\boldsymbol{x};\boldsymbol{\beta})\) as
-the probability density function (p.d.f.) of the random vector
-\(\boldsymbol{X}\) corresponding to \(\boldsymbol{x}\). Then the
-complete-data log-likelihood function when complete data is fully
-observed can be given by
-
-\[\log L_\boldsymbol{X}(\boldsymbol{\beta})=\log f_\boldsymbol{X}(\boldsymbol{x};\boldsymbol{\beta}).\]
-
-The EM algorithm approaches the problem of solving the incomplete-data
-likelihood equation indirectly by proceeding iteratively in terms of
-\(\log L_\boldsymbol{X}(\boldsymbol{\beta})\). But it is unobservable
-since it includes missing part of the data, then we use the conditional
-expectation given \(\boldsymbol{y}\) and current fit for
-\(\boldsymbol{\beta}\).
-
-On the \((k+1)^th\) iteration, we have \[
-\begin{align*}
-&\text{E-step: Compute } Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}):=\mathbb{E}_\boldsymbol{X}[\log L_\boldsymbol{X}(\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
-&\text{M-step: Update }\boldsymbol{\beta}^{(k+1)} \text{ as }\boldsymbol{{\beta}}^{(k+1)}:=\text{arg}\max_\boldsymbol{\beta} Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) \text{ (Original EM)}\\
-& \text{ Or update }\boldsymbol{{\beta}}^{(k+1)} \text{ such that } Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\text{ (Generalized EM)}.
-\end{align*} 
-\] We keep iterating between E-step and M-step until convergence, which
-may be determined by a criteria such as
-\(||\boldsymbol{\beta}^{(k+1)}-\boldsymbol{\beta}^{(k)}||_p\leq \epsilon\)
-for some p-norm \(||\cdot||_p\) and positive \(\epsilon\).
-
-Meanwhile, the M-step in both original and generalized algorithms
-defines a mapping from the parameter space \(\boldsymbol{\Omega}\) to
-itself by \[
-\begin{align*}
-M: \boldsymbol{\Omega} &\to \boldsymbol{\Omega}\\
-   \boldsymbol{\beta}^{(k)} &\mapsto \boldsymbol{\beta}^{(k+1)}.
-\end{align*}
+Suppose we have an observable random vector
+\(\boldsymbol{y}_i\in \mathbb{R}^p\) for the \(i\)-th subject with mean
+\(\mathbb{E}(\boldsymbol{y}_i)=\boldsymbol{\mu}\) and variance
+\(\mathbb{V}(\boldsymbol{y}_i)=\boldsymbol{\Sigma}\). Then a \(k\)-order
+factor analysis model for \(\boldsymbol{y}_i\) can be given by \[
+\begin{equation}
+\boldsymbol{y}_i=\boldsymbol{\mu}+\boldsymbol{\Lambda} \boldsymbol{f}_i+\boldsymbol{\epsilon}_i,
+\end{equation} 
 \]
 
-\section{Convergence of the EM
-Algorithm}\label{convergence-of-the-em-algorithm}
+where \(\boldsymbol{\Lambda} \in \mathbb{R}^{p \times k}\),
+\(\boldsymbol{f}_i \in \mathbb{R}^{k}\) is and
+\(\boldsymbol{\epsilon}_i \in \mathbb{R}^{p}\) are called the
+\emph{loading matrix}, \emph{common factors} and \emph{unique (or
+specific) factors}, respectively. The order \(k\) is usually much
+smaller than \(p\). For simplicity, we conduct a centralization to those
+\(\boldsymbol{y}_i\) and assume that
+\(\boldsymbol{\mu} = \boldsymbol{0}_p\).
 
-By the definition of conditional likelihood, our likelihood of complete
-data can be expressed by \[
-L_\boldsymbol{X}(\boldsymbol{\beta}) = f_\boldsymbol{X}(\boldsymbol{x};\boldsymbol{\beta})=L_\boldsymbol{Y}(\boldsymbol{\beta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}),
-\] and hence the log-likelihood is given by \[
-\log L_\boldsymbol{X}(\boldsymbol{\beta}) = \log L_\boldsymbol{Y}(\boldsymbol{\beta})+ \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}).
-\] Take expectation to both sides of the equation with respect to
-\(\boldsymbol{x|y}\) and replace \(\boldsymbol{\beta}\) by
-\(\boldsymbol{\beta}^{(k)}\), we will have \[
-Q(\boldsymbol{\beta};\boldsymbol{\beta}^{(k)}) = \log L_\boldsymbol{Y}(\boldsymbol{\beta}) + \mathbb{E}_\boldsymbol{X}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].
-\] Now consider the difference of log-likelihood of \(\boldsymbol{Y}\)
-function between two iterations, we have \[
-\begin{align*}
-  \log L_\boldsymbol{Y}(\boldsymbol{\beta}^{(k+1)})-\log L_\boldsymbol{Y}(\boldsymbol{\beta}^{(k)}) =
-  &\{Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})-Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\}\\
-  &-\{\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\\
-  &-\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}]\}.
-\end{align*}
-\] By the procedure of EM-algorithm, we always have
-\(Q(\boldsymbol{\beta}^{(k+1)};\boldsymbol{\beta}^{(k)})\geq Q(\boldsymbol{\beta}^{(k)};\boldsymbol{\beta}^{(k)})\).
-By the Jensen's inequality, we have
-\(\mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\beta}^{(k)}] \leq \mathbb{E}_\boldsymbol{X}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\beta}^{(k)}|\boldsymbol{y},\boldsymbol{\beta}^{(k)}].\)
-Therefore during iterations, the log-likelihood of observed data
-\(\boldsymbol{Y}\) keeps increasing. If the log-likelihood is bounded,
-then we can promise that it must converge to some maximum.
+To make the model well-defined, we may assume
 
-\bookmarksetup{startatroot}
+\[\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}_i\\\boldsymbol{\epsilon}_i\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_k\\\boldsymbol{0}_p\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}_i\\\boldsymbol{\epsilon}_i\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_k & \mathbf{0}_{k\times p}\\\mathbf{0}_{p\times k} & \mathbf{\Psi}\end{bmatrix},\]
 
-\chapter{The EM Algorithm in LASSO Factor Analytic
-Models}\label{the-em-algorithm-in-lasso-factor-analytic-models}
+where \(\boldsymbol{\Psi}\) is a \(p\times p\) diagonal matrix where we
+denote the \(i\)-th diagonal entry as \(\psi_{ii}\). Based on this
+assumption, the covariance of observable vector \(\boldsymbol{y}_i\) can
+be modelled by
 
-\section{Model Setup}\label{model-setup}
+\[\mathbb{V}(\boldsymbol{y}_i|\boldsymbol{\Lambda},\boldsymbol{\Psi} )=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.\]
 
-Suppose we have the \(n\) centralized observations,
-\(\{\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\}\), where
-\(\boldsymbol{y}_j\in \mathbb{R}^p\) and hence the mean,
-\(\boldsymbol{\mu}_j=\boldsymbol{0}_p\) (\(j=1,2,\dots,n\)). For each of
-the observation \(\boldsymbol{y}_j\), the common factor and unique
-factor are \(\boldsymbol{f}_j\) and \(\boldsymbol{\epsilon}_j\)
-respectively. Denote the response matrix as
-\(\boldsymbol{Y}=[\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n]^\top\),
-the common factor matrix as
-\(\boldsymbol{F}=[\boldsymbol{f}_1,\boldsymbol{f}_2,\dots,\boldsymbol{f}_n]^\top\),
-and the unique factor matrix as
-\(\boldsymbol{\hat\epsilon}=[\boldsymbol{\epsilon}_1,\boldsymbol{\epsilon}_2,\dots,\boldsymbol{\epsilon}_n]^\top\).
-Then the model can be written as
-\[\boldsymbol{Y}=\boldsymbol{F}\boldsymbol{\Lambda}^\top+\boldsymbol{\hat\epsilon}.\]\\
-We also assume
+Alternatively, we can write the model as
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \(\boldsymbol{\epsilon}_j\) follows a normal distribution with mean
-  \(0\) and variance \(\boldsymbol{\Psi}\) for \(j=1,2,\dots,n\), where
-  \(\boldsymbol{\Psi}\) is a diagonal matrix defined by
-  \(\boldsymbol{\Psi}=diag(\psi_{11},\psi_{22},\dots,\psi_{pp})\).
-\item
-  \(\boldsymbol{f}_j\) follows a normal distribution with mean \(0\) and
-  variance \(\boldsymbol{I}_k\) for \(j=1,2,\dots,n\).
-\item
-  \(\boldsymbol{y}_j\) follows a normal distribution with mean \(0\) and
-  variance
-  \(\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}\)
-  for \(j=1,2,\dots,n\). Those \(\boldsymbol{y}_j\) are pairwisely
-  independent.
-\end{enumerate}
+\[\boldsymbol{y} = (\mathbf{I}_n \otimes \boldsymbol{\Lambda})\boldsymbol{f} + \boldsymbol{\epsilon}\]
+where \(\boldsymbol{y} =
+\begin{pmatrix}
+\boldsymbol{y}_1 \\ \boldsymbol{y}_2 \\ \vdots \\ \boldsymbol{y}_n
+\end{pmatrix}\), \(\boldsymbol{f} =
+\begin{pmatrix}
+\boldsymbol{f}_1 \\ \boldsymbol{f}_2 \\ \vdots \\  \boldsymbol{f}_n
+\end{pmatrix}\) and \(\boldsymbol{\epsilon} =
+\begin{pmatrix}
+\boldsymbol{\epsilon}_1 \\ \boldsymbol{\epsilon}_2 \\ \vdots \\  \boldsymbol{\epsilon}_n
+\end{pmatrix}\). Thus we have
 
-\section{The EM Algorithm}\label{the-em-algorithm}
+\[\mathbb{E}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) = \begin{bmatrix}\boldsymbol{0}_{nk}\\\boldsymbol{0}_{np}\end{bmatrix}\quad\text{and}\quad\mathbb{V}\left(\begin{bmatrix}\boldsymbol{f}\\\boldsymbol{\epsilon}\end{bmatrix}\right) =\begin{bmatrix}\mathbf{I}_{nk} & \mathbf{0}_{nk\times np}\\\mathbf{0}_{np\times nk} & \mathbf{I}_n \otimes \mathbf{\Psi}\end{bmatrix}.\]
 
-We treat the common factor matrix \(\boldsymbol{F}\) as the latent
-variable. In E-step, we need to compute the conditional expectation of
-the joint likelihood of \((\boldsymbol{Y},\boldsymbol{F})\) given
-\(\boldsymbol{Y}\) and
-\((\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)})\), where
-\((\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)})\) is the
-parameter we got in the \(k\)-th iteration (\(k>1\)) and
-\((\boldsymbol{\Lambda}_{(0)},\boldsymbol{\Psi}_{(0)})\) is the initial
-value we set. In M-step, we maximize the conditional expectation over
-parameters and get
-\((\boldsymbol{\Lambda}_{(k+1)},\boldsymbol{\Psi}_{(k+1)})\).
+\section{Indeterminacy of the loading
+matrix}\label{indeterminacy-of-the-loading-matrix}
 
-\subsection{E-Step}\label{e-step}
+One can easily see that if our factor analytic model is given by (1),
+then it can also be modelled as
+\[\boldsymbol{y}=(\boldsymbol{\Lambda}\boldsymbol{M})(\boldsymbol{M}^\top\boldsymbol{f}) +\boldsymbol{\mu}+\boldsymbol{\epsilon}\]
+where the matrix \(\boldsymbol{M}\) is orthogonal and simultaneously the
+variance of \(\boldsymbol{y}\) given by (2) still holds, since
+\[\mathbb{V}[\boldsymbol{y}]=(\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\top)\mathbb{V}[\boldsymbol{f}](\boldsymbol{\Lambda}\boldsymbol{M}\boldsymbol{M}^\top)^\top+\boldsymbol{\Psi}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}.\]
+Therefore a rotated loading matrix
+\(\boldsymbol{\Lambda}\boldsymbol{M}\) is still a valid loading matrix
+for a factor analytic model. Sometimes we resolve this problem by making
+the loading matrix to satisfy some constraints like
+\citep{mardiaMultivariateAnalysis1979}
+\[\boldsymbol{\Lambda}^\top \boldsymbol{\Psi}^{-1} \boldsymbol{\Lambda} \text{ is diagonal.}\]
 
-First, the joint likelihood of \((\boldsymbol{Y},\boldsymbol{F})\),
-denoted as
-\(L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\),
-is given by
+\section{Parameter Estimation}\label{parameter-estimation}
 
-\[
-\begin{align*}
-L_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=&\prod_{i=1}^nf(\boldsymbol{y}_i,\boldsymbol{f}_i)\\
-=&\prod_{i=1}^nf(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\\
-=&\prod_{i=1}^nN(\boldsymbol{y}_i;\boldsymbol{\Lambda}\boldsymbol{f}_i,\boldsymbol{\Psi})N(\boldsymbol{f}_i;\boldsymbol{0}_k,\boldsymbol{I}_k)\\
-=&\prod_{i=1}^n[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Psi})^{-\frac{1}{2}}\exp\{-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}\\
-&(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\}][(2\pi)^{-\frac{k}{2}}\det({\boldsymbol{I}_k})^{-\frac{1}{2}}\exp\{-\frac{1}{2}\boldsymbol{f}_i^\top\boldsymbol{I}_k^{-1}\boldsymbol{f}_i\}]\\
-= &(2\pi)^{-\frac{n}{2}(p+k)}(\prod_{i=1}^p\psi_{jj})^{-\frac{n}{2}}\exp\{-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}\}\\
-&\exp\{-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\}.
-\end{align*}
-\]
+We denote the set of parameters by
+\(\boldsymbol{\theta} = \{\text{vec}(\boldsymbol{\Lambda}), \text{diag}(\boldsymbol{\Psi})\}\)
+where \(\text{vec}(\cdot)\) is the vectorisation of the input matrix and
+\(\text{diag}(\cdot)\) is the diagonal elements of the input matrix.
 
-Furthermore, the log-likelihood, denoted as
-\(l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\),
-is given by
+Traditionally, a two-step procedure is used to construct a factor
+analytic model: estimate parameters by maximum likelihood estimation
+(aka, MLE) and then use rotation techniques to find an interpretable
+model.
 
-\begin{equation}\phantomsection\label{eq-loglikelihood}{
-l_{\boldsymbol{Y},\boldsymbol{F}}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2}{\psi_{jj}}-\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i+\text{constant}.
+\subsection{Maximum Likelihood
+Estimation}\label{maximum-likelihood-estimation}
+
+Suppose we have \(n\) independent and identically distributed
+observations
+\(\boldsymbol{y}_1,\boldsymbol{y}_2,\dots,\boldsymbol{y}_n\) from a
+\(p\)-dimensional multi-variate normal distribution
+\(\mathcal{N}_p(\boldsymbol{\mu},\boldsymbol{\Sigma})\). Now denote
+\(f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta})\) as the
+probability density function of the random vector \(\boldsymbol{Y}\)
+corresponding to \(\boldsymbol{y}\). Then the likelihood is given by
+
+\begin{equation}\phantomsection\label{eq-likelihood}{
+L(\boldsymbol{\theta};\boldsymbol{y})=f_{\boldsymbol{y}}(\boldsymbol{y};\boldsymbol{\theta}) = \prod^n_{i=1}f_{\boldsymbol{y}_i}(\boldsymbol{y}_i;\boldsymbol{\theta}) =  \prod^n_{i=1}\left[(2\pi)^{-\frac{p}{2}}\det(\boldsymbol{\Sigma})^{-\frac{1}{2}}\exp(-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu}))\right].
 }\end{equation}
 
-Now let us deduce the conditional expectation to \(\boldsymbol{F}\)
-given
-\(\boldsymbol{Y},\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)}\),
-denoted as \(El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\). In
-Equation~\ref{eq-loglikelihood}, the first term is independent on
-\(\boldsymbol{F}\), hence stay the same under conditional expectation.
-The last term is independent on
-\((\boldsymbol{\Lambda},\boldsymbol{\Psi})\), therefore we can regard it
-as a constant in \(El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\).
-We only need to consider the term inside the sum in the second term,
-more specifically, the numerator, we have
+The maximum likelihood estimate (MLE) of \(\boldsymbol{\theta}\),
+denoted as \(\hat{\boldsymbol{\theta}}\), is found by finding
+\(\boldsymbol{\theta}\) that maximizes Equation~\ref{eq-likelihood}.
+However, it is often more convenient to maximize the log likelihood
+function. To be more computational friendly, a better form of log
+likelihood is given by
 
-\[
-(y_{ij}-\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i)^2 = y_{ij}^2 - 2 y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{f}_i + \boldsymbol{\Lambda}(j,)\boldsymbol{f}_i\boldsymbol{f}_i^\top \boldsymbol{\Lambda}^\top(,j).
-\]
+\begin{lemma}[]\protect\hypertarget{lem-MLE}{}\label{lem-MLE}
 
-Without ambiguity, denote \(\mathbb{E}[\boldsymbol{f}_i|_{(k)}]\) to be
-the conditional expectation
-\(\mathbb{E}[\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}_{(k)},\boldsymbol{\Psi}_{(k)}]\)
-for simplification. Then the conditional expectation
-\(El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\) is given by
+The log-likelihood is given by
 
-\[
-\begin{align*}
-El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})=& \ \text{constant}-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\\
-&\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2 - 2 y_{ij}{\boldsymbol{\Lambda}}(j,)\mathbb{E}[\boldsymbol{f}_i|_{(k)}]\boldsymbol+\boldsymbol{\Lambda}(j,) \mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}^\top_i|_{(k)}]\boldsymbol{\Lambda}^\top(,j)}{\psi_{jj}}\\
-\end{align*}
-\]
+\begin{equation}\phantomsection\label{eq-loglikelihood}{\ell(\boldsymbol{\theta}) =  -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right]}\end{equation}
 
-To deal with \(\mathbb{E}[\boldsymbol{f}_i|_{(k)}]\) and
-\(\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]\), we only
-need to know the mean and variance of conditional distribution
-\(\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}\),
-or equivalently
-\(\boldsymbol{f}_i|\boldsymbol{y}_i,\boldsymbol{\Lambda}^\top_{(k)},\boldsymbol{\Psi}_{(k)}\)
-because of the independency of \(\boldsymbol{f}_i\) to
-\(\boldsymbol{y}_j\) for (\(i\neq j\)). This is because we can always
-treat \(\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]\) as
-
-\[
-\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)}]= \mathbb{V}[\boldsymbol{f}_i|_{(k)}]+ \mathbb{E}[\boldsymbol{f}_i|_{(k)}]\mathbb{E}[\boldsymbol{f}_i|_{(k)}]^\top.
-\] where \(\mathbb{V}[\boldsymbol{f}_i|_{(k)}]\) is the variance of
-conditional distribution. We have
-
-\begin{lemma}[]\protect\hypertarget{lem-1}{}\label{lem-1}
-
-If
-\(\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_\boldsymbol{\alpha},\boldsymbol{\Sigma_\boldsymbol{\alpha}})\)
-and
-\(\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_\boldsymbol{\beta},\boldsymbol{\Sigma}_\boldsymbol{\beta})\),
-then we have
-\(\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})\),
-where \[
-\begin{align*}
-& \boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}=\boldsymbol{\mu}_\boldsymbol{\alpha}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{\beta}\\
-& \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_\boldsymbol{\alpha}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_\boldsymbol{\beta}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
-\end{align*}
-\]
+where \(\boldsymbol{S}\) is the sample covariance defined as
+\(\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\).
 
 \end{lemma}
 
-In our scenario, we have
+\begin{proof}
+\[
+\begin{align*}
+\ell(\boldsymbol{\theta})=& \sum^n_{i=1}\left[-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log(\det(\boldsymbol{\Sigma}))-\frac{1}{2}(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
+=& -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\frac{1}{n}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})\right]\\
+=& -\frac{n}{2}\left[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})\right].
+\end{align*}
+\] The last equality holds from the following fact: \[
+\begin{align*}
+&\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\\
+\Leftrightarrow \ & \boldsymbol{\Sigma}^{-1}\boldsymbol{S}=\frac{1}{n}\sum^n_{i=1}\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\\
+\Leftrightarrow \ & \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n} \sum^n_{i=1} \text{tr} (\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})(\boldsymbol{y}_i-\boldsymbol{\mu})^\top)\\
+\Leftrightarrow \ & \text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}) = \frac{1}{n}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}_i-\boldsymbol{\mu})
+\end{align*}
+\]
+\end{proof}
+
+The MLE is obtained by seeking the roots of equation system (provided
+the likelihood is compact)
+
+\begin{equation}\phantomsection\label{eq-solveMLE}{
+\begin{align*}
+\frac{\partial}{\partial \boldsymbol{\Lambda}}\ell(\boldsymbol{\theta})&=0 \\
+\frac{\partial}{\partial \boldsymbol{\Psi}}\ell(\boldsymbol{\theta})&= 0.
+\end{align*}
+}\end{equation}
+
+However, there is no closed form of the roots. Many iterative algorithms
+are developed to get the roots of the equation, like
+Expectation-Maximization (EM) algorithm \citep{Rubin1982EMAlgorithms},
+we will discuss this algorithm in the last part of background.
+
+\section{Rotation Techniques}\label{rotation-techniques}
+
+After estimation, we want to rotate the loading matrix to possess a
+sparse matrix in order to interpret the observable variables by
+underlying factors better. Also there are many method to achieve
+rotation as well such as the varimax method and the promax method
+\citep{hiroseSparseEstimationNonconcave2015}.
+
+Suppose \(Q(\boldsymbol{\Lambda})\) is an criterion for
+\(\boldsymbol{\Lambda}\) in the rotation procedure, and we may express
+it as
+\(Q(\boldsymbol{\Lambda}):= \sum^p_{i=1}\sum^d_{j=1}P(\boldsymbol{\Lambda}_{ij})\)
+where \(P(\cdot)\) is some loss
+function\citep{hiroseSparseEstimationNonconcave2015}. Specifically, if
+we set \(P(\cdot)=|\cdot|\), we have LASSO to generate a theoretically
+sparse loading matrix. If we rewrite this in a optimization problem, it
+can be given as \citep{Jennrich2004Rotation}
+
+\[
+\begin{align*}
+&\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
+&\text{subject to } \boldsymbol{\Lambda}=\boldsymbol{\Lambda}_0\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
+\end{align*}
+\]
+
+where \(\boldsymbol{\Lambda}_0\) is an initial guess. Since we execute
+this technique after obtaining the MLE of parameters, therefore what we
+want is
+
+\[
+\begin{align*}
+&\min_{\boldsymbol{\Lambda}} \sum^p_{i=1}\sum^k_{j=1}P(\boldsymbol{\Lambda}_{ij})\\
+&\text{subject to } \boldsymbol{\Lambda}=\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\boldsymbol{M} \text{ and } \boldsymbol{M}^\top\boldsymbol{M}=\boldsymbol{I}_k,
+\end{align*}
+\]
+
+where \(\hat{\boldsymbol{\Lambda}}_{\text{MLE}}\) is the maximum
+likelihood estimator.
+
+\subsection{Discussion about two-step
+method}\label{discussion-about-two-step-method}
+
+The traditional two-step method faces significant shortcomings,
+primarily its unsuitability
+\citep{hiroseSparseEstimationNonconcave2015}. Similar to challenges in
+regression models, MLE can result in overfitting, and rotation
+techniques might not yield a sufficiently sparse loading matrix. See
+this as an example: Suppose the true loading matrix is given by \[
+\boldsymbol{\Lambda}=
+\begin{bmatrix}
+0.8 & 0 \\
+0 & 0.8 \\
+0.6 & 0\\
+0 & 0.7\\
+0 & 0.6\\
+\end{bmatrix}.
+\] and the real \(\boldsymbol{\Psi}\) is given by \[
+\boldsymbol{\Psi}=\text{diag}(0.1,0.2,0.2,0.1,0.1).
+\] We generate \(\boldsymbol{Y}\in \mathbb{R}^{{10000}\times 5}\) from a
+multivariate normal distribution with mean \(\mathbb{0}_{5}\) and
+covariance
+\(\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}\). We
+utilize the R-function \texttt{factanal()} to produce the loading matrix
+via MLE, where this R-function will unitize varimax method to achieve
+rotation automatically. What we finally get is
+
+\[
+\hat{\boldsymbol{\Lambda}}=
+\begin{bmatrix}
+0 & 0.997\\
+0.872 & 0\\
+0 & 0.748\\
+0.915 & 0\\
+0.882 & 0\\
+\end{bmatrix},
+\hat{\boldsymbol{\Psi}}=\text{diag}(0.005,0.240,0.440,0.163,0.223)
+\] This result gives the same sparsity result. However, the result of
+loading matrix in the first and last two dimensions are much larger than
+the real one, which implies overfitness.
+
+Simulation code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{10000} \CommentTok{\# Number of observations}
+\CommentTok{\# True loading matrix}
+\NormalTok{true\_loading }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.8}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.6}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.8}\NormalTok{,}\DecValTok{0}\NormalTok{,}\FloatTok{0.7}\NormalTok{,}\FloatTok{0.6}\NormalTok{),}\AttributeTok{nrow=}\DecValTok{5}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{) }
+\CommentTok{\# True psi matrix}
+\NormalTok{true\_psi }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{,}\FloatTok{0.2}\NormalTok{,}\FloatTok{0.2}\NormalTok{,}\FloatTok{0.1}\NormalTok{,}\FloatTok{0.1}\NormalTok{))}
+\CommentTok{\# Generate samples from multivariate normal distribution}
+\NormalTok{samples }\OtherTok{\textless{}{-}}\NormalTok{ MASS}\SpecialCharTok{::}\FunctionTok{mvrnorm}\NormalTok{(}\AttributeTok{n =}\NormalTok{ n, }\AttributeTok{mu =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{), }
+                         \AttributeTok{Sigma =}\NormalTok{ true\_loading }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(true\_loading) }\SpecialCharTok{+}\NormalTok{ true\_psi)}
+\CommentTok{\# Traditional two step procedure}
+\CommentTok{\# the function factanal has already used varimax method to get the optimal loading}
+\NormalTok{fa\_result }\OtherTok{\textless{}{-}} \FunctionTok{factanal}\NormalTok{(}\AttributeTok{factors =} \DecValTok{2}\NormalTok{, }\AttributeTok{covmat =} \FunctionTok{cor}\NormalTok{(samples))}
+\CommentTok{\# Result}
+\NormalTok{fa\_result}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+factanal(factors = 2, covmat = cor(samples))
+
+Uniquenesses:
+[1] 0.005 0.240 0.440 0.163 0.222
+
+Loadings:
+     Factor1 Factor2
+[1,]          0.997 
+[2,]  0.872         
+[3,]          0.748 
+[4,]  0.915         
+[5,]  0.882         
+
+               Factor1 Factor2
+SS loadings      2.375   1.555
+Proportion Var   0.475   0.311
+Cumulative Var   0.475   0.786
+
+The degrees of freedom for the model is 1 and the fit was 2e-04 
+\end{verbatim}
+
+Another problem is that the absence of model selection complicates
+efficient modeling by making it difficult to determine the precise
+number of underlying factors, that is, the order of the factor analytic
+model. A usual but troublesome method is conducting a hypothesis test
+for the model \citep{mardiaMultivariateAnalysis1979}. We have
+\begin{align*}
+  &&&H_k: k \text{ common factors are sufficient to describe the data } \\
+  \longleftrightarrow &&&H_a: \text{ Otherwise}.
+\end{align*} The test statistics is given by
+\(\text{TS}=nF(\hat{\boldsymbol{\Lambda}},\hat{\boldsymbol{\Psi}})\)
+which has an asymptotic \(\chi^2_s\) distribution with
+\(s=\frac{1}{2}(p-k)^2-(p+k)\) by the property of MLE, where \(F\) is
+given by (\citet{mardiaMultivariateAnalysis1979}) \[
+F(\boldsymbol{\Lambda},\boldsymbol{\Psi})=\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})-\log(\det(\boldsymbol{\Sigma}^{-1}\boldsymbol{S}))-p.
+\] Typically, the test is conducted at a \(5\%\) significant level. We
+can start the procedure from a very small \(k\), say, \(k=1\) or \(k=2\)
+and then increase \(k\) until the null hypothesis is not rejected.
+
+\section{Penalized Likelihood Method}\label{penalized-likelihood-method}
+
+Penalized likelihood method can be viewed as a generalization of
+two-step method mentioned above
+\citep{hiroseSparseEstimationNonconcave2015}. A penalized factor
+analytic model can be obtained by solving following optimization problem
+\[
+ \max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}}\ell_p := \ell(\boldsymbol{\theta})-P(\boldsymbol{\theta};\rho).
+\] where we call \(\ell_p\) as the penalized likelihood, \(\rho\) is
+called regularization parameter or tuning parameter, and we treat
+\(P(\boldsymbol{\theta};\rho)\) as the penalty. There are many types of
+penalized functions developed, such as LASSO
+(\(P(\boldsymbol{\Lambda})=\sum_{i=1}^p\sum_{j=1}^k|\lambda_{ij}|\)) and
+MC+
+(\$P(\boldsymbol{\theta};\rho;\gamma)=\sum\emph{\{i=1\}\^{}p\sum}\{j=1\}\^{}k
+\{
+n(\textbar{}\lambda\emph{\{ij\}\textbar-\frac{\lambda_{ij}^2}{2\rho\gamma})I(\textbar{}\lambda}\{ij\}\textbar\textless{}\rho\gamma)+\frac{\rho^2\gamma}{2}I(\textbar{}\lambda\_\{ij\}\textbar{}\geq\rho\gamma)\}
+\$)\citep{hiroseSparseEstimationNonconcave2015}，where \(\gamma\) is
+another tuning parameter to keep a balance between unbiasedness and
+concavity. In this article, we will mainly focus on the LASSO penalty.
+
+\subsection{LASSO penalty and LASSO
+estimator}\label{lasso-penalty-and-lasso-estimator}
+
+Again, recall that the LASSO penalized likelihood is given by
+\[\ell_p=-\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|\]
+and the LASSO estimator, denoted as
+\((\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*)\), can be obtained via
+
+\[
+\begin{align*}
+(\boldsymbol{\Lambda}^*,\boldsymbol{\Psi}^*) &= \text{arg}\max_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad -\frac{n}{2}[p\log(2\pi)+\log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})]-\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|\\
+&=\text{arg}\min_{\boldsymbol{\Lambda},\boldsymbol{\Psi}} \quad \log(\det(\boldsymbol{\Sigma}))+\text{tr}(\boldsymbol{\Sigma}^{-1}\boldsymbol{S})+\frac{2}{n}\rho\sum^p_{i=1}\sum^k_{j=1}|\lambda_{ij}|.
+\end{align*}
+\] Nevertheless, the objective function is non\_differentiable at some
+point because of the penalization term. Therefore we need to find other
+approaches to obtain the estimator instead of solving
+
+\section{The EM Algorithm}\label{sec-EM}
+
+The Expectation-Maximization (EM) algorithm is a widely used iterative
+method to find the MLE, especially when the model depends on latent
+variables. The EM algorithm iteratively apply two distinct steps: the
+Expectation step (E-step) and the Maximization step (M-step). More
+specifically, we define
+
+\[Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)}) = \mathbb{E}\left(\ell (\boldsymbol{\theta}; \boldsymbol{y})\bigg|\boldsymbol{y},\boldsymbol{\theta}^{(t)}\right).\]
+Then for the \((t + 1)\)-th interation, the steps involve:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{E-step}: Compute
+  \(Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)})\).
+\item
+  \emph{M-step}: Update \(\boldsymbol{\theta}^{(t+1)}\) as
+  \(\boldsymbol{\theta}\) that maximses
+  \(Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(t)})\).
+\end{itemize}
+
+The M-step may be replaced with updating \(\boldsymbol{\theta}^{(t+1)}\)
+such that
+\(Q(\boldsymbol{\theta}^{(t+1)}|\boldsymbol{\theta}^{(t)}) \geq Q(\boldsymbol{\theta}^{(t)}|\boldsymbol{\theta}^{(t)})\).
+
+We iterate between E-step and M-step until convergence. The convergence
+may be determined by a criteria such as
+\(||\boldsymbol{\theta}^{(t+1)}-\boldsymbol{\theta}^{(t)}||_p\leq \epsilon\)
+for some \(p\)-norm \(||\cdot||_p\) and \(\epsilon > 0\).
+
+The EM algorithm approaches the problem of solving the likelihood
+equation indirectly by proceeding iteratively in terms of
+\(\ell(\boldsymbol{\theta};\boldsymbol{y})\). But it is unobservable
+since it includes missing part of the data, then we use the conditional
+expectation given \(\boldsymbol{y}\) and current fit for
+\(\boldsymbol{\theta}\).
+
+Now we need to show the correctness of the EM-algorithm. In other words,
+by iteratively processing the EM-algorithm, the likelihood will keep
+increasing (at least non-decreasing). First we need to show the
+following lemma.
+
+\begin{lemma}[Convergence of the EM
+Algorithm]\protect\hypertarget{lem-convergence}{}\label{lem-convergence}
+
+Suppose the likelihood is upper-bounded. Then for all \(\epsilon > 0\),
+there exists \(t > t_0\) such that
+\(||\boldsymbol{\theta}^{(t)} - \hat{\boldsymbol{\theta}}|| < \epsilon\)
+where \(\hat{\boldsymbol{\theta}}\) is the MLE.
+
+\end{lemma}
+
+\begin{proof}
+By the definition of conditional likelihood, our likelihood of complete
+data, i.e.~the observable and unobservable data, can be expressed by \[
+L_{\boldsymbol{X}}(\boldsymbol{\theta}) = f_{\boldsymbol{X}}(\boldsymbol{x};\boldsymbol{\theta})=L_{\boldsymbol{Y}}(\boldsymbol{\theta})f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}),
+\] and hence the log-likelihood is given by \[
+\log L_{\boldsymbol{X}}(\boldsymbol{\theta}) = \ell_{\boldsymbol{y}}(\boldsymbol{\theta}) + \log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}).
+\] Take expectation to both sides of the equation with respect to
+\(\boldsymbol{x|y}\) and replace \(\boldsymbol{\theta}\) by
+\(\boldsymbol{\theta}^{(k)}\), we will have \[
+Q(\boldsymbol{\theta};\boldsymbol{\theta}^{(k)}) = \ell_{\boldsymbol{y}}(\boldsymbol{\theta}) + \mathbb{E}_{\boldsymbol{X}}[\log f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}].
+\] Now consider the difference of log-likelihood of \(\boldsymbol{Y}\)
+function between two iterations, we have \[
+\begin{align*}
+  \ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k+1)})-\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k)}) =
+  &\{Q(\boldsymbol{\theta}^{(k+1)};\boldsymbol{\theta}^{(k)})-Q(\boldsymbol{\theta}^{(k)};\boldsymbol{\theta}^{(k)})\}\\
+  &-\{\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}]\\
+  &-\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k)}|\boldsymbol{y},\boldsymbol{\theta}^{(k)}]\}.
+\end{align*}
+\] By the procedure of EM-algorithm, we always have
+\(Q(\boldsymbol{\theta}^{(k+1)};\boldsymbol{\theta}^{(k)})\geq Q(\boldsymbol{\theta}^{(k)};\boldsymbol{\theta}^{(k)})\).
+By the Gibbs's inequality, we have
+\(\mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k+1)})|\boldsymbol{y},\boldsymbol{\theta}^{(k)}] \leq \mathbb{E}_{\boldsymbol{X}}[\log         f_{\boldsymbol{X|Y}}(\boldsymbol{x}|\boldsymbol{y};\boldsymbol{\theta}^{(k)}|\boldsymbol{y},\boldsymbol{\theta}^{(k)}].\)
+Therefore during iterations, the sequnence of log-likelihood of observed
+data \(\boldsymbol{Y}\) given by
+\(\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(n)})\}_{n\geq 1}:=\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(1)}),\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(2)}),\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(3)}),\dots\}\),
+is increasing. Now replace the term
+\(\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k+1)})\) by
+\(\ell_{\boldsymbol{y}}(\hat{\boldsymbol{{\theta}}})\), we will have \[
+\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(k)}) \leq \ell_{\boldsymbol{y}}(\hat{\boldsymbol{{\theta}}})
+\] for all \(k=1,2,\dots\). Therefore the upper-bound of the sequence
+\(\{\ell_{\boldsymbol{y}}(\boldsymbol{\theta}^{(n)})\}_{n\geq 1}\) is
+\(\ell_{\boldsymbol{y}}(\hat{\boldsymbol{\theta}})\). By the monotone
+convergence theorem, and the definition of convergence, we finished.
+\end{proof}
+
+\bookmarksetup{startatroot}
+
+\chapter{Method}\label{sec-method}
+
+As described in Chapter~\ref{sec-bg}, there are various methods to fit a
+factor analytic model to multivariate data.
+
+\section{Parameter estimation}\label{parameter-estimation-1}
+
+\subsection{The EM Algorithm}\label{the-em-algorithm}
+
+We treat the common factor matrix \(\boldsymbol{f}\) as the latent
+variable. In E-step, we need to compute the conditional expectation of
+the joint likelihood of \((\boldsymbol{y},\boldsymbol{f})\) given
+\(\boldsymbol{y}\) and \(\boldsymbol{\theta}_{(t)}\), where
+\(\boldsymbol{\theta}_{(t)}\) is the parameter we got in the \(t\)-th
+iteration (\(t>1\)) and \(\boldsymbol{\theta}_{(0)}\) is the initial
+value we set. In M-step, we maximize the conditional expectation over
+parameters and get \(\boldsymbol{\theta}_{(t + 1)}\).
+
+\subsubsection{E-Step}\label{e-step}
+
+\begin{lemma}[]\protect\hypertarget{lem-fa-likelihood}{}\label{lem-fa-likelihood}
+
+The joint log-likelihood of \((\boldsymbol{y},\boldsymbol{f})\) is given
+by
+\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\\]
+
+\end{lemma}
+
+\begin{proof}
+First, the joint log-likelihood of \((\boldsymbol{y},\boldsymbol{f})\)
+is given by
+\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)\]
+where
+\(\boldsymbol{y}_i|\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})\)
+and
+\(\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{0}_m,\boldsymbol{I}_m)\).
+Therefore we have
+
+\$\$
+
+\begin{align*}
+\ell(\boldsymbol{\theta})=& \sum_{i=1}^n\log f(\boldsymbol{y}_i|\boldsymbol{f}_i) + \sum_{i=1}^n\log f(\boldsymbol{f}_i)\\
+=& -\frac{np}{2}\log(2\pi)-\frac{n}{2}\log\left[\det(\boldsymbol{\Psi})\right]-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\\
+&\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log\left[\det(\boldsymbol{I}_m)\right]-\frac{1}{2}(\boldsymbol{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_m^{-1}(\boldsymbol{f}_i-\boldsymbol{0}_m)\\
+=& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\sum_{j=1}^p\log \psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
+=& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} + \frac{1}{2}\sum_{i=1}^n \boldsymbol{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\boldsymbol{y}_i+ \frac{1}{2}\sum_{i=1}^n\boldsymbol{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i  - \frac{1}{2}\sum_{i=1}^n
+\boldsymbol{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i -\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
+=& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} +   \sum_{i=1}^n \boldsymbol{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i  - \frac{1}{2}\sum_{i=1}^n
+\boldsymbol{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i -\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
+
+=& -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} +   \sum_{i=1}^n \boldsymbol{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i  - \frac{1}{2}\sum_{i=1}^n\text{tr}\left(
+\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i\boldsymbol{f}_i^\top\right) -\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
+\end{align*}
+
+\$\$
+\end{proof}
+
+Now let us deduce the conditional expectation to \(\boldsymbol{f}\)
+given \(\boldsymbol{y},\boldsymbol{\theta}_{(t)}\), denoted as
+\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\). In
+Equation~\ref{eq-loglikelihood}, the first term is independent of
+\(\boldsymbol{f}\), hence stay the same under conditional expectation.
+The last term is independent of \(\boldsymbol{\theta}\), therefore we
+can regard it as a constant in
+\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\).
+
+Without ambiguity, denote \(\mathbb{E}[f_{ik}|_{(t)}]\) to be the
+conditional expectation
+\(\mathbb{E}[f_{ik}|\boldsymbol{y},\boldsymbol{\theta}_{(t)}]\) for
+simplification. Then the conditional expectation
+\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\) is given by
+
+\[
+\begin{align*}
+\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)=& \ \text{constant}-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\\
+&\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{\mathbb{E}\left[(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2|_{(t)}\right]}{\psi_{jj}} - \frac{1}{2}\sum_{i=1}^n\mathbb{E}(\boldsymbol{f}_i^\top\boldsymbol{f}_i|_{(t)})\\
+\end{align*}
+\]
+
+To deal with \(\mathbb{E}[\boldsymbol{f}_i|_{(t)}]\) and
+\(\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)}]\), we only
+need to know the mean and variance of conditional distribution
+\(\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}^\top_{(t)},\boldsymbol{\Psi}_{(t)}\),
+or equivalently
+\(\boldsymbol{f}_i|\boldsymbol{y}_i,\boldsymbol{\Lambda}^\top_{(t)},\boldsymbol{\Psi}_{(t)}\)
+because of the independency of \(\boldsymbol{f}_i\) to
+\(\boldsymbol{y}_j\) for \(i\neq j\). This is because we can always
+treat \(\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)}]\) as
+
+\[
+\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)}]= \mathbb{V}[\boldsymbol{f}_i|_{(t)}]+ \mathbb{E}[\boldsymbol{f}_i|_{(t)}]\mathbb{E}[\boldsymbol{f}_i|_{(t)}]^\top.
+\] where \(\mathbb{V}[\boldsymbol{f}_i|_{(t)}]\) is the variance of
+conditional distribution. To deal with this, wed need the following
+lemma.
+
+In our scenario, using Lemma~\ref{lem-cond}, we have
 
 \[
 \begin{align*}
@@ -846,15 +979,15 @@ In our scenario, we have
 and also
 
 \[
-\boldsymbol{Cov}(\boldsymbol{y_i},\boldsymbol{f_i})=\boldsymbol{Cov}(\boldsymbol{\Lambda f}_i+\boldsymbol{\epsilon}_i,\boldsymbol{f}_i)=\boldsymbol{\Lambda}^\top.
+\text{Cov}(\boldsymbol{y}_i,\boldsymbol{f}_i)=\text{Cov}(\boldsymbol{\Lambda f}_i+\boldsymbol{\epsilon}_i,\boldsymbol{f}_i)=\boldsymbol{\Lambda}^\top.
 \]
 
 Therefore we have
 
 \[
 \begin{align*}
-&\mathbb{E}(\boldsymbol{f}_i|_{(k)})=\boldsymbol{\mu}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{y}_i\\
-&\mathbb{V}(\boldsymbol{f}_i|_{(k)})=\boldsymbol{\Sigma}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{\Lambda}_{(k)}.\\
+&\mathbb{E}(\boldsymbol{f}_i|_{(t)})=\boldsymbol{\mu}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{\Lambda}_{(t)}^\top(\boldsymbol{\Lambda}_{(t)}\boldsymbol{\Lambda}_{(t)}^\top+\boldsymbol{\Psi}_{(t)})^{-1}\boldsymbol{y}_i\\
+&\mathbb{V}(\boldsymbol{f}_i|_{(t)})=\boldsymbol{\Sigma}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(t)}^\top(\boldsymbol{\Lambda}_{(t)}\boldsymbol{\Lambda}_{(t)}^\top+\boldsymbol{\Psi}_{(t)})^{-1}\boldsymbol{\Lambda}_{(t)}.\\
 \end{align*} 
 \]
 
@@ -862,8 +995,8 @@ For simplification, let us denote
 
 \[
 \begin{align*}
-&\boldsymbol{A}:=\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\\
-&\boldsymbol{B}:=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(k)}^\top(\boldsymbol{\Lambda}_{(k)}\boldsymbol{\Lambda}_{(k)}^\top+\boldsymbol{\Psi}_{(k)})^{-1}\boldsymbol{\Lambda}_{(k)},\\
+&\boldsymbol{A}:=\boldsymbol{\Lambda}_{(t)}^\top(\boldsymbol{\Lambda}_{(t)}\boldsymbol{\Lambda}_{(t)}^\top+\boldsymbol{\Psi}_{(t)})^{-1}\\
+&\boldsymbol{B}:=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(t)}^\top(\boldsymbol{\Lambda}_{(t)}\boldsymbol{\Lambda}_{(t)}^\top+\boldsymbol{\Psi}_{(t)})^{-1}\boldsymbol{\Lambda}_{(t)},\\
 \end{align*} 
 \]
 
@@ -871,8 +1004,8 @@ we will get
 
 \[
 \begin{align*}
-&\mathbb{E}(\boldsymbol{f}_i|_{(k)})= \boldsymbol{A}\boldsymbol{y}_i\\
-&\mathbb{E}(\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(k)})= \boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top.
+&\mathbb{E}(\boldsymbol{f}_i|_{(t)})= \boldsymbol{A}\boldsymbol{y}_i\\
+&\mathbb{E}(\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)})= \boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top.
 \end{align*}
 \]
 
@@ -880,22 +1013,22 @@ Our expectation will finally be confirmed by
 
 \[
 \begin{align*}
-El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= & -\frac{n}{2}\sum_{j=1}^p\log{\Psi_{jj}}\\
+El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= & -\frac{n}{2}\sum_{j=1}^p\log{\Psi_{jj}}\\
 & -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\Psi_{jj}}\\
 & -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\Psi_{jj}}+\text{constant}.
 \end{align*}
 \]
 
-\subsection{M-step}\label{m-step}
+\subsubsection{M-step}\label{m-step}
 
 In M-step, we need to maximize so called \(Q\)-function with respect to
 parameters where \(Q\)-function is penalized conditional expectation of
 the log-likelihood, i.e. \[
-Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi}) - \frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})
+Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi}) - \frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})
 \] We add a coefficient \(\frac{1}{2}\) before
 \(P_{\rho}(\boldsymbol{\Lambda})\) for simplification since we notice
 that the same coefficient occurs in each term of conditional expectation
-\(El_{(k)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\). When execute
+\(El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\). When execute
 M-step, we use the following strategy\citep{Ng2012EMAlgorithm}:
 
 \begin{enumerate}
@@ -903,8 +1036,8 @@ M-step, we use the following strategy\citep{Ng2012EMAlgorithm}:
 \tightlist
 \item
   Find \(\boldsymbol{\Psi}_{(k+1)}\) using current
-  \(\boldsymbol{\Lambda}_{(k)}\), i.e. \[
-    \boldsymbol{\Psi}_{(k+1)} = \arg \max_{\boldsymbol{\Psi}} (Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)}).
+  \(\boldsymbol{\Lambda}_{(t)}\), i.e. \[
+    \boldsymbol{\Psi}_{(k+1)} = \arg \max_{\boldsymbol{\Psi}} (Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)}).
   \]
 \item
   Find \(\boldsymbol{\Lambda}_{(k+1)}\) using
@@ -918,15 +1051,15 @@ and let it equal to zero to find the local maximizer of \(\psi_{jj}\),
 i.e.~
 
 \[
-\frac{\partial}{\partial \psi_{jj}}Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})=0.
+\frac{\partial}{\partial \psi_{jj}}Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})=0.
 \] By simple calculation, we will have
 
 \[
 \begin{align*}
-\frac{\partial}{\partial \psi_{jj}}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(k)})=
+\frac{\partial}{\partial \psi_{jj}}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})=
 &-\frac{n}{2}\frac{1}{\psi_{jj}}+\frac{1}{2}\sum_{i=1}^n
-\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj}^2} \\
-&+ \frac{1}{2}\sum_{i=1}^n\frac{\boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top}{\psi_{jj}^2}.\\
+\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj}^2} \\
+&+ \frac{1}{2}\sum_{i=1}^n\frac{\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top}{\psi_{jj}^2}.\\
 \end{align*}
 \]
 
@@ -934,16 +1067,20 @@ Thus the update of \(\boldsymbol{\Psi}\) will be elementwisely given by
 
 \[
 \begin{equation}
-\psi_{jj,(k+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2-\frac{2}{n}\sum_{i=1}^ny_{ij}\boldsymbol{\Lambda}_{(k)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(k)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(k)}(j,)^\top.
+\psi_{jj,(t+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2-\frac{2}{n}\sum_{i=1}^ny_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top.
 \end{equation}
-\]
-
-For step 2, let us revise the update formula, we have
+\] But notice that the \(Q\)-function is not concave globally, therefore
+we may update \(\boldsymbol{\Psi}\) selectively. More specifically, we
+only update \(\psi_{jj}\) when it satisfies \[
+\frac{\partial^2}{\partial\psi_{jj}^2}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})\leq 0,
+\] i.e. \[
+\psi_{jj}\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top].
+\] For step 2, let us revise the update formula, we have
 
 \[
 \begin{align*}
-\boldsymbol{\Lambda}_{(k+1)}=&\arg \max_\boldsymbol{\Lambda} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)})\\
-=&\arg \max_\boldsymbol{\Lambda} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
+\boldsymbol{\Lambda}_{(k+1)}=&\arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)})\\
+=&\arg \max_{\boldsymbol{\Lambda}} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
 &-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}}-\frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})\\
 &-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj,(k+1)}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2}{\psi_{jj,(k+1)}}+\text{constant}\}.\\
 \end{align*}
@@ -964,73 +1101,186 @@ as LASSO, we can rewrite it as
 \end{align*} \$\$
 
 Notice that the objective function with respect to
-\(\boldsymbol{\Lambda}(j,)\) for any given \(j=1,2,\dots,p\) is convex,
+\(\boldsymbol{\Lambda}(q,)\) for any given \(q=1,2,\dots,p\) is convex,
 and due to non-differentiablity of the \(L_1\)-norm at certain points, a
-subgradient approach can be necessary to optimize
+proximal gradient method can be necessary to optimize
 \(\boldsymbol{\Lambda}\) row by row.
 
-Denote the objective function as \(g(\boldsymbol{\Lambda})\), the
-subdifferential of \(g(\boldsymbol{\Lambda})\) with respect to some
-given \(j=1,2,\dots,p\) is given by \[
-\begin{align*}
-\partial_{(j)}g(\boldsymbol{\Lambda})&=-\sum_{i=1}^n\frac{2y_{ij}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}+\sum_{i=1}^n\frac{(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top+\boldsymbol{B}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}}+\rho \partial||\boldsymbol{\Lambda}(j,)^\top||_1\\
-&=\sum_{i=1}^n\frac{2y_{ij}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}+\sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}}+\rho \partial||\boldsymbol{\Lambda}(j,)^\top||_1\\
-\end{align*}
-\] We have
+Denote the differentiable part (w.r.t. the \(q\)-th row of
+\(\boldsymbol{\Lambda}\)) of the objective function as \[
+G(\boldsymbol{\Lambda}):= \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}} -\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}},
+\] while the non-differentiable part is denoted as \[
+H(\boldsymbol{\Lambda}) := \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
+\] We will have a nice form for the objective function, under which a
+proximal gradient method can be applied for rowwisely upgrade the
+loading matrix.
 
-\begin{lemma}[]\protect\hypertarget{lem-subd}{}\label{lem-subd}
+\begin{lemma}[]\protect\hypertarget{lem-proximalmethod}{}\label{lem-proximalmethod}
 
-For the set \(\partial||\boldsymbol{\Lambda}(j,)||_1\), we have \[
-\text{sign}(\boldsymbol{\Lambda}(j,)^\top)\in \partial||\boldsymbol{\Lambda}(j,)^\top||_1,
-\] where the sign function is given by \(\text{sign}(x)=
-\begin{cases}
-1 &\text{if } x>0\\
-0 &\text{if } x=0\\
--1 &\text{if } x<0\\
-\end{cases}\) elementwisely.
-
-\end{lemma}
-
-Therefore a iterative subgradient method for finding
-\(\boldsymbol{\Lambda}_{(k+1)}\) rowwisely given by
-\(\boldsymbol{\Lambda}_{(k)}\) is given by
-
-\begin{tcolorbox}[enhanced jigsaw, bottomrule=.15mm, rightrule=.15mm, toprule=.15mm, bottomtitle=1mm, arc=.35mm, opacitybacktitle=0.6, leftrule=.75mm, colframe=quarto-callout-note-color-frame, titlerule=0mm, coltitle=black, opacityback=0, toptitle=1mm, breakable, colback=white, colbacktitle=quarto-callout-note-color!10!white, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{algorithm}, left=2mm]
-
-For each \(j=1,2,...,p\), denote
-\(\boldsymbol{\Lambda}_{(k+1)}^{(l)}(j,)\) as the \(l^{th}\) iteration
-when executing the subgradient method to find the \(j^{th}\) row of
-\(\boldsymbol{\Lambda}_{(k+1)}\), we iterate as following
+Consider the optimization problem \[
+\min_{\boldsymbol{x}\in\mathbb{R}^n}\{G(\boldsymbol{x})+H(\boldsymbol{x})\},
+\] where
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Set
-  \(\boldsymbol{\Lambda}_{(k+1)}^{(0)}(j,):=\boldsymbol{\Lambda}_{(k)}(j,)\).
+  \(G(\boldsymbol{x}): \mathbb{R}^n \to \mathbb{R}\) is convex,
+  differentiable, and \(L\)-Lipschitz continuous,
 \item
-  For \(l\geq 1\), calculate \[
-  \partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})=-\sum_{i=1}^n\frac{2y_{ij}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}+\sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}^{(l)}(j,)^\top}{\psi_{jj,(k+1)}}+\rho \text{ sign}(\boldsymbol{\Lambda}^{(l)}(j,)^\top) .
-  \]
-\item
-  Update \(\boldsymbol{\Lambda}_{(k+1)}^{(l+1)}(j,)\) as \[
-  \boldsymbol{\Lambda}_{(k+1)}^{(l+1)}(j,)=\boldsymbol{\Lambda}_{(k+1)}^{(l)}(j,)-t^{(l)}[\partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})]^\top
-  \] where \(t^{(l)}\) is the step size in the \(l^{th}\) iteration and
-  a widely used choice is letting
-  \(t^{(l)}=\frac{1}{(l+1)||[\partial_{(j)}g(\boldsymbol{\Lambda}^{(l)})]^\top||_2}\),
-  where \(||\cdot||_2\) is the \(L_2\)
-  norm.(\citet{boyd2003subgradient})
-\item
-  Repeat step 3 and 4 until converge.
+  \(H(\boldsymbol{x}): \mathbb{R}^n \to (-\infty,\infty]\) is proper,
+  lower semi-continuous and convex.
 \end{enumerate}
+
+The proximal gradient method is that pick an initial guess
+\(\boldsymbol{x}_0\), for \(k=0,1,2,\dots\), repeat \[
+\boldsymbol{\xi}_k := \boldsymbol{x}_k - s_k \nabla G(\boldsymbol{x})
+\] \[
+\boldsymbol{x}_{k+1} := \arg \min_{\boldsymbol{x}\in\mathbb{R}^n}\{H(\boldsymbol{x})+\frac{1}{2s_k}||\boldsymbol{x}-\boldsymbol{\xi}_k||^2_2\}
+\] with a properly chosen step size \(0<s_k<\frac{1}{L}\).
+
+\end{lemma}
+
+One should notice that in practice, we may choose a sufficiently small
+constant step size \(s_k=s\). In our case, the strategy to update the
+loading matrix is
+
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, arc=.35mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, breakable, toprule=.15mm, opacitybacktitle=0.6, coltitle=black, bottomrule=.15mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Algorithm}, colback=white, rightrule=.15mm, left=2mm, opacityback=0]
+
+For each row of the \(\boldsymbol{\Lambda}\), say,
+\(\boldsymbol{\Lambda}(q,)\) where \(q=1,2,\dots,p\), initialize it as
+the updated row of loading matrix in the last M-step respectively. Then
+for \(k=1,2,\dots,\), update the \(q\)-th row of
+\(\boldsymbol{\Lambda}\) by repeating \[
+\boldsymbol{\xi}_k := \boldsymbol{\Lambda}(q,)_k - s_k \nabla G(\boldsymbol{\Lambda}(q,)_k)
+\] \[
+\boldsymbol{\Lambda}(q,)_{k+1}:=\text{sign}(\boldsymbol{\xi}_k) \cdot \max(|\boldsymbol{\xi}_k|-\rho,0)
+\] where \(|\cdot|\) is the elementwise absolute value and
+\(\nabla G(\boldsymbol{\Lambda}(q,))\) can be calculated by \[
+\nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
+\]
 
 \end{tcolorbox}
 
-the EM-Algorithm for LASSO FA
+\subsection{Overall Algorithm for Fitting LASSO-penalized
+FA}\label{overall-algorithm-for-fitting-lasso-penalized-fa}
+
+\begin{tcolorbox}[enhanced jigsaw, toptitle=1mm, arc=.35mm, colframe=quarto-callout-note-color-frame, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, breakable, toprule=.15mm, opacitybacktitle=0.6, coltitle=black, bottomrule=.15mm, titlerule=0mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Algorithm}, colback=white, rightrule=.15mm, left=2mm, opacityback=0]
+
+\end{tcolorbox}
+
+\section{Existing R packages}\label{existing-r-packages}
+
+\section{Selecting initial values}\label{selecting-initial-values}
+
+\begin{itemize}
+\tightlist
+\item
+  MLE approach (non-penalised approach)
+\item
+  MLE + Rotation
+\item
+  FA model -\textgreater{} one order at a time
+\item
+  uniform/fixed
+\end{itemize}
+
+\section{Simulation setting}\label{simulation-setting}
+
+Criteria? Judge based on estimation? Sparsity structure.
+
+\subsection{Setting 1}\label{setting-1}
+
+\begin{itemize}
+\tightlist
+\item
+  Hirose + other existing simulation settings in published papers
+\item
+  Different FA order (k = 2, 4, 6, 8 x n = 200, 400, 800, 1600 x sparse
+  vs non-sparse).
+\end{itemize}
+
+\subsection{Setting 2}\label{setting-2}
 
 \bookmarksetup{startatroot}
 
-\chapter*{References}\label{references-1}
+\chapter{Results}\label{sec-results}
+
+\bookmarksetup{startatroot}
+
+\chapter{Appendix}\label{appendix}
+
+\section{Multivariate Normal
+distribution}\label{multivariate-normal-distribution}
+
+Suppose that a \(p\)-vector random variable
+\(\boldsymbol{y} \sim N_p(\boldsymbol{\mu},\mathbf{\Sigma})\), then the
+probability density function of \(\boldsymbol{y}\) is given as:
+
+\[f(\boldsymbol{y}) = (2\pi)^{-\frac{p}{2}}|\boldsymbol{\Sigma}|^{-\frac{1}{2}}\exp\left(-\frac{1}{2}(\boldsymbol{y}-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}-\boldsymbol{\mu})\right).\]
+
+\[\log f(\boldsymbol{y}) = -\frac{p}{2}\log(2\pi)-\frac{1}{2}\log|\boldsymbol{\Sigma}|-\frac{1}{2}(\boldsymbol{y}-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\boldsymbol{y}-\boldsymbol{\mu}).\]
+
+\section{Conditional}\label{conditional}
+
+\begin{lemma}[]\protect\hypertarget{lem-cond}{}\label{lem-cond}
+
+If
+\(\boldsymbol{\alpha}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}},\boldsymbol{\Sigma_{\boldsymbol{\alpha}}})\)
+and
+\(\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\beta}})\),
+then we have
+\(\boldsymbol{\alpha}|\boldsymbol{\beta}\sim N(\boldsymbol{\mu}_{\boldsymbol{\alpha}|\boldsymbol{\beta}},\boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}})\),
+where \[
+\begin{align*}
+& \boldsymbol{\mu}_{\boldsymbol{\alpha}}|\boldsymbol{\beta}=\boldsymbol{\mu}_{\boldsymbol{\alpha}}+\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_{\boldsymbol{\beta}}^{-1}\boldsymbol{\beta}\\
+& \boldsymbol{\Sigma}_{\boldsymbol{\alpha}|\boldsymbol{\beta}}= \boldsymbol{\Sigma}_{\boldsymbol{\alpha}}-\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]\boldsymbol{\Sigma}_{\boldsymbol{\beta}}^{-1}\boldsymbol{Cov}[\boldsymbol{\alpha},\boldsymbol{\beta}]^\top.
+\end{align*}
+\]
+
+\end{lemma}
+
+\begin{lemma}[]\protect\hypertarget{lem-con-distribution}{}\label{lem-con-distribution}
+
+Let
+\(\boldsymbol{x}\sim \mathcal{N}(\boldsymbol{\mu}_1,\boldsymbol{\Sigma}_1)\)
+and
+\(\boldsymbol{y}\sim \mathcal{N}(\boldsymbol{\mu}_2,\boldsymbol{\Sigma}_2)\),
+by definition of multivariate normal distribution, we have \[
+\begin{pmatrix}
+\boldsymbol{x}\\
+\boldsymbol{y}
+\end{pmatrix}
+\sim \mathcal{N}(
+\begin{pmatrix}
+\boldsymbol{\mu_x}\\
+\boldsymbol{\mu_y}
+\end{pmatrix}
+,
+\begin{pmatrix}
+\boldsymbol{\Sigma_{xx}} & \boldsymbol{\Sigma_{xy}}\\
+\boldsymbol{\Sigma_{yx}} & \boldsymbol{\Sigma_{yy}}
+\end{pmatrix}
+).
+\] The conditional distribution \(\boldsymbol{x}|\boldsymbol{y}\) is
+then given by \[
+\boldsymbol{x}|\boldsymbol{y} \sim \mathcal{N}(\boldsymbol{\mu_{x|y}},\boldsymbol{\Sigma_{x|y}}),
+\] where \[
+\begin{align*}
+& \boldsymbol{\mu_{x|y}} = \boldsymbol{\mu_x}+\boldsymbol{\Sigma_{xy}}\boldsymbol{\Sigma_{yy}}^{-1}(\boldsymbol{y}-\boldsymbol{\mu_y})\\
+& \boldsymbol{\Sigma_{x|y}} = \boldsymbol{\Sigma_{xx}}-\boldsymbol{\Sigma_{xy}}\boldsymbol{\Sigma_{yy}}^{-1}\boldsymbol{\Sigma_{yx}}
+\end{align*}.
+\]
+
+\end{lemma}
+
+\begin{proof}
+See Appendix A.
+\end{proof}
+
+\bookmarksetup{startatroot}
+
+\chapter*{References}\label{references}
 \addcontentsline{toc}{chapter}{References}
 
 \markboth{References}{References}
@@ -1040,6 +1290,7 @@ the EM-Algorithm for LASSO FA
 
 
 \backmatter
+
 
 
 \end{document}

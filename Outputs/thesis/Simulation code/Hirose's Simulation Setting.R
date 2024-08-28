@@ -213,7 +213,7 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   real_psi <- diag(psi_diag)
   ## Generate a Data Set
   # Hirose use this to generate instead of Y = lambda %*% F + epsilon
-  Y <- mvrnorm(n = N, mu = rep(0,p), Sigma = real_psi)  
+  Y <- mvrnorm(n = N, mu = rep(0,p), Sigma = real_loading %*% t(real_loading) + real_psi)  
   ## End the iteration if the error between two steps is less than np_tolerance
   ## and regard as convergent
   pem_tolerance <- 1 

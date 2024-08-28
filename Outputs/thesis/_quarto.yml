@@ -49,8 +49,8 @@ format:
   html: 
     css: style.css
   #anu-thesis-html: default
-  #anu-thesis-pdf:
-  #  keep-tex: false
-    #classoption: twoside
+  anu-thesis-pdf:
+    keep-tex: false
+    classoption: twoside
 
 engine: knitr

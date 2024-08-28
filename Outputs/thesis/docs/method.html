@@ -254,7 +254,7 @@ window.Quarto = {
 </header>
 
 
-<p>As described in <a href="background.html" class="quarto-xref"><span>Chapter 2</span></a>, there are various methods to fit a factor analytic model to multivariate data.</p>
+<p>As described in <a href="#sec-bg" class="quarto-xref"><span class="quarto-unresolved-ref">sec-bg</span></a>, there are various methods to fit a factor analytic model to multivariate data.</p>
 <section id="parameter-estimation" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="parameter-estimation"><span class="header-section-number">3.1</span> Parameter estimation</h2>
 <section id="the-em-algorithm" class="level3" data-number="3.1.1">
@@ -283,7 +283,7 @@ window.Quarto = {
 \end{align*}\]</span></p>
 <p>$$</p>
 </div>
-<p>Now let us deduce the conditional expectation to <span class="math inline">\(\boldsymbol{f}\)</span> given <span class="math inline">\(\boldsymbol{y},\boldsymbol{\theta}_{(t)}\)</span>, denoted as <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. In <a href="background.html#eq-loglikelihood" class="quarto-xref">Equation&nbsp;<span>2.2</span></a>, the first term is independent of <span class="math inline">\(\boldsymbol{f}\)</span>, hence stay the same under conditional expectation. The last term is independent of <span class="math inline">\(\boldsymbol{\theta}\)</span>, therefore we can regard it as a constant in <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>.</p>
+<p>Now let us deduce the conditional expectation to <span class="math inline">\(\boldsymbol{f}\)</span> given <span class="math inline">\(\boldsymbol{y},\boldsymbol{\theta}_{(t)}\)</span>, denoted as <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. In <a href="#eq-loglikelihood" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-loglikelihood</span></a>, the first term is independent of <span class="math inline">\(\boldsymbol{f}\)</span>, hence stay the same under conditional expectation. The last term is independent of <span class="math inline">\(\boldsymbol{\theta}\)</span>, therefore we can regard it as a constant in <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>.</p>
 <p>Without ambiguity, denote <span class="math inline">\(\mathbb{E}[f_{ik}|_{(t)}]\)</span> to be the conditional expectation <span class="math inline">\(\mathbb{E}[f_{ik}|\boldsymbol{y},\boldsymbol{\theta}_{(t)}]\)</span> for simplification. Then the conditional expectation <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span> is given by</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -295,7 +295,7 @@ window.Quarto = {
 <p><span class="math display">\[
 \mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)}]= \mathbb{V}[\boldsymbol{f}_i|_{(t)}]+ \mathbb{E}[\boldsymbol{f}_i|_{(t)}]\mathbb{E}[\boldsymbol{f}_i|_{(t)}]^\top.
 \]</span> where <span class="math inline">\(\mathbb{V}[\boldsymbol{f}_i|_{(t)}]\)</span> is the variance of conditional distribution. To deal with this, wed need the following lemma.</p>
-<p>In our scenario, using <a href="appendix.html#lem-cond" class="quarto-xref">Lemma&nbsp;<span>5.1</span></a>, we have</p>
+<p>In our scenario, using <a href="#lem-cond" class="quarto-xref">Lemma&nbsp;<span class="quarto-unresolved-ref">lem-cond</span></a>, we have</p>
 <p><span class="math display">\[
 \begin{align*}
 &amp; \boldsymbol{\mu}_{\boldsymbol{f}_i}= \boldsymbol{0}_k, \boldsymbol{\Sigma}_{\boldsymbol{f}_{i}}=\boldsymbol{I}_k\\
@@ -340,7 +340,7 @@ El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= &amp; -\frac{n}{2}\sum_{j=1}^p
 <h4 data-number="3.1.1.2" class="anchored" data-anchor-id="m-step"><span class="header-section-number">3.1.1.2</span> M-step</h4>
 <p>In M-step, we need to maximize so called <span class="math inline">\(Q\)</span>-function with respect to parameters where <span class="math inline">\(Q\)</span>-function is penalized conditional expectation of the log-likelihood, i.e. <span class="math display">\[
 Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi}) - \frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})
-\]</span> We add a coefficient <span class="math inline">\(\frac{1}{2}\)</span> before <span class="math inline">\(P_{\rho}(\boldsymbol{\Lambda})\)</span> for simplification since we notice that the same coefficient occurs in each term of conditional expectation <span class="math inline">\(El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>. When execute M-step, we use the following strategy<span class="citation" data-cites="Ng2012EMAlgorithm">(<a href="references.html#ref-Ng2012EMAlgorithm" role="doc-biblioref">Ng, Krishnan, and McLachlan 2012</a>)</span>:</p>
+\]</span> We add a coefficient <span class="math inline">\(\frac{1}{2}\)</span> before <span class="math inline">\(P_{\rho}(\boldsymbol{\Lambda})\)</span> for simplification since we notice that the same coefficient occurs in each term of conditional expectation <span class="math inline">\(El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>. When execute M-step, we use the following strategy<span class="citation" data-cites="Ng2012EMAlgorithm">(<a href="#ref-Ng2012EMAlgorithm" role="doc-biblioref">Ng, Krishnan, and McLachlan 2012</a>)</span>:</p>
 <ol type="1">
 <li>Find <span class="math inline">\(\boldsymbol{\Psi}_{(k+1)}\)</span> using current <span class="math inline">\(\boldsymbol{\Lambda}_{(t)}\)</span>, i.e. <span class="math display">\[
   \boldsymbol{\Psi}_{(k+1)} = \arg \max_{\boldsymbol{\Psi}} (Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)}).
@@ -473,7 +473,7 @@ Algorithm
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="setting-2"><span class="header-section-number">3.4.2</span> Setting 2</h3>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-Ng2012EMAlgorithm" class="csl-entry" role="listitem">
 Ng, S. K., T. Krishnan, and G. J. McLachlan. 2012. <span>“The EM Algorithm.”</span> In <em>Handbook of Computational Statistics: Concepts and Methods</em>, 139–72. Springer.
 </div>
