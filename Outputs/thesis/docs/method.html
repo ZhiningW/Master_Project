@@ -217,10 +217,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link active" data-scroll-target="#parameter-estimation"><span class="header-section-number">3.1</span> Parameter estimation</a>
+  <li><a href="#parameter-estimation-the-em-algorithm" id="toc-parameter-estimation-the-em-algorithm" class="nav-link active" data-scroll-target="#parameter-estimation-the-em-algorithm"><span class="header-section-number">3.1</span> Parameter estimation: The EM Algorithm</a>
   <ul class="collapse">
-  <li><a href="#the-em-algorithm" id="toc-the-em-algorithm" class="nav-link" data-scroll-target="#the-em-algorithm"><span class="header-section-number">3.1.1</span> The EM Algorithm</a></li>
-  <li><a href="#overall-algorithm-for-fitting-lasso-penalized-fa" id="toc-overall-algorithm-for-fitting-lasso-penalized-fa" class="nav-link" data-scroll-target="#overall-algorithm-for-fitting-lasso-penalized-fa"><span class="header-section-number">3.1.2</span> Overall Algorithm for Fitting LASSO-penalized FA</a></li>
+  <li><a href="#e-step" id="toc-e-step" class="nav-link" data-scroll-target="#e-step"><span class="header-section-number">3.1.1</span> E-Step</a></li>
+  <li><a href="#m-step" id="toc-m-step" class="nav-link" data-scroll-target="#m-step"><span class="header-section-number">3.1.2</span> M-step</a></li>
+  <li><a href="#overall-algorithm-for-fitting-lasso-penalized-fa" id="toc-overall-algorithm-for-fitting-lasso-penalized-fa" class="nav-link" data-scroll-target="#overall-algorithm-for-fitting-lasso-penalized-fa"><span class="header-section-number">3.1.3</span> Overall Algorithm for Fitting LASSO-penalized FA</a></li>
   </ul></li>
   <li><a href="#existing-r-packages" id="toc-existing-r-packages" class="nav-link" data-scroll-target="#existing-r-packages"><span class="header-section-number">3.2</span> Existing R packages</a></li>
   <li><a href="#selecting-initial-values" id="toc-selecting-initial-values" class="nav-link" data-scroll-target="#selecting-initial-values"><span class="header-section-number">3.3</span> Selecting initial values</a></li>
@@ -254,21 +255,20 @@ window.Quarto = {
 </header>
 
 
-<p>As described in <a href="#sec-bg" class="quarto-xref"><span class="quarto-unresolved-ref">sec-bg</span></a>, there are various methods to fit a factor analytic model to multivariate data.</p>
-<section id="parameter-estimation" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="parameter-estimation"><span class="header-section-number">3.1</span> Parameter estimation</h2>
-<section id="the-em-algorithm" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="the-em-algorithm"><span class="header-section-number">3.1.1</span> The EM Algorithm</h3>
+<p>As described in <a href="background.html" class="quarto-xref"><span>Chapter 2</span></a>, there are various methods to fit a factor analytic model to multivariate data.</p>
+<section id="parameter-estimation-the-em-algorithm" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="parameter-estimation-the-em-algorithm"><span class="header-section-number">3.1</span> Parameter estimation: The EM Algorithm</h2>
 <p>We treat the common factor matrix <span class="math inline">\(\boldsymbol{f}\)</span> as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> given <span class="math inline">\(\boldsymbol{y}\)</span> and <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span>, where <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span> is the parameter we got in the <span class="math inline">\(t\)</span>-th iteration (<span class="math inline">\(t&gt;1\)</span>) and <span class="math inline">\(\boldsymbol{\theta}_{(0)}\)</span> is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get <span class="math inline">\(\boldsymbol{\theta}_{(t + 1)}\)</span>.</p>
-<section id="e-step" class="level4" data-number="3.1.1.1">
-<h4 data-number="3.1.1.1" class="anchored" data-anchor-id="e-step"><span class="header-section-number">3.1.1.1</span> E-Step</h4>
+<section id="e-step" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="e-step"><span class="header-section-number">3.1.1</span> E-Step</h3>
 <div id="lem-fa-likelihood" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lemma 3.1</strong></span> The joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by <span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\\]</span></p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>First, the joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by <span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)\]</span> where <span class="math inline">\(\boldsymbol{y}_i|\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})\)</span> and <span class="math inline">\(\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{0}_m,\boldsymbol{I}_m)\)</span>. Therefore we have</p>
-<p>$$</p>
-<p><span class="math display">\[\begin{align*}
+<p><span class="proof-title"><em>Proof</em>. </span>First, the joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by <span class="math display">\[
+\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)
+\]</span> where <span class="math inline">\(\boldsymbol{y}_i|\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})\)</span> and <span class="math inline">\(\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{0}_m,\boldsymbol{I}_m)\)</span>. Therefore we have</p>
+<p>$$ <span class="math display">\[\begin{align*}
 \ell(\boldsymbol{\theta})=&amp; \sum_{i=1}^n\log f(\boldsymbol{y}_i|\boldsymbol{f}_i) + \sum_{i=1}^n\log f(\boldsymbol{f}_i)\\
 =&amp; -\frac{np}{2}\log(2\pi)-\frac{n}{2}\log\left[\det(\boldsymbol{\Psi})\right]-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\\
 &amp;\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log\left[\det(\boldsymbol{I}_m)\right]-\frac{1}{2}(\boldsymbol{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_m^{-1}(\boldsymbol{f}_i-\boldsymbol{0}_m)\\
@@ -280,10 +280,9 @@ window.Quarto = {
 
 =&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} +   \sum_{i=1}^n \boldsymbol{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i  - \frac{1}{2}\sum_{i=1}^n\text{tr}\left(
 \mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i\boldsymbol{f}_i^\top\right) -\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
-\end{align*}\]</span></p>
-<p>$$</p>
+\end{align*}\]</span> $$</p>
 </div>
-<p>Now let us deduce the conditional expectation to <span class="math inline">\(\boldsymbol{f}\)</span> given <span class="math inline">\(\boldsymbol{y},\boldsymbol{\theta}_{(t)}\)</span>, denoted as <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. In <a href="#eq-loglikelihood" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-loglikelihood</span></a>, the first term is independent of <span class="math inline">\(\boldsymbol{f}\)</span>, hence stay the same under conditional expectation. The last term is independent of <span class="math inline">\(\boldsymbol{\theta}\)</span>, therefore we can regard it as a constant in <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>.</p>
+<p>Now let us deduce the conditional expectation to <span class="math inline">\(\boldsymbol{f}\)</span> given <span class="math inline">\(\boldsymbol{y},\boldsymbol{\theta}_{(t)}\)</span>, denoted as <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. In <a href="background.html#eq-loglikelihood" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>, the first term is independent of <span class="math inline">\(\boldsymbol{f}\)</span>, hence stay the same under conditional expectation. The last term is independent of <span class="math inline">\(\boldsymbol{\theta}\)</span>, therefore we can regard it as a constant in <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>.</p>
 <p>Without ambiguity, denote <span class="math inline">\(\mathbb{E}[f_{ik}|_{(t)}]\)</span> to be the conditional expectation <span class="math inline">\(\mathbb{E}[f_{ik}|\boldsymbol{y},\boldsymbol{\theta}_{(t)}]\)</span> for simplification. Then the conditional expectation <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span> is given by</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -295,7 +294,7 @@ window.Quarto = {
 <p><span class="math display">\[
 \mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)}]= \mathbb{V}[\boldsymbol{f}_i|_{(t)}]+ \mathbb{E}[\boldsymbol{f}_i|_{(t)}]\mathbb{E}[\boldsymbol{f}_i|_{(t)}]^\top.
 \]</span> where <span class="math inline">\(\mathbb{V}[\boldsymbol{f}_i|_{(t)}]\)</span> is the variance of conditional distribution. To deal with this, wed need the following lemma.</p>
-<p>In our scenario, using <a href="#lem-cond" class="quarto-xref">Lemma&nbsp;<span class="quarto-unresolved-ref">lem-cond</span></a>, we have</p>
+<p>In our scenario, using <a href="appendix.html#lem-cond" class="quarto-xref">Lemma&nbsp;<span>5.1</span></a>, we have</p>
 <p><span class="math display">\[
 \begin{align*}
 &amp; \boldsymbol{\mu}_{\boldsymbol{f}_i}= \boldsymbol{0}_k, \boldsymbol{\Sigma}_{\boldsymbol{f}_{i}}=\boldsymbol{I}_k\\
@@ -336,11 +335,11 @@ El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= &amp; -\frac{n}{2}\sum_{j=1}^p
 \end{align*}
 \]</span></p>
 </section>
-<section id="m-step" class="level4" data-number="3.1.1.2">
-<h4 data-number="3.1.1.2" class="anchored" data-anchor-id="m-step"><span class="header-section-number">3.1.1.2</span> M-step</h4>
+<section id="m-step" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="m-step"><span class="header-section-number">3.1.2</span> M-step</h3>
 <p>In M-step, we need to maximize so called <span class="math inline">\(Q\)</span>-function with respect to parameters where <span class="math inline">\(Q\)</span>-function is penalized conditional expectation of the log-likelihood, i.e. <span class="math display">\[
 Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi}) - \frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})
-\]</span> We add a coefficient <span class="math inline">\(\frac{1}{2}\)</span> before <span class="math inline">\(P_{\rho}(\boldsymbol{\Lambda})\)</span> for simplification since we notice that the same coefficient occurs in each term of conditional expectation <span class="math inline">\(El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>. When execute M-step, we use the following strategy<span class="citation" data-cites="Ng2012EMAlgorithm">(<a href="#ref-Ng2012EMAlgorithm" role="doc-biblioref">Ng, Krishnan, and McLachlan 2012</a>)</span>:</p>
+\]</span> We add a coefficient <span class="math inline">\(\frac{1}{2}\)</span> before <span class="math inline">\(P_{\rho}(\boldsymbol{\Lambda})\)</span> for simplification since we notice that the same coefficient occurs in each term of conditional expectation <span class="math inline">\(El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>. When execute M-step, we use the following strategy<span class="citation" data-cites="Ng2012EMAlgorithm">(<a href="references.html#ref-Ng2012EMAlgorithm" role="doc-biblioref">Ng, Krishnan, and McLachlan 2012</a>)</span>:</p>
 <ol type="1">
 <li>Find <span class="math inline">\(\boldsymbol{\Psi}_{(k+1)}\)</span> using current <span class="math inline">\(\boldsymbol{\Lambda}_{(t)}\)</span>, i.e. <span class="math display">\[
   \boldsymbol{\Psi}_{(k+1)} = \arg \max_{\boldsymbol{\Psi}} (Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)}).
@@ -362,40 +361,48 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(t)}(\boldsymbol{\Lambda},\bolds
 \end{align*}
 \]</span></p>
 <p>Thus the update of <span class="math inline">\(\boldsymbol{\Psi}\)</span> will be elementwisely given by</p>
-<p><span class="math display">\[
+<p><span id="eq-psiupdate"><span class="math display">\[
 \begin{equation}
 \psi_{jj,(t+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2-\frac{2}{n}\sum_{i=1}^ny_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top.
 \end{equation}
-\]</span> But notice that the <span class="math inline">\(Q\)</span>-function is not concave globally, therefore we may update <span class="math inline">\(\boldsymbol{\Psi}\)</span> selectively. More specifically, we only update <span class="math inline">\(\psi_{jj}\)</span> when it satisfies <span class="math display">\[
+\tag{3.1}\]</span></span></p>
+<p>But notice that the <span class="math inline">\(Q\)</span>-function is not concave globally, therefore we may update <span class="math inline">\(\boldsymbol{\Psi}\)</span> selectively. More specifically, we only update <span class="math inline">\(\psi_{jj}\)</span> when it satisfies</p>
+<p><span class="math display">\[
 \frac{\partial^2}{\partial\psi_{jj}^2}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})\leq 0,
 \]</span> i.e. <span class="math display">\[
 \psi_{jj}\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top].
 \]</span> For step 2, let us revise the update formula, we have</p>
 <p><span class="math display">\[
 \begin{align*}
-\boldsymbol{\Lambda}_{(k+1)}=&amp;\arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)})\\
-=&amp;\arg \max_{\boldsymbol{\Lambda}} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
-&amp;-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}}-\frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})\\
-&amp;-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj,(k+1)}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2}{\psi_{jj,(k+1)}}+\text{constant}\}.\\
+\boldsymbol{\Lambda}_{(t+1)}=&amp;\arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(t+1)})\\
+=&amp;\arg \max_{\boldsymbol{\Lambda}} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
+&amp;-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}}-\frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})\\
+&amp;-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj,(t+1)}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2}{\psi_{jj,(t+1)}}+\text{constant}\}.\\
 \end{align*}
 \]</span></p>
 <p>Since the last three terms do not contain any <span class="math inline">\(\boldsymbol{\Lambda}\)</span>, so they can be eliminated. After letting <span class="math inline">\(P_\rho(\boldsymbol{\Lambda}):=\rho\sum_{j=1}^p\sum_{i=1}^k|\lambda_{ji}|=\rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1\)</span> as LASSO, we can rewrite it as</p>
 <p>$$ <span class="math display">\[\begin{align*}
 \boldsymbol{\Lambda}_{(k+1)}
 
-=&amp; \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}}\\
+=&amp; \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
 
-&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
+&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
   \}
-\end{align*}\]</span> $$</p>
-<p>Notice that the objective function with respect to <span class="math inline">\(\boldsymbol{\Lambda}(q,)\)</span> for any given <span class="math inline">\(q=1,2,\dots,p\)</span> is convex, and due to non-differentiablity of the <span class="math inline">\(L_1\)</span>-norm at certain points, a proximal gradient method can be necessary to optimize <span class="math inline">\(\boldsymbol{\Lambda}\)</span> row by row.</p>
+\end{align*}\]</span> $$ The objective function enjoys a nice property given by the following lemma:</p>
+<div id="lem-mstep-covexity" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 3.2</strong></span> The objective function is convex with respective to <span class="math inline">\(\boldsymbol{\Lambda}_{q\cdot}\)</span> for any given <span class="math inline">\(q=1,2,\dots,p\)</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Proof</em>. </span>To show <a href="#lem-mstep-covexity" class="quarto-xref">Lemma&nbsp;<span>3.2</span></a>, we only need to show <span class="math inline">\(\sum_{i=1}^n (\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\)</span> is semi-positive definite.</p>
+</div>
+<p>Due to the convexity mentioned by and non-differentiablity of the <span class="math inline">\(L_1\)</span>-norm at certain points, a proximal gradient method can be necessary to optimize <span class="math inline">\(\boldsymbol{\Lambda}\)</span> row by row.</p>
 <p>Denote the differentiable part (w.r.t. the <span class="math inline">\(q\)</span>-th row of <span class="math inline">\(\boldsymbol{\Lambda}\)</span>) of the objective function as <span class="math display">\[
-G(\boldsymbol{\Lambda}):= \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(k+1)}} -\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(k+1)}},
+G(\boldsymbol{\Lambda}):= \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} -\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}},
 \]</span> while the non-differentiable part is denoted as <span class="math display">\[
 H(\boldsymbol{\Lambda}) := \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
 \]</span> We will have a nice form for the objective function, under which a proximal gradient method can be applied for rowwisely upgrade the loading matrix.</p>
 <div id="lem-proximalmethod" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 3.2</strong></span> Consider the optimization problem <span class="math display">\[
+<p><span class="theorem-title"><strong>Lemma 3.3</strong></span> Consider the optimization problem <span class="math display">\[
 \min_{\boldsymbol{x}\in\mathbb{R}^n}\{G(\boldsymbol{x})+H(\boldsymbol{x})\},
 \]</span> where</p>
 <ol type="1">
@@ -420,18 +427,17 @@ Algorithm
 </div>
 <div class="callout-body-container callout-body">
 <p>For each row of the <span class="math inline">\(\boldsymbol{\Lambda}\)</span>, say, <span class="math inline">\(\boldsymbol{\Lambda}(q,)\)</span> where <span class="math inline">\(q=1,2,\dots,p\)</span>, initialize it as the updated row of loading matrix in the last M-step respectively. Then for <span class="math inline">\(k=1,2,\dots,\)</span>, update the <span class="math inline">\(q\)</span>-th row of <span class="math inline">\(\boldsymbol{\Lambda}\)</span> by repeating <span class="math display">\[
-\boldsymbol{\xi}_k := \boldsymbol{\Lambda}(q,)_k - s_k \nabla G(\boldsymbol{\Lambda}(q,)_k)
+\boldsymbol{\xi}_k := \boldsymbol{\Lambda}(q,)_{(t)} - s_k \nabla G(\boldsymbol{\Lambda}(q,)_{(t)})
 \]</span> <span class="math display">\[
-\boldsymbol{\Lambda}(q,)_{k+1}:=\text{sign}(\boldsymbol{\xi}_k) \cdot \max(|\boldsymbol{\xi}_k|-\rho,0)
+\boldsymbol{\Lambda}(q,)_{(t+1)}:=\text{sign}(\boldsymbol{\xi}_k) \cdot \max(|\boldsymbol{\xi}_k|-\rho,0)
 \]</span> where <span class="math inline">\(|\cdot|\)</span> is the elementwise absolute value and <span class="math inline">\(\nabla G(\boldsymbol{\Lambda}(q,))\)</span> can be calculated by <span class="math display">\[
 \nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
 \]</span></p>
 </div>
 </div>
 </section>
-</section>
-<section id="overall-algorithm-for-fitting-lasso-penalized-fa" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="overall-algorithm-for-fitting-lasso-penalized-fa"><span class="header-section-number">3.1.2</span> Overall Algorithm for Fitting LASSO-penalized FA</h3>
+<section id="overall-algorithm-for-fitting-lasso-penalized-fa" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="overall-algorithm-for-fitting-lasso-penalized-fa"><span class="header-section-number">3.1.3</span> Overall Algorithm for Fitting LASSO-penalized FA</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -473,7 +479,7 @@ Algorithm
 <h3 data-number="3.4.2" class="anchored" data-anchor-id="setting-2"><span class="header-section-number">3.4.2</span> Setting 2</h3>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Ng2012EMAlgorithm" class="csl-entry" role="listitem">
 Ng, S. K., T. Krishnan, and G. J. McLachlan. 2012. <span>“The EM Algorithm.”</span> In <em>Handbook of Computational Statistics: Concepts and Methods</em>, 139–72. Springer.
 </div>
