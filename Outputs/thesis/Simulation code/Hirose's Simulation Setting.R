@@ -173,7 +173,7 @@ gradient <- function(lambda,psi,Y,j){
 
 proximal_method <- function(lambda,psi,Y,j,rho){
   lambda_j_old <- lambda[j,,drop=FALSE]
-  gamma <- 0.01  # step size
+  gamma <- 0.1  # step size
   epsilon <- 0.1
   error <- 0
   iteration <- 0
@@ -269,7 +269,7 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
 
 set.seed(126)
 Model_A <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow=6, ncol=2, byrow = TRUE)
-# Model_B <- 
+Model_B <- matrix(c(0.9,0,0.9,0,0.8,0,0,0.8,0,0.7,0,0.7), nrow=6, ncol=2, byrow = TRUE)
 
 initial_loading <- matrix(c(1,0,2,3,2,1,2,1,2,0,2,1), nrow=6, ncol=2)
 initial_psi <- diag(c(0.1,0.2,0.2,0.3,0.4,0.1))

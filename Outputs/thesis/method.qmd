@@ -108,7 +108,7 @@ El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= & -\frac{n}{2}\sum_{j=1}^p\log
 & -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\Psi_{jj}}\\
 & -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\Psi_{jj}}+\text{constant}.
 \end{align*}
-$$
+$$ {#eq-expectation}
 
 ### M-step
 
@@ -160,7 +160,7 @@ $$
 i.e.
 $$
 \psi_{jj}\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top].
-$$
+$$ {#eq-psiselect}
 For step 2, let us revise the update formula, we have 
 
 $$
@@ -193,9 +193,24 @@ The objective function is convex with respective to $\boldsymbol{\Lambda}_{q\cdo
 :::
 
 ::: proof
-To show @lem-mstep-covexity, we only need to show $\sum_{i=1}^n (\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)$ is semi-positive definite.
+To show @lem-mstep-covexity, we only need to show $\sum_{i=1}^n (\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)=n\boldsymbol{B}+\boldsymbol{AY}^\top\boldsymbol{YA}^\top$ is positive semi-definite. Consider an arbitrary vector $\boldsymbol{\eta}\in\mathbb{R}^k$, we have
+$$
+\begin{align*}
+\boldsymbol{\eta}^\top (n \boldsymbol{B} + \boldsymbol{AY}^\top \boldsymbol{YA}^\top) \boldsymbol{\eta}& = n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} + \boldsymbol{\eta}^\top \boldsymbol{AY}^\top  \boldsymbol{YA}^\top \boldsymbol{\eta}\\
+& = n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} + || \boldsymbol{YA}^\top \boldsymbol{\eta} ||_2^2
+\end{align*}.
+$$
+The second term is greater or equal to zero and for the first term, consider the following block-structured matrix
+$$
+\boldsymbol{P}=
+\begin{pmatrix}
+\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi} & \boldsymbol{\Lambda}\\
+\boldsymbol{\Lambda}^\top & \boldsymbol{I}_k\\
+\end{pmatrix}
+$$
+We can verify that the top-left matrix, denoted as $\boldsymbol{P}_{11}$ is positive semi-definite since $\boldsymbol{\eta}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}) \boldsymbol{\eta} = ||\boldsymbol{\Lambda}^\top \boldsymbol{\eta}||_2^2 + \boldsymbol{\eta}^\top \boldsymbol{\Psi} \boldsymbol{\eta}$ and the $\boldsymbol{Psi}$ is a diagonal matrix with all the non-zero elements positive as definited. Therefore the matrix $\boldsymbol{P}$ is positive semi-definite and hence its Schur complementary is also positive semi-definite. The Schur complementary with respect to $\boldsymbol{P}_{11}$ is given by $\boldsymbol{I}_k - \boldsymbol{\Lambda}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi})$, which is $\boldsymbol{B}$ we previously defined.
 :::
-Due to the convexity mentioned by and non-differentiablity of the $L_1$-norm at certain points, a proximal gradient method can be necessary to optimize $\boldsymbol{\Lambda}$ row by row.
+Due to the convexity proved before and non-differentiablity of the $L_1$-norm at certain points, a proximal gradient method can be necessary to optimize $\boldsymbol{\Lambda}$ row by row.
 
 Denote the differentiable part (w.r.t. the $q$-th row of $\boldsymbol{\Lambda}$) of the objective function as 
 $$
@@ -231,19 +246,19 @@ One should notice that in practice, we may choose a sufficiently small constant 
 
 :::{.callout-note}
 
-## Algorithm 
+## Proximal Method in M-Step
 
 For each row of the $\boldsymbol{\Lambda}$, say, $\boldsymbol{\Lambda}(q,)$ where $q=1,2,\dots,p$, initialize it as the updated row of loading matrix in the last M-step respectively. Then for $k=1,2,\dots,$, update the $q$-th row of $\boldsymbol{\Lambda}$ by repeating
 $$
 \boldsymbol{\xi}_k := \boldsymbol{\Lambda}(q,)_{(t)} - s_k \nabla G(\boldsymbol{\Lambda}(q,)_{(t)})
-$$
+$$ {#eq-xi}
 $$
 \boldsymbol{\Lambda}(q,)_{(t+1)}:=\text{sign}(\boldsymbol{\xi}_k) \cdot \max(|\boldsymbol{\xi}_k|-\rho,0)
-$$
+$$ {#eq-lambdaupdate}
 where $|\cdot|$ is the elementwise absolute value and $\nabla G(\boldsymbol{\Lambda}(q,))$ can be calculated by
 $$
 \nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
-$$
+$$ {#eq-gradient}
 :::
 
 
@@ -253,19 +268,26 @@ $$
 
 ## Algorithm 
 
-
+  1. Set reasonable initial value $\boldsymbol{\Psi}_{(0)}$ and $\boldsymbol{\Lambda}_{(0)}$.
+  2. Calculate the expectation using formula @eq-expectation.
+  3. Update $\boldsymbol{\Psi}$ using formulae @eq-psiupdate and @eq-psiselect.
+  4. Update $\boldsymbol{\Lambda}$ using proximal method @eq-lambdaupdate, @eq-xi, and @eq-gradient
+  5. Repeat 2,3, and 4 until convergence.
 
 :::
 
-## Existing R packages
 
 ## Selecting initial values 
 
-- MLE approach (non-penalised approach)
-- MLE + Rotation
-- FA model -> one order at a time
-- uniform/fixed 
+The initialization strategy of the EM algorithm is of interest to discuss. Although the update of $\boldsymbol{\Lambda}$ is a convex optimization problem, an appropriate initial value can still make the convergence faster. Here are some ways to find a satisfying initial value:
 
+1. randomly chosen values,
+2. use the result of MLE as the initial value,
+3. use the result of traditional two-step method as the initial value,
+4. start from a very small order, like $k=1$. Then use the result from the smaller order model as the first $k$ columns of the loading matrix.
+
+
+The comparison of these strategies will be demonstrated in the simulation part.
 
 ## Simulation setting 
 
