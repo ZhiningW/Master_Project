@@ -217,17 +217,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#parameter-estimation-the-em-algorithm" id="toc-parameter-estimation-the-em-algorithm" class="nav-link active" data-scroll-target="#parameter-estimation-the-em-algorithm"><span class="header-section-number">3.1</span> Parameter estimation: The EM Algorithm</a>
+  <li><a href="#e-step" id="toc-e-step" class="nav-link active" data-scroll-target="#e-step"><span class="header-section-number">3.1</span> E-Step</a></li>
+  <li><a href="#m-step-standard-em-algorithm" id="toc-m-step-standard-em-algorithm" class="nav-link" data-scroll-target="#m-step-standard-em-algorithm"><span class="header-section-number">3.2</span> M-step: Standard EM-algorithm</a></li>
+  <li><a href="#m-step-penalized-em-algorithm" id="toc-m-step-penalized-em-algorithm" class="nav-link" data-scroll-target="#m-step-penalized-em-algorithm"><span class="header-section-number">3.3</span> M-step: Penalized EM-algorithm</a>
   <ul class="collapse">
-  <li><a href="#e-step" id="toc-e-step" class="nav-link" data-scroll-target="#e-step"><span class="header-section-number">3.1.1</span> E-Step</a></li>
-  <li><a href="#m-step" id="toc-m-step" class="nav-link" data-scroll-target="#m-step"><span class="header-section-number">3.1.2</span> M-step</a></li>
-  <li><a href="#overall-algorithm-for-fitting-lasso-penalized-fa" id="toc-overall-algorithm-for-fitting-lasso-penalized-fa" class="nav-link" data-scroll-target="#overall-algorithm-for-fitting-lasso-penalized-fa"><span class="header-section-number">3.1.3</span> Overall Algorithm for Fitting LASSO-penalized FA</a></li>
+  <li><a href="#overall-algorithm-for-fitting-lasso-penalized-fa" id="toc-overall-algorithm-for-fitting-lasso-penalized-fa" class="nav-link" data-scroll-target="#overall-algorithm-for-fitting-lasso-penalized-fa"><span class="header-section-number">3.3.1</span> Overall Algorithm for Fitting LASSO-penalized FA</a></li>
   </ul></li>
-  <li><a href="#selecting-initial-values" id="toc-selecting-initial-values" class="nav-link" data-scroll-target="#selecting-initial-values"><span class="header-section-number">3.2</span> Selecting initial values</a></li>
-  <li><a href="#simulation-setting" id="toc-simulation-setting" class="nav-link" data-scroll-target="#simulation-setting"><span class="header-section-number">3.3</span> Simulation setting</a>
+  <li><a href="#selecting-initial-values" id="toc-selecting-initial-values" class="nav-link" data-scroll-target="#selecting-initial-values"><span class="header-section-number">3.4</span> Selecting initial values</a></li>
+  <li><a href="#simulation-setting" id="toc-simulation-setting" class="nav-link" data-scroll-target="#simulation-setting"><span class="header-section-number">3.5</span> Simulation setting</a>
   <ul class="collapse">
-  <li><a href="#setting-1" id="toc-setting-1" class="nav-link" data-scroll-target="#setting-1"><span class="header-section-number">3.3.1</span> Setting 1</a></li>
-  <li><a href="#setting-2" id="toc-setting-2" class="nav-link" data-scroll-target="#setting-2"><span class="header-section-number">3.3.2</span> Setting 2</a></li>
+  <li><a href="#setting-1" id="toc-setting-1" class="nav-link" data-scroll-target="#setting-1"><span class="header-section-number">3.5.1</span> Setting 1</a></li>
+  <li><a href="#setting-2" id="toc-setting-2" class="nav-link" data-scroll-target="#setting-2"><span class="header-section-number">3.5.2</span> Setting 2</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ZhiningW/Master_Project/edit/main/method.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ZhiningW/Master_Project/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -254,12 +254,9 @@ window.Quarto = {
 </header>
 
 
-<p>As described in <a href="background.html" class="quarto-xref"><span>Chapter 2</span></a>, there are various methods to fit a factor analytic model to multivariate data.</p>
-<section id="parameter-estimation-the-em-algorithm" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="parameter-estimation-the-em-algorithm"><span class="header-section-number">3.1</span> Parameter estimation: The EM Algorithm</h2>
-<p>We treat the common factor matrix <span class="math inline">\(\boldsymbol{f}\)</span> as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> given <span class="math inline">\(\boldsymbol{y}\)</span> and <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span>, where <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span> is the parameter we got in the <span class="math inline">\(t\)</span>-th iteration (<span class="math inline">\(t&gt;1\)</span>) and <span class="math inline">\(\boldsymbol{\theta}_{(0)}\)</span> is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get <span class="math inline">\(\boldsymbol{\theta}_{(t + 1)}\)</span>.</p>
-<section id="e-step" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="e-step"><span class="header-section-number">3.1.1</span> E-Step</h3>
+<p>As described in <a href="background.html" class="quarto-xref"><span>Chapter 2</span></a>, there are various methods to fit a factor analytic model to multivariate data. We will discuss the standard EM-algorithm and the penalized EM-algorithm in this chapter. We treat the common factor matrix <span class="math inline">\(\boldsymbol{f}\)</span> as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> given <span class="math inline">\(\boldsymbol{y}\)</span> and <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span>, where <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span> is the parameter we got in the <span class="math inline">\(t\)</span>-th iteration (<span class="math inline">\(t&gt;1\)</span>) and <span class="math inline">\(\boldsymbol{\theta}_{(0)}\)</span> is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get <span class="math inline">\(\boldsymbol{\theta}_{(t + 1)}\)</span>. The outline is as follow: in subsection</p>
+<section id="e-step" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="e-step"><span class="header-section-number">3.1</span> E-Step</h2>
 <div id="lem-fa-likelihood" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lemma 3.1</strong></span> The joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by <span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\\]</span></p>
 </div>
@@ -328,29 +325,30 @@ window.Quarto = {
 <p>Our expectation will finally be confirmed by</p>
 <p><span id="eq-expectation"><span class="math display">\[
 \begin{align*}
-El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})= &amp; -\frac{n}{2}\sum_{j=1}^p\log{\Psi_{jj}}\\
+\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)= &amp; -\frac{n}{2}\sum_{j=1}^p\log{\Psi_{jj}}\\
 &amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\Psi_{jj}}\\
 &amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\Psi_{jj}}+\text{constant}.
 \end{align*}
 \tag{3.1}\]</span></span></p>
 </section>
-<section id="m-step" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="m-step"><span class="header-section-number">3.1.2</span> M-step</h3>
-<p>In M-step, we need to maximize so called <span class="math inline">\(Q\)</span>-function with respect to parameters where <span class="math inline">\(Q\)</span>-function is penalized conditional expectation of the log-likelihood, i.e. <span class="math display">\[
-Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi}) - \frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})
-\]</span> We add a coefficient <span class="math inline">\(\frac{1}{2}\)</span> before <span class="math inline">\(P_{\rho}(\boldsymbol{\Lambda})\)</span> for simplification since we notice that the same coefficient occurs in each term of conditional expectation <span class="math inline">\(El_{(t)}(\boldsymbol{\Lambda},\boldsymbol{\Psi})\)</span>. When execute M-step, we use the following strategy<span class="citation" data-cites="Ng2012EMAlgorithm">(<a href="references.html#ref-Ng2012EMAlgorithm" role="doc-biblioref">Ng, Krishnan, and McLachlan 2012</a>)</span>:</p>
+<section id="m-step-standard-em-algorithm" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="m-step-standard-em-algorithm"><span class="header-section-number">3.2</span> M-step: Standard EM-algorithm</h2>
+<p>In M-step, we need to maximize so called <span class="math inline">\(Q\)</span>-function with respect to parameters. In the standard scenario, the <span class="math inline">\(Q\)</span>-function is directly the expectation given by <a href="#eq-expectation" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>, i.e. <span class="math display">\[
+Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)
+\]</span> When execute M-step, we use the following strategy<span class="citation" data-cites="Ng2012EMAlgorithm">(<a href="references.html#ref-Ng2012EMAlgorithm" role="doc-biblioref">Ng, Krishnan, and McLachlan 2012</a>)</span>:</p>
 <ol type="1">
-<li>Find <span class="math inline">\(\boldsymbol{\Psi}_{(k+1)}\)</span> using current <span class="math inline">\(\boldsymbol{\Lambda}_{(t)}\)</span>, i.e. <span class="math display">\[
-  \boldsymbol{\Psi}_{(k+1)} = \arg \max_{\boldsymbol{\Psi}} (Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)}).
+<li>Find <span class="math inline">\(\boldsymbol{\Psi}_{(t+1)}\)</span> using current <span class="math inline">\(\boldsymbol{\Lambda}_{(t)}\)</span>, i.e. <span class="math display">\[
+  \boldsymbol{\Psi}_{(t+1)} = \arg \max_{\boldsymbol{\Psi}} (Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)}).
 \]</span></li>
 <li>Find <span class="math inline">\(\boldsymbol{\Lambda}_{(k+1)}\)</span> using <span class="math inline">\(\boldsymbol{\Psi}_{(k+1)}\)</span> we got in previous step, i.e.&nbsp; <span class="math display">\[
-  \boldsymbol{\Lambda}_{(k+1)} = \arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(k+1)}).
+  \boldsymbol{\Lambda}_{(t+1)} = \arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(t+1)}).
 \]</span></li>
 </ol>
 <p>For step 1, take partial derivative with respect to each <span class="math inline">\(\psi_{jj}\)</span> and let it equal to zero to find the local maximizer of <span class="math inline">\(\psi_{jj}\)</span>, i.e.&nbsp;</p>
 <p><span class="math display">\[
 \frac{\partial}{\partial \psi_{jj}}Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})=0.
-\]</span> By simple calculation, we will have</p>
+\]</span></p>
+<p>By simple calculation, we will have</p>
 <p><span class="math display">\[
 \begin{align*}
 \frac{\partial}{\partial \psi_{jj}}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})=
@@ -361,33 +359,40 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(t)}(\boldsymbol{\Lambda},\bolds
 \]</span></p>
 <p>Thus the update of <span class="math inline">\(\boldsymbol{\Psi}\)</span> will be elementwisely given by</p>
 <p><span id="eq-psiupdate"><span class="math display">\[
-\begin{equation}
-\psi_{jj,(t+1)}=\frac{1}{n}\sum_{i=1}^n y_{ij}^2-\frac{2}{n}\sum_{i=1}^ny_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top.
-\end{equation}
+\begin{align*}
+\psi_{jj,(t+1)} &amp;= \frac{1}{n} \sum_{i=1}^n y_{ij}^2 - \frac{2}{n} \sum_{i=1}^n y_{ij} \boldsymbol{\Lambda}_{(t)}(j,) \boldsymbol{A} \boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(t)}(j,) (\boldsymbol{B} + \boldsymbol{A} \boldsymbol{y}_i \boldsymbol{y}_i^\top \boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}(j,)^\top \\
+&amp;= \frac{1}{n} \boldsymbol{Y}[,j]^\top \boldsymbol{Y}[,j] - \frac{2}{n} \boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}[\cdot,j] + \frac{1}{n} \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top
+\end{align*}.
 \tag{3.2}\]</span></span></p>
 <p>But notice that the <span class="math inline">\(Q\)</span>-function is not concave globally, therefore we may update <span class="math inline">\(\boldsymbol{\Psi}\)</span> selectively. More specifically, we only update <span class="math inline">\(\psi_{jj}\)</span> when it satisfies</p>
 <p><span class="math display">\[
 \frac{\partial^2}{\partial\psi_{jj}^2}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})\leq 0,
-\]</span> i.e. <span id="eq-psiselect"><span class="math display">\[
-\psi_{jj}\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top].
-\tag{3.3}\]</span></span> For step 2, let us revise the update formula, we have</p>
+\]</span></p>
+<p>i.e.</p>
+<p><span id="eq-psiselect"><span class="math display">\[
+\begin{align*}
+\psi_{jj} &amp;\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top]\\
+&amp;= \frac{2}{n}( \boldsymbol{Y}[,j]^\top \boldsymbol{Y}[,j] -  \boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}[\cdot,j] + \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top)
+\end{align*}
+\tag{3.3}\]</span></span></p>
+<p>For step 2, let us revise the update formula, we have</p>
 <p><span class="math display">\[
 \begin{align*}
 \boldsymbol{\Lambda}_{(t+1)}=&amp;\arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(t+1)})\\
 =&amp;\arg \max_{\boldsymbol{\Lambda}} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
-&amp;-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}}-\frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})\\
+&amp;-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}}\\
 &amp;-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj,(t+1)}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2}{\psi_{jj,(t+1)}}+\text{constant}\}.\\
 \end{align*}
 \]</span></p>
-<p>Since the last three terms do not contain any <span class="math inline">\(\boldsymbol{\Lambda}\)</span>, so they can be eliminated. After letting <span class="math inline">\(P_\rho(\boldsymbol{\Lambda}):=\rho\sum_{j=1}^p\sum_{i=1}^k|\lambda_{ji}|=\rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1\)</span> as LASSO, we can rewrite it as</p>
+<p>Since the last three terms do not contain any <span class="math inline">\(\boldsymbol{\Lambda}\)</span>, so they can be eliminated. Therefore we have</p>
 <p>$$ <span class="math display">\[\begin{align*}
 \boldsymbol{\Lambda}_{(k+1)}
 
 =&amp; \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
 
-&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
-  \}
-\end{align*}\]</span> $$ The objective function enjoys a nice property given by the following lemma:</p>
+&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} \}
+\end{align*}\]</span> $$</p>
+<p>The objective function, denoted as <span class="math inline">\(G(\boldsymbol{\Lambda})\)</span> enjoys a nice convexity property given by the following lemma:</p>
 <div id="lem-mstep-covexity" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lemma 3.2</strong></span> The objective function is convex with respective to <span class="math inline">\(\boldsymbol{\Lambda}_{q\cdot}\)</span> for any given <span class="math inline">\(q=1,2,\dots,p\)</span>.</p>
 </div>
@@ -397,14 +402,37 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = El_{(t)}(\boldsymbol{\Lambda},\bolds
 \boldsymbol{\eta}^\top (n \boldsymbol{B} + \boldsymbol{AY}^\top \boldsymbol{YA}^\top) \boldsymbol{\eta}&amp; = n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} + \boldsymbol{\eta}^\top \boldsymbol{AY}^\top  \boldsymbol{YA}^\top \boldsymbol{\eta}\\
 &amp; = n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} + || \boldsymbol{YA}^\top \boldsymbol{\eta} ||_2^2
 \end{align*}.
-\]</span> The second term is greater or equal to zero and for the first term, consider the following block-structured matrix <span class="math display">\[
+\]</span> The second term is greater or equal to zero and for the first term, consider the following block-structured matrix</p>
+<p><span class="math display">\[
 \boldsymbol{P}=
 \begin{pmatrix}
 \boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi} &amp; \boldsymbol{\Lambda}\\
 \boldsymbol{\Lambda}^\top &amp; \boldsymbol{I}_k\\
 \end{pmatrix}
-\]</span> We can verify that the top-left matrix, denoted as <span class="math inline">\(\boldsymbol{P}_{11}\)</span> is positive semi-definite since <span class="math inline">\(\boldsymbol{\eta}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}) \boldsymbol{\eta} = ||\boldsymbol{\Lambda}^\top \boldsymbol{\eta}||_2^2 + \boldsymbol{\eta}^\top \boldsymbol{\Psi} \boldsymbol{\eta}\)</span> and the <span class="math inline">\(\boldsymbol{Psi}\)</span> is a diagonal matrix with all the non-zero elements positive as definited. Therefore the matrix <span class="math inline">\(\boldsymbol{P}\)</span> is positive semi-definite and hence its Schur complementary is also positive semi-definite. The Schur complementary with respect to <span class="math inline">\(\boldsymbol{P}_{11}\)</span> is given by <span class="math inline">\(\boldsymbol{I}_k - \boldsymbol{\Lambda}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi})\)</span>, which is <span class="math inline">\(\boldsymbol{B}\)</span> we previously defined.</p>
+\]</span></p>
+<p>We can verify that the top-left matrix, denoted as <span class="math inline">\(\boldsymbol{P}_{11}\)</span> is positive semi-definite since <span class="math inline">\(\boldsymbol{\eta}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}) \boldsymbol{\eta} = ||\boldsymbol{\Lambda}^\top \boldsymbol{\eta}||_2^2 + \boldsymbol{\eta}^\top \boldsymbol{\Psi} \boldsymbol{\eta}\)</span> and the <span class="math inline">\(\boldsymbol{\Psi}\)</span> is a diagonal matrix with all the non-zero elements positive as defined. Therefore the matrix <span class="math inline">\(\boldsymbol{P}\)</span> is positive semi-definite and hence its Schur complementary is also positive semi-definite. The Schur complementary with respect to <span class="math inline">\(\boldsymbol{P}_{11}\)</span> is given by <span class="math inline">\(\boldsymbol{I}_k - \boldsymbol{\Lambda}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi})\)</span>, which is <span class="math inline">\(\boldsymbol{B}\)</span> we previously defined. Therefore <span class="math inline">\(n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} \geq 0\)</span>, which leads to <span class="math inline">\(\boldsymbol{\eta}^\top (n \boldsymbol{B} + \boldsymbol{AY}^\top \boldsymbol{YA}^\top) \boldsymbol{\eta} \geq 0\)</span> for any <span class="math inline">\(\boldsymbol{\eta}\in\mathbb{R}^k\)</span>.</p>
 </div>
+<p>Therefore we can update <span class="math inline">\(\boldsymbol{\Lambda}\)</span> rowwisely using the critical points. Mathematically, the gradient of the object function with respect of the <span class="math inline">\(q\)</span>-th row is given by</p>
+<p><span class="math display">\[
+\nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
+\]</span> Let <span class="math inline">\(\nabla G(\boldsymbol{\Lambda}(q,))=0\)</span>, we have the formula to update <span class="math inline">\(\boldsymbol{\Lambda}\)</span> as</p>
+<p><span class="math display">\[
+\boldsymbol{\Lambda}_{(t+1)}(q,) = \boldsymbol{Y}[,q]^\top \boldsymbol{Y} \boldsymbol{A}^\top (n\boldsymbol{B} + \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)^{-1}
+\]</span></p>
+</section>
+<section id="m-step-penalized-em-algorithm" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="m-step-penalized-em-algorithm"><span class="header-section-number">3.3</span> M-step: Penalized EM-algorithm</h2>
+<p>The <span class="math inline">\(Q\)</span>-function of the penalized EM-algorithm is the penalized expectation, i.e. <span class="math display">\[
+Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right) - \frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})
+\]</span> We add a coefficient <span class="math inline">\(\frac{1}{2}\)</span> before <span class="math inline">\(P_{\rho}(\boldsymbol{\Lambda})\)</span> for simplification since we notice that the same coefficient occurs in each term of conditional expectation <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)\)</span>.</p>
+<p>$$ <span class="math display">\[\begin{align*}
+\boldsymbol{\Lambda}_{(k+1)}
+
+=&amp; \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
+
+&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
+  \}
+\end{align*}\]</span> $$</p>
 <p>Due to the convexity proved before and non-differentiablity of the <span class="math inline">\(L_1\)</span>-norm at certain points, a proximal gradient method can be necessary to optimize <span class="math inline">\(\boldsymbol{\Lambda}\)</span> row by row.</p>
 <p>Denote the differentiable part (w.r.t. the <span class="math inline">\(q\)</span>-th row of <span class="math inline">\(\boldsymbol{\Lambda}\)</span>) of the objective function as <span class="math display">\[
 G(\boldsymbol{\Lambda}):= \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} -\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}},
@@ -426,16 +454,7 @@ H(\boldsymbol{\Lambda}) := \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
 \]</span> with a properly chosen step size <span class="math inline">\(0&lt;s_k&lt;\frac{1}{L}\)</span>.</p>
 </div>
 <p>One should notice that in practice, we may choose a sufficiently small constant step size <span class="math inline">\(s_k=s\)</span>. In our case, the strategy to update the loading matrix is</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proximal Method in M-Step
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div id="alg-proximal">
 <p>For each row of the <span class="math inline">\(\boldsymbol{\Lambda}\)</span>, say, <span class="math inline">\(\boldsymbol{\Lambda}(q,)\)</span> where <span class="math inline">\(q=1,2,\dots,p\)</span>, initialize it as the updated row of loading matrix in the last M-step respectively. Then for <span class="math inline">\(k=1,2,\dots,\)</span>, update the <span class="math inline">\(q\)</span>-th row of <span class="math inline">\(\boldsymbol{\Lambda}\)</span> by repeating <span id="eq-xi"><span class="math display">\[
 \boldsymbol{\xi}_k := \boldsymbol{\Lambda}(q,)_{(t)} - s_k \nabla G(\boldsymbol{\Lambda}(q,)_{(t)})
 \tag{3.4}\]</span></span> <span id="eq-lambdaupdate"><span class="math display">\[
@@ -444,10 +463,8 @@ Proximal Method in M-Step
 \nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
 \tag{3.6}\]</span></span></p>
 </div>
-</div>
-</section>
-<section id="overall-algorithm-for-fitting-lasso-penalized-fa" class="level3" data-number="3.1.3">
-<h3 data-number="3.1.3" class="anchored" data-anchor-id="overall-algorithm-for-fitting-lasso-penalized-fa"><span class="header-section-number">3.1.3</span> Overall Algorithm for Fitting LASSO-penalized FA</h3>
+<section id="overall-algorithm-for-fitting-lasso-penalized-fa" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="overall-algorithm-for-fitting-lasso-penalized-fa"><span class="header-section-number">3.3.1</span> Overall Algorithm for Fitting LASSO-penalized FA</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -469,8 +486,8 @@ Algorithm
 </div>
 </section>
 </section>
-<section id="selecting-initial-values" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="selecting-initial-values"><span class="header-section-number">3.2</span> Selecting initial values</h2>
+<section id="selecting-initial-values" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="selecting-initial-values"><span class="header-section-number">3.4</span> Selecting initial values</h2>
 <p>The initialization strategy of the EM algorithm is of interest to discuss. Although the update of <span class="math inline">\(\boldsymbol{\Lambda}\)</span> is a convex optimization problem, an appropriate initial value can still make the convergence faster. Here are some ways to find a satisfying initial value:</p>
 <ol type="1">
 <li>randomly chosen values,</li>
@@ -480,18 +497,18 @@ Algorithm
 </ol>
 <p>The comparison of these strategies will be demonstrated in the simulation part.</p>
 </section>
-<section id="simulation-setting" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="simulation-setting"><span class="header-section-number">3.3</span> Simulation setting</h2>
+<section id="simulation-setting" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="simulation-setting"><span class="header-section-number">3.5</span> Simulation setting</h2>
 <p>Criteria? Judge based on estimation? Sparsity structure.</p>
-<section id="setting-1" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="setting-1"><span class="header-section-number">3.3.1</span> Setting 1</h3>
+<section id="setting-1" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="setting-1"><span class="header-section-number">3.5.1</span> Setting 1</h3>
 <ul>
 <li>Hirose + other existing simulation settings in published papers</li>
 <li>Different FA order (k = 2, 4, 6, 8 x n = 200, 400, 800, 1600 x sparse vs non-sparse).</li>
 </ul>
 </section>
-<section id="setting-2" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="setting-2"><span class="header-section-number">3.3.2</span> Setting 2</h3>
+<section id="setting-2" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="setting-2"><span class="header-section-number">3.5.2</span> Setting 2</h3>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

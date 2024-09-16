@@ -173,7 +173,7 @@ gradient <- function(lambda,psi,Y,j){
 
 proximal_method <- function(lambda,psi,Y,j,rho){
   lambda_j_old <- lambda[j,,drop=FALSE]
-  gamma <- 0.1  # step size
+  gamma <- 0.01  # step size
   epsilon <- 0.1
   error <- 0
   iteration <- 0
