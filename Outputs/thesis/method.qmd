@@ -100,9 +100,10 @@ Our expectation will finally be confirmed by
 
 $$
 \begin{align*}
-\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)= & -\frac{n}{2}\sum_{j=1}^p\log{\Psi_{jj}}\\
-& -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\Psi_{jj}}\\
-& -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\Psi_{jj}}+\text{constant}.
+\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)= & -\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}\\
+& -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj}}\\
+& -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj}}+\text{constant}\\
+=& -\frac{n}{2}\log(\det(\boldsymbol{\Psi}))-\frac{1}{2}\text{tr}(\boldsymbol{Y}\boldsymbol{\Psi}^{-1}\boldsymbol{Y}^\top)+\text{tr}(\boldsymbol{\Lambda}\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{\Psi}^{-1})-\frac{1}{2}\text{tr}(\boldsymbol{\Lambda}(\boldsymbol{n\boldsymbol{B}}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}^\top\boldsymbol{\Psi}^{-1})
 \end{align*}
 $$ {#eq-expectation}
 
@@ -310,7 +311,7 @@ $$ {#eq-gradient}
 ## Summary of algorithms: EM and penalized EM
 
 :::{.callout-note}
-
+## Algorithm: Standard EM-algorithm
 
 
 :::
