@@ -237,7 +237,7 @@ $$ {#eq-nplambdaupdate}
 The $Q$-function of the penalized EM-algorithm is the penalized expectation, i.e.
 $$
 Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right) - \frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})
-$$
+$$ {#eq-penalizedE}
 We add a coefficient $\frac{1}{2}$ before $P_{\rho}(\boldsymbol{\Lambda})$ for simplification since we notice that the same coefficient occurs in each term of conditional expectation $\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)$.
 
 The maximization towards the $Q$-function with respect to $\boldsymbol{\Psi}$ is exactly the same with @eq-psiupdate, since we did not add any penalty to matrix $\boldsymbol{\Psi}$.
@@ -299,7 +299,7 @@ $$
 $$ {#eq-xi}
 $$
 \boldsymbol{\Lambda}(q,)_{(t+1)}:=\text{sign}(\boldsymbol{\xi}_k) \cdot \max(|\boldsymbol{\xi}_k|-\rho,0)
-$$ {#eq-lambdaupdate}
+$$ {#eq-plambdaupdate}
 where $|\cdot|$ is the elementwise absolute value and $\nabla G(\boldsymbol{\Lambda}(q,))$ can be calculated by
 $$
 \nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
@@ -312,6 +312,11 @@ $$ {#eq-gradient}
 
 :::{.callout-note}
 ## Algorithm: Standard EM-algorithm
+  1. Set reasonable initial value $\boldsymbol{\Psi}_{(0)}$ and $\boldsymbol{\Lambda}_{(0)}$.
+  2. Calculate the expectation using formula @eq-expectation.
+  3. Update $\boldsymbol{\Psi}$ using formulae @eq-psiupdate and @eq-psiselect.
+  4. Update $\boldsymbol{\Lambda}$ using formula @eq-nplambdaupdate.
+  5. Repeat 2,3, and 4 until convergence.
 
 
 :::
@@ -321,9 +326,9 @@ $$ {#eq-gradient}
 ## Algorithm: Penalized EM-algorithm
 
   1. Set reasonable initial value $\boldsymbol{\Psi}_{(0)}$ and $\boldsymbol{\Lambda}_{(0)}$.
-  2. Calculate the expectation using formula @eq-expectation.
+  2. Calculate the expectation using formula @eq-penalizedE.
   3. Update $\boldsymbol{\Psi}$ using formulae @eq-psiupdate and @eq-psiselect.
-  4. Update $\boldsymbol{\Lambda}$ using proximal method @eq-lambdaupdate, @eq-xi, and @eq-gradient
+  4. Update $\boldsymbol{\Lambda}$ using proximal method @eq-plambdaupdate, @eq-xi, and @eq-gradient
   5. Repeat 2,3, and 4 until convergence.
 
 :::

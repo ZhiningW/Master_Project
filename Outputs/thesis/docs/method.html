@@ -323,9 +323,10 @@ window.Quarto = {
 <p>Our expectation will finally be confirmed by</p>
 <p><span id="eq-expectation"><span class="math display">\[
 \begin{align*}
-\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)= &amp; -\frac{n}{2}\sum_{j=1}^p\log{\Psi_{jj}}\\
-&amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\Psi_{jj}}\\
-&amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\Psi_{jj}}+\text{constant}.
+\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)= &amp; -\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}\\
+&amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj}}\\
+&amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj}}+\text{constant}\\
+=&amp; -\frac{n}{2}\log(\det(\boldsymbol{\Psi}))-\frac{1}{2}\text{tr}(\boldsymbol{Y}\boldsymbol{\Psi}^{-1}\boldsymbol{Y}^\top)+\text{tr}(\boldsymbol{\Lambda}\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{\Psi}^{-1})-\frac{1}{2}\text{tr}(\boldsymbol{\Lambda}(\boldsymbol{n\boldsymbol{B}}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}^\top\boldsymbol{\Psi}^{-1})
 \end{align*}
 \tag{3.1}\]</span></span></p>
 </section>
@@ -423,9 +424,9 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 </section>
 <section id="m-step-penalized-em-algorithm" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="m-step-penalized-em-algorithm"><span class="header-section-number">3.3</span> M-step: Penalized EM-algorithm</h2>
-<p>The <span class="math inline">\(Q\)</span>-function of the penalized EM-algorithm is the penalized expectation, i.e. <span class="math display">\[
+<p>The <span class="math inline">\(Q\)</span>-function of the penalized EM-algorithm is the penalized expectation, i.e. <span id="eq-penalizedE"><span class="math display">\[
 Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right) - \frac{1}{2}P_{\rho}(\boldsymbol{\Lambda})
-\]</span> We add a coefficient <span class="math inline">\(\frac{1}{2}\)</span> before <span class="math inline">\(P_{\rho}(\boldsymbol{\Lambda})\)</span> for simplification since we notice that the same coefficient occurs in each term of conditional expectation <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)\)</span>.</p>
+\tag{3.6}\]</span></span> We add a coefficient <span class="math inline">\(\frac{1}{2}\)</span> before <span class="math inline">\(P_{\rho}(\boldsymbol{\Lambda})\)</span> for simplification since we notice that the same coefficient occurs in each term of conditional expectation <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)\)</span>.</p>
 <p>The maximization towards the <span class="math inline">\(Q\)</span>-function with respect to <span class="math inline">\(\boldsymbol{\Psi}\)</span> is exactly the same with <a href="#eq-psiupdate" class="quarto-xref">Equation&nbsp;<span>3.2</span></a>, since we did not add any penalty to matrix <span class="math inline">\(\boldsymbol{\Psi}\)</span>.</p>
 <p>Now consider the update for <span class="math inline">\(boldsymbol{\Lambda}\)</span>, we have</p>
 <p>$$ <span class="math display">\[\begin{align*}
@@ -469,11 +470,11 @@ Proximal method for updating loading matrix
 <div class="callout-body-container callout-body">
 <p>For each row of the <span class="math inline">\(\boldsymbol{\Lambda}\)</span>, say, <span class="math inline">\(\boldsymbol{\Lambda}(q,)\)</span> where <span class="math inline">\(q=1,2,\dots,p\)</span>, initialize it as the updated row of loading matrix in the last M-step respectively. Then for <span class="math inline">\(k=1,2,\dots,\)</span>, update the <span class="math inline">\(q\)</span>-th row of <span class="math inline">\(\boldsymbol{\Lambda}\)</span> by repeating <span id="eq-xi"><span class="math display">\[
 \boldsymbol{\xi}_k := \boldsymbol{\Lambda}(q,)_{(t)} - s_k \nabla G(\boldsymbol{\Lambda}(q,)_{(t)})
-\tag{3.6}\]</span></span> <span id="eq-lambdaupdate"><span class="math display">\[
+\tag{3.7}\]</span></span> <span id="eq-plambdaupdate"><span class="math display">\[
 \boldsymbol{\Lambda}(q,)_{(t+1)}:=\text{sign}(\boldsymbol{\xi}_k) \cdot \max(|\boldsymbol{\xi}_k|-\rho,0)
-\tag{3.7}\]</span></span> where <span class="math inline">\(|\cdot|\)</span> is the elementwise absolute value and <span class="math inline">\(\nabla G(\boldsymbol{\Lambda}(q,))\)</span> can be calculated by <span id="eq-gradient"><span class="math display">\[
+\tag{3.8}\]</span></span> where <span class="math inline">\(|\cdot|\)</span> is the elementwise absolute value and <span class="math inline">\(\nabla G(\boldsymbol{\Lambda}(q,))\)</span> can be calculated by <span id="eq-gradient"><span class="math display">\[
 \nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
-\tag{3.8}\]</span></span></p>
+\tag{3.9}\]</span></span></p>
 </div>
 </div>
 </section>
@@ -485,11 +486,17 @@ Proximal method for updating loading matrix
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+Algorithm: Standard EM-algorithm
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
+<ol type="1">
+<li>Set reasonable initial value <span class="math inline">\(\boldsymbol{\Psi}_{(0)}\)</span> and <span class="math inline">\(\boldsymbol{\Lambda}_{(0)}\)</span>.</li>
+<li>Calculate the expectation using formula <a href="#eq-expectation" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>.</li>
+<li>Update <span class="math inline">\(\boldsymbol{\Psi}\)</span> using formulae <a href="#eq-psiupdate" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and <a href="#eq-psiselect" class="quarto-xref">Equation&nbsp;<span>3.3</span></a>.</li>
+<li>Update <span class="math inline">\(\boldsymbol{\Lambda}\)</span> using formula <a href="#eq-nplambdaupdate" class="quarto-xref">Equation&nbsp;<span>3.5</span></a>.</li>
+<li>Repeat 2,3, and 4 until convergence.</li>
+</ol>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -504,9 +511,9 @@ Algorithm: Penalized EM-algorithm
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Set reasonable initial value <span class="math inline">\(\boldsymbol{\Psi}_{(0)}\)</span> and <span class="math inline">\(\boldsymbol{\Lambda}_{(0)}\)</span>.</li>
-<li>Calculate the expectation using formula <a href="#eq-expectation" class="quarto-xref">Equation&nbsp;<span>3.1</span></a>.</li>
+<li>Calculate the expectation using formula <a href="#eq-penalizedE" class="quarto-xref">Equation&nbsp;<span>3.6</span></a>.</li>
 <li>Update <span class="math inline">\(\boldsymbol{\Psi}\)</span> using formulae <a href="#eq-psiupdate" class="quarto-xref">Equation&nbsp;<span>3.2</span></a> and <a href="#eq-psiselect" class="quarto-xref">Equation&nbsp;<span>3.3</span></a>.</li>
-<li>Update <span class="math inline">\(\boldsymbol{\Lambda}\)</span> using proximal method <a href="#eq-lambdaupdate" class="quarto-xref">Equation&nbsp;<span>3.7</span></a>, <a href="#eq-xi" class="quarto-xref">Equation&nbsp;<span>3.6</span></a>, and <a href="#eq-gradient" class="quarto-xref">Equation&nbsp;<span>3.8</span></a></li>
+<li>Update <span class="math inline">\(\boldsymbol{\Lambda}\)</span> using proximal method <a href="#eq-plambdaupdate" class="quarto-xref">Equation&nbsp;<span>3.8</span></a>, <a href="#eq-xi" class="quarto-xref">Equation&nbsp;<span>3.7</span></a>, and <a href="#eq-gradient" class="quarto-xref">Equation&nbsp;<span>3.9</span></a></li>
 <li>Repeat 2,3, and 4 until convergence.</li>
 </ol>
 </div>
