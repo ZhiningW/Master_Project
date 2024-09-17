@@ -179,7 +179,7 @@ Since the last three terms do not contain any $\boldsymbol{\Lambda}$, so they ca
 
 $$
 \begin{align*}
-\boldsymbol{\Lambda}_{(k+1)}
+\boldsymbol{\Lambda}_{(t+1)}
 
 =& \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
 
@@ -219,13 +219,16 @@ We can verify that the top-left matrix, denoted as $\boldsymbol{P}_{11}$ is posi
 Therefore we can update $\boldsymbol{\Lambda}$ rowwisely using the critical points. Mathematically, the gradient of the object function with respect of the $q$-th row is given by 
 
 $$
-\nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
-$$
+\begin{align*}
+\nabla G(\boldsymbol{\Lambda}(q,)) &= \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(t+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(t+1)}}\\
+&= \frac{2}{\psi_{qq}}(n\boldsymbol{B}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}[q,]^\top - \boldsymbol{Y}[,q]^\top\boldsymbol{Y}\boldsymbol{A}^\top)
+\end{align*}.
+$$ {#eq-gradient}
 Let $\nabla G(\boldsymbol{\Lambda}(q,))=0$, we have the formula to update $\boldsymbol{\Lambda}$ as
 
 $$
-\boldsymbol{\Lambda}_{(t+1)}(q,) = \boldsymbol{Y}[,q]^\top \boldsymbol{Y} \boldsymbol{A}^\top (n\boldsymbol{B} + \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)^{-1}.
-$$
+\boldsymbol{\Lambda}_{(t+1)}(q,) = \boldsymbol{Y}[,q]^\top \boldsymbol{Y} \boldsymbol{A} (n\boldsymbol{B} + \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)^{-1}.
+$$ {#eq-nplambdaupdate}
 
 
 ## M-step: Penalized EM-algorithm
@@ -236,9 +239,13 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 $$
 We add a coefficient $\frac{1}{2}$ before $P_{\rho}(\boldsymbol{\Lambda})$ for simplification since we notice that the same coefficient occurs in each term of conditional expectation $\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)$.
 
+The maximization towards the $Q$-function with respect to $\boldsymbol{\Psi}$ is exactly the same with @eq-psiupdate, since we did not add any penalty to matrix $\boldsymbol{\Psi}$.
+
+Now consider the update for $boldsymbol{\Lambda}$, we have
+
 $$
 \begin{align*}
-\boldsymbol{\Lambda}_{(k+1)}
+\boldsymbol{\Lambda}_{(t+1)} &= \arg \max_{\boldsymbol{\Lambda}}\{Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})| \boldsymbol{\Psi} = \boldsymbol{\Psi}_{t+1} \} \\
 
 =& \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
 
@@ -282,8 +289,8 @@ with a properly chosen step size $0<s_k<\frac{1}{L}$.
 :::
 One should notice that in practice, we may choose a sufficiently small constant step size $s_k=s$. In our case, the strategy to update the loading matrix is
 
-:::{#alg-proximal}
-
+:::{.callout-note}
+## Proximal method for updating loading matrix 
 
 For each row of the $\boldsymbol{\Lambda}$, say, $\boldsymbol{\Lambda}(q,)$ where $q=1,2,\dots,p$, initialize it as the updated row of loading matrix in the last M-step respectively. Then for $k=1,2,\dots,$, update the $q$-th row of $\boldsymbol{\Lambda}$ by repeating
 $$
@@ -299,11 +306,18 @@ $$ {#eq-gradient}
 :::
 
 
-### Overall Algorithm for Fitting LASSO-penalized FA
+
+## Summary of algorithms: EM and penalized EM
 
 :::{.callout-note}
 
-## Algorithm 
+
+
+:::
+
+:::{.callout-note}
+
+## Algorithm: Penalized EM-algorithm
 
   1. Set reasonable initial value $\boldsymbol{\Psi}_{(0)}$ and $\boldsymbol{\Lambda}_{(0)}$.
   2. Calculate the expectation using formula @eq-expectation.
