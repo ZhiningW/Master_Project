@@ -226,7 +226,7 @@ simula_Hirose <- function(real_loading, N, rho, initial_loading, initial_psi){
   # update iteratively
   pem_loading_old <- initial_loading
   pem_psi <- initial_psi
-  loading_saving <-
+
   
   while(pem_loading_diff >= pem_tolerance){
     pem_step <- pem_step + 1

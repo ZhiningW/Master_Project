@@ -161,7 +161,7 @@ i.e.
 $$
 \begin{align*}
 \psi_{jj} &\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top]\\
-&= \frac{2}{n}( \boldsymbol{Y}[,j]^\top \boldsymbol{Y}[,j] -  \boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}[\cdot,j] + \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top)
+&= \frac{2}{n}( \boldsymbol{Y}[,j]^\top \boldsymbol{Y}[,j] -  2\boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}[\cdot,j] + \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top)
 \end{align*}
 $$ {#eq-psiselect}
 
@@ -214,7 +214,7 @@ $$
 \end{pmatrix}
 $$
 
-We can verify that the top-left matrix, denoted as $\boldsymbol{P}_{11}$ is positive semi-definite since $\boldsymbol{\eta}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}) \boldsymbol{\eta} = ||\boldsymbol{\Lambda}^\top \boldsymbol{\eta}||_2^2 + \boldsymbol{\eta}^\top \boldsymbol{\Psi} \boldsymbol{\eta}$ and the $\boldsymbol{\Psi}$ is a diagonal matrix with all the non-zero elements positive as defined. Therefore the matrix $\boldsymbol{P}$ is positive semi-definite and hence its Schur complementary is also positive semi-definite. The Schur complementary with respect to $\boldsymbol{P}_{11}$ is given by $\boldsymbol{I}_k - \boldsymbol{\Lambda}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi})$, which is $\boldsymbol{B}$ we previously defined. Therefore $n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} \geq 0$, which leads to $\boldsymbol{\eta}^\top (n \boldsymbol{B} + \boldsymbol{AY}^\top \boldsymbol{YA}^\top) \boldsymbol{\eta} \geq 0$ for any $\boldsymbol{\eta}\in\mathbb{R}^k$.
+We can verify that the top-left matrix, denoted as $\boldsymbol{P}_{11}$ is positive semi-definite since $\boldsymbol{\eta}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}) \boldsymbol{\eta} = ||\boldsymbol{\Lambda}^\top \boldsymbol{\eta}||_2^2 + \boldsymbol{\eta}^\top \boldsymbol{\Psi} \boldsymbol{\eta}$ and the $\boldsymbol{\Psi}$ is a diagonal matrix with all the non-zero elements positive as defined. Therefore the matrix $\boldsymbol{P}$ is positive semi-definite and hence its Schur complementary is also positive semi-definite. The Schur complementary with respect to $\boldsymbol{P}_{11}$ is given by $\boldsymbol{I}_k - \boldsymbol{\Lambda}^\top (\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi})^{-1}\boldsymbol{\Lambda}$, which is $\boldsymbol{B}$ we previously defined. Therefore $n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} \geq 0$, which leads to $\boldsymbol{\eta}^\top (n \boldsymbol{B} + \boldsymbol{AY}^\top \boldsymbol{YA}^\top) \boldsymbol{\eta} \geq 0$ for any $\boldsymbol{\eta}\in\mathbb{R}^k$.
 :::
 
 Therefore we can update $\boldsymbol{\Lambda}$ rowwisely using the critical points. Mathematically, the gradient of the object function with respect of the $q$-th row is given by 
@@ -222,13 +222,13 @@ Therefore we can update $\boldsymbol{\Lambda}$ rowwisely using the critical poin
 $$
 \begin{align*}
 \nabla G(\boldsymbol{\Lambda}(q,)) &= \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(t+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(t+1)}}\\
-&= \frac{2}{\psi_{qq}}(n\boldsymbol{B}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}[q,]^\top - \boldsymbol{Y}[,q]^\top\boldsymbol{Y}\boldsymbol{A}^\top)
+&= \frac{2}{\psi_{qq}}(n\boldsymbol{B}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}[q,]^\top - \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}[,q])
 \end{align*}.
 $$ {#eq-gradient}
 Let $\nabla G(\boldsymbol{\Lambda}(q,))=0$, we have the formula to update $\boldsymbol{\Lambda}$ as
 
 $$
-\boldsymbol{\Lambda}_{(t+1)}(q,) = \boldsymbol{Y}[,q]^\top \boldsymbol{Y} \boldsymbol{A} (n\boldsymbol{B} + \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)^{-1}.
+\boldsymbol{\Lambda}_{(t+1)}(q,) =  ((n\boldsymbol{B} + \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)^{-1}\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}[,q])^\top.
 $$ {#eq-nplambdaupdate}
 
 
@@ -242,7 +242,7 @@ We add a coefficient $\frac{1}{2}$ before $P_{\rho}(\boldsymbol{\Lambda})$ for s
 
 The maximization towards the $Q$-function with respect to $\boldsymbol{\Psi}$ is exactly the same with @eq-psiupdate, since we did not add any penalty to matrix $\boldsymbol{\Psi}$.
 
-Now consider the update for $boldsymbol{\Lambda}$, we have
+Now consider the update for $\boldsymbol{\Lambda}$, we have
 
 $$
 \begin{align*}

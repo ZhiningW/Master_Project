@@ -7,8 +7,7 @@ Factor analysis (FA) is a statistical method which attempts to use fewer
 underlying factors to explain the correlation between a large set of
 observed variables [@mardiaMultivariateAnalysis1979]. FA provides a useful tool for exploring the covariance structure among observable variables [@hiroseSparseEstimationNonconcave2015].
 
-An FA model assumes that the observations are explained by a small number of underlying factors. This assumption is suited to many areas, e.g. in
-psychology where certain variables, like intelligence, cannot be directly measured [@mardiaMultivariateAnalysis1979].
+An FA model assumes that the observations are explained by a small number of underlying factors. This assumption is suited to many areas, e.g. in psychology where certain variables, like intelligence, cannot be directly measured [@mardiaMultivariateAnalysis1979].
 
 Suppose we have an observable random vector $\boldsymbol{y}_i\in \mathbb{R}^p$ for the $i$-th subject
 with mean $\mathbb{E}(\boldsymbol{y}_i)=\boldsymbol{\mu}$ and variance

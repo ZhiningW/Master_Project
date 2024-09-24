@@ -43,14 +43,13 @@ psi_update <- function(lambda,psi,Y,j){
   n <- nrow(Y)
   mat_A <- A(lambda,psi)
   mat_B <- B(lambda, psi)
-  lambda_j <- lambda[j,,drop=FALSE]
+  lambda_j <- lambda[j, ,drop = FALSE]
+  Y.j <-Y[ ,j,drop = FALSE] # The j-th column of Y
   
   # Start calculating
-  first_term <- (1/n) * sum(Y[,j]*Y[,j])
-  second_term <- -(2/n) * lambda_j %*% as.matrix(rowSums(tcrossprod(mat_A,Y) 
-                                                         %*% Y[,j, drop=FALSE]),ncol=1)
-  third_term <- (1/n) * lambda_j %*% (n * mat_B + tcrossprod(mat_A,Y) 
-                                      %*% tcrossprod(Y , mat_A)) %*% t(lambda_j)
+  first_term <- (1/n) * t(Y.j) * Y.j
+  second_term <- (-2/n) * lambda_j %*% mat_A %*% t(Y) %*% Y.j
+  third_term <- (1/n) * lambda_j %*% (n * mat_B + mat_A %*% t(Y) %*% Y %*% t(mat_A)) %*% t(lambda_j)
   return(first_term + second_term + third_term)
 }
 
