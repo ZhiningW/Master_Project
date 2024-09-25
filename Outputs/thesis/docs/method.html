@@ -415,11 +415,11 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 <p><span id="eq-gradient"><span class="math display">\[
 \begin{align*}
 \nabla G(\boldsymbol{\Lambda}(q,)) &amp;= \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(t+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(t+1)}}\\
-&amp;= \frac{2}{\psi_{qq}}(n\boldsymbol{B}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}[q,]^\top - \boldsymbol{Y}[,q]^\top\boldsymbol{Y}\boldsymbol{A}^\top)
+&amp;= \frac{2}{\psi_{qq}}(n\boldsymbol{B}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}[q,]^\top - \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}[,q])
 \end{align*}.
 \tag{3.4}\]</span></span> Let <span class="math inline">\(\nabla G(\boldsymbol{\Lambda}(q,))=0\)</span>, we have the formula to update <span class="math inline">\(\boldsymbol{\Lambda}\)</span> as</p>
 <p><span id="eq-nplambdaupdate"><span class="math display">\[
-\boldsymbol{\Lambda}_{(t+1)}(q,) = \boldsymbol{Y}[,q]^\top \boldsymbol{Y} \boldsymbol{A} (n\boldsymbol{B} + \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)^{-1}.
+\boldsymbol{\Lambda}_{(t+1)}(q,) =  ((n\boldsymbol{B} + \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)^{-1}\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}[,q])^\top.
 \tag{3.5}\]</span></span></p>
 </section>
 <section id="m-step-penalized-em-algorithm" class="level2" data-number="3.3">

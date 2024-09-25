@@ -146,6 +146,7 @@ Standard_EM_update <- function(real_lambda, real_psi, N, initial_lambda, initial
     for (j in 1:p){
       lambda_new[j,] <- lambda_update(Y, lambda, psi,j)
     }
+    lambda_new[upper.tri(lambda_new)] <- 0
     #print(lambda_new)
     loading_diff <- norm(lambda_new - lambda, type = 'F')
     
@@ -167,10 +168,11 @@ n <- 200
 p <- 6
 k <- 2
 
+# true_lambda <- matrix(rep(1,12), nrow = p, ncol = k, byrow = TRUE)
 true_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = p, ncol = k, byrow = TRUE)
 # true_lambda <- matrix(c(0.9,0,0.9,0,0.8,0,0,0.8,0,0.7,0,0.7), nrow= p, ncol = k, byrow = TRUE)
 
-true_psi <- diag(rep(1,p)) - true_lambda %*% t(true_lambda)
+true_psi <- diag(diag(diag(rep(1,p)) - true_lambda %*% t(true_lambda)))
 
 initial_lambda <- matrix(rep(1,p*k),nrow = p, ncol = k)
 initial_psi <- diag(rep(1,p))
@@ -178,3 +180,5 @@ initial_psi <- diag(rep(1,p))
 
 Standard_EM_update(true_lambda, true_psi, n, initial_lambda, initial_psi)
 
+true_psi
+true_lambda
