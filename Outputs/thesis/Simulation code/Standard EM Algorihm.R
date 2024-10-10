@@ -115,7 +115,7 @@ Standard_EM_update <- function(real_lambda, real_psi, N, initial_lambda, initial
   k <- ncol(real_lambda)
   Y <- MASS::mvrnorm(n = N, mu = rep(0,p), Sigma = real_lambda %*% t(real_lambda) + real_psi) 
   
-  epsilon <- 0.0001 # error tolerance
+  epsilon <- 0.00001 # error tolerance
   n_max_iter <- 1000 # maximum iteration number
   
   

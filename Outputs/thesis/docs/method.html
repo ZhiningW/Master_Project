@@ -252,58 +252,58 @@ window.Quarto = {
 </header>
 
 
-<p>As described in <a href="background.html" class="quarto-xref"><span>Chapter 2</span></a>, there are various methods to fit a factor analytic model to multivariate data. We will discuss the standard EM-algorithm and the penalized EM-algorithm in this chapter. We treat the common factor matrix <span class="math inline">\(\boldsymbol{f}\)</span> as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> given <span class="math inline">\(\boldsymbol{y}\)</span> and <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span>, where <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span> is the parameter we got in the <span class="math inline">\(t\)</span>-th iteration (<span class="math inline">\(t&gt;1\)</span>) and <span class="math inline">\(\boldsymbol{\theta}_{(0)}\)</span> is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get <span class="math inline">\(\boldsymbol{\theta}_{(t + 1)}\)</span>. The outline is as follow: in subsection</p>
+<p>As described in <a href="background.html" class="quarto-xref"><span>Chapter 2</span></a>, there are various methods to fit a factor analytic model to multivariate data. We will discuss the standard EM-algorithm and the penalized EM-algorithm in this chapter. We treat the common factor matrix <span class="math inline">\(\mathbf{f}\)</span> as the latent variable. In E-step, we need to compute the conditional expectation of the joint likelihood of <span class="math inline">\((\mathbf{y},\mathbf{f})\)</span> given <span class="math inline">\(\mathbf{y}\)</span> and <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span>, where <span class="math inline">\(\boldsymbol{\theta}_{(t)}\)</span> is the parameter we got in the <span class="math inline">\(t\)</span>-th iteration (<span class="math inline">\(t&gt;1\)</span>) and <span class="math inline">\(\boldsymbol{\theta}_{(0)}\)</span> is the initial value we set. In M-step, we maximize the conditional expectation over parameters and get <span class="math inline">\(\boldsymbol{\theta}_{(t + 1)}\)</span>. The outline is as follow: in subsection</p>
 <section id="e-step" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="e-step"><span class="header-section-number">3.1</span> E-Step</h2>
 <div id="lem-fa-likelihood" class="theorem lemma">
-<p><span class="theorem-title"><strong>Lemma 3.1</strong></span> The joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by <span class="math display">\[\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})= -\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\\]</span></p>
+<p><span class="theorem-title"><strong>Lemma 3.1</strong></span> The joint log-likelihood of <span class="math inline">\((\mathbf{y},\mathbf{f})\)</span> is given by <span class="math display">\[\ell_{\mathbf{y},\mathbf{f}}(\boldsymbol{\theta})= -\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2}{\psi_{jj}} - \sum_{i=1}^n\sum_{j=1}^pf_{ij}^2 + \text{constant}.\\\]</span></p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>First, the joint log-likelihood of <span class="math inline">\((\boldsymbol{y},\boldsymbol{f})\)</span> is given by <span class="math display">\[
-\ell_{\boldsymbol{y},\boldsymbol{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\boldsymbol{y}_i,\boldsymbol{f}_i) =\sum_{i=1}^n\log \left(f(\boldsymbol{y}_i|\boldsymbol{f}_i)f(\boldsymbol{f}_i)\right)
-\]</span> where <span class="math inline">\(\boldsymbol{y}_i|\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{\Lambda}\boldsymbol{f}_i, \boldsymbol{\Psi})\)</span> and <span class="math inline">\(\boldsymbol{f}_i \sim \mathcal{N}(\boldsymbol{0}_m,\boldsymbol{I}_m)\)</span>. Therefore we have</p>
+<p><span class="proof-title"><em>Proof</em>. </span>First, the joint log-likelihood of <span class="math inline">\((\mathbf{y},\mathbf{f})\)</span> is given by <span class="math display">\[
+\ell_{\mathbf{y},\mathbf{f}}(\boldsymbol{\theta})=\sum_{i=1}^n\log f(\mathbf{y}_i,\mathbf{f}_i) =\sum_{i=1}^n\log \left(f(\mathbf{y}_i|\mathbf{f}_i)f(\mathbf{f}_i)\right)
+\]</span> where <span class="math inline">\(\mathbf{y}_i|\mathbf{f}_i \sim \mathcal{N}(\boldsymbol{\Lambda}\mathbf{f}_i, \boldsymbol{\Psi})\)</span> and <span class="math inline">\(\mathbf{f}_i \sim \mathcal{N}(\boldsymbol{0}_m,\boldsymbol{I}_m)\)</span>. Therefore we have</p>
 <p>$$ <span class="math display">\[\begin{align*}
-\ell(\boldsymbol{\theta})=&amp; \sum_{i=1}^n\log f(\boldsymbol{y}_i|\boldsymbol{f}_i) + \sum_{i=1}^n\log f(\boldsymbol{f}_i)\\
-=&amp; -\frac{np}{2}\log(2\pi)-\frac{n}{2}\log\left[\det(\boldsymbol{\Psi})\right]-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)\\
-&amp;\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log\left[\det(\boldsymbol{I}_m)\right]-\frac{1}{2}(\boldsymbol{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_m^{-1}(\boldsymbol{f}_i-\boldsymbol{0}_m)\\
-=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\sum_{j=1}^p\log \psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)^\top\boldsymbol{\Psi}^{-1}(\boldsymbol{y}_i-\boldsymbol{\Lambda}\boldsymbol{f}_i)- \frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
-=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} + \frac{1}{2}\sum_{i=1}^n \boldsymbol{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\boldsymbol{y}_i+ \frac{1}{2}\sum_{i=1}^n\boldsymbol{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i  - \frac{1}{2}\sum_{i=1}^n
-\boldsymbol{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i -\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
-=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} +   \sum_{i=1}^n \boldsymbol{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i  - \frac{1}{2}\sum_{i=1}^n
-\boldsymbol{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i -\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
+\ell(\boldsymbol{\theta})=&amp; \sum_{i=1}^n\log f(\mathbf{y}_i|\mathbf{f}_i) + \sum_{i=1}^n\log f(\mathbf{f}_i)\\
+=&amp; -\frac{np}{2}\log(2\pi)-\frac{n}{2}\log\left[\det(\boldsymbol{\Psi})\right]-\frac{1}{2}\sum_{i=1}^n(\mathbf{y}_i-\boldsymbol{\Lambda}\mathbf{f}_i)^\top\boldsymbol{\Psi}^{-1}(\mathbf{y}_i-\boldsymbol{\Lambda}\mathbf{f}_i)\\
+&amp;\quad -\frac{kp}{2}\log(2\pi)-\frac{1}{2}\log\left[\det(\boldsymbol{I}_m)\right]-\frac{1}{2}(\mathbf{f}_i-\boldsymbol{0}_k)^\top\boldsymbol{I}_m^{-1}(\mathbf{f}_i-\boldsymbol{0}_m)\\
+=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2}\sum_{j=1}^p\log \psi_{jj}-\frac{1}{2}\sum_{i=1}^n(\mathbf{y}_i-\boldsymbol{\Lambda}\mathbf{f}_i)^\top\boldsymbol{\Psi}^{-1}(\mathbf{y}_i-\boldsymbol{\Lambda}\mathbf{f}_i)- \frac{1}{2}\sum_{i=1}^n\mathbf{f}_i^\top\mathbf{f}_i\\
+=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} + \frac{1}{2}\sum_{i=1}^n \mathbf{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{y}_i+ \frac{1}{2}\sum_{i=1}^n\mathbf{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\mathbf{f}_i  - \frac{1}{2}\sum_{i=1}^n
+\mathbf{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\mathbf{f}_i -\frac{1}{2}\sum_{i=1}^n\mathbf{f}_i^\top\mathbf{f}_i\\
+=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} +   \sum_{i=1}^n \mathbf{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\mathbf{f}_i  - \frac{1}{2}\sum_{i=1}^n
+\mathbf{f}_i^\top\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\mathbf{f}_i -\frac{1}{2}\sum_{i=1}^n\mathbf{f}_i^\top\mathbf{f}_i\\
 
-=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} +   \sum_{i=1}^n \boldsymbol{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i  - \frac{1}{2}\sum_{i=1}^n\text{tr}\left(
-\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\boldsymbol{f}_i\boldsymbol{f}_i^\top\right) -\frac{1}{2}\sum_{i=1}^n\boldsymbol{f}_i^\top\boldsymbol{f}_i\\
+=&amp; -\frac{(n+k)p}{2}\log(2\pi)-\frac{n}{2} \sum_{j=1}^p\log\psi_{jj}-\frac{1}{2}\sum_{i=1}^n\sum_{j}^p \frac{y_{ij}^2}{\psi_{jj}} +   \sum_{i=1}^n \mathbf{y}_i^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\mathbf{f}_i  - \frac{1}{2}\sum_{i=1}^n\text{tr}\left(
+\mathbf{\Lambda}^\top\mathbf{\Psi}^{-1}\mathbf{\Lambda}\mathbf{f}_i\mathbf{f}_i^\top\right) -\frac{1}{2}\sum_{i=1}^n\mathbf{f}_i^\top\mathbf{f}_i\\
 \end{align*}\]</span> $$</p>
 </div>
-<p>Now let us deduce the conditional expectation to <span class="math inline">\(\boldsymbol{f}\)</span> given <span class="math inline">\(\boldsymbol{y},\boldsymbol{\theta}_{(t)}\)</span>, denoted as <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. In <a href="background.html#eq-loglikelihood" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>, the first term is independent of <span class="math inline">\(\boldsymbol{f}\)</span>, hence stay the same under conditional expectation. The last term is independent of <span class="math inline">\(\boldsymbol{\theta}\)</span>, therefore we can regard it as a constant in <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>.</p>
-<p>Without ambiguity, denote <span class="math inline">\(\mathbb{E}[f_{ik}|_{(t)}]\)</span> to be the conditional expectation <span class="math inline">\(\mathbb{E}[f_{ik}|\boldsymbol{y},\boldsymbol{\theta}_{(t)}]\)</span> for simplification. Then the conditional expectation <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span> is given by</p>
+<p>Now let us deduce the conditional expectation to <span class="math inline">\(\mathbf{f}\)</span> given <span class="math inline">\(\mathbf{y},\boldsymbol{\theta}_{(t)}\)</span>, denoted as <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>. In <a href="background.html#eq-loglikelihood" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>, the first term is independent of <span class="math inline">\(\mathbf{f}\)</span>, hence stay the same under conditional expectation. The last term is independent of <span class="math inline">\(\boldsymbol{\theta}\)</span>, therefore we can regard it as a constant in <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span>.</p>
+<p>Without ambiguity, denote <span class="math inline">\(\mathbb{E}[f_{ik}|_{(t)}]\)</span> to be the conditional expectation <span class="math inline">\(\mathbb{E}[f_{ik}|\mathbf{y},\boldsymbol{\theta}_{(t)}]\)</span> for simplification. Then the conditional expectation <span class="math inline">\(\mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})\right)\)</span> is given by</p>
 <p><span class="math display">\[
 \begin{align*}
 \mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)=&amp; \ \text{constant}-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}-\\
-&amp;\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{\mathbb{E}\left[(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2|_{(t)}\right]}{\psi_{jj}} - \frac{1}{2}\sum_{i=1}^n\mathbb{E}(\boldsymbol{f}_i^\top\boldsymbol{f}_i|_{(t)})\\
+&amp;\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p \frac{\mathbb{E}\left[(y_{ij} - \sum_{k=1}^m \lambda_{jk}f_{ik})^2|_{(t)}\right]}{\psi_{jj}} - \frac{1}{2}\sum_{i=1}^n\mathbb{E}(\mathbf{f}_i^\top\mathbf{f}_i|_{(t)})\\
 \end{align*}
 \]</span></p>
-<p>To deal with <span class="math inline">\(\mathbb{E}[\boldsymbol{f}_i|_{(t)}]\)</span> and <span class="math inline">\(\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)}]\)</span>, we only need to know the mean and variance of conditional distribution <span class="math inline">\(\boldsymbol{f}_i|\boldsymbol{Y},\boldsymbol{\Lambda}^\top_{(t)},\boldsymbol{\Psi}_{(t)}\)</span>, or equivalently <span class="math inline">\(\boldsymbol{f}_i|\boldsymbol{y}_i,\boldsymbol{\Lambda}^\top_{(t)},\boldsymbol{\Psi}_{(t)}\)</span> because of the independency of <span class="math inline">\(\boldsymbol{f}_i\)</span> to <span class="math inline">\(\boldsymbol{y}_j\)</span> for <span class="math inline">\(i\neq j\)</span>. This is because we can always treat <span class="math inline">\(\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)}]\)</span> as</p>
+<p>To deal with <span class="math inline">\(\mathbb{E}[\mathbf{f}_i|_{(t)}]\)</span> and <span class="math inline">\(\mathbb{E}[\mathbf{f}_i\mathbf{f}_i^\top|_{(t)}]\)</span>, we only need to know the mean and variance of conditional distribution <span class="math inline">\(\mathbf{f}_i|\mathbf{y},\boldsymbol{\Lambda}^\top_{(t)},\boldsymbol{\Psi}_{(t)}\)</span>, or equivalently <span class="math inline">\(\mathbf{f}_i|\mathbf{y}_i,\boldsymbol{\Lambda}^\top_{(t)},\boldsymbol{\Psi}_{(t)}\)</span> because of the independency of <span class="math inline">\(\mathbf{f}_i\)</span> to <span class="math inline">\(\mathbf{y}_j\)</span> for <span class="math inline">\(i\neq j\)</span>. This is because we can always treat <span class="math inline">\(\mathbb{E}[\mathbf{f}_i\mathbf{f}_i^\top|_{(t)}]\)</span> as</p>
 <p><span class="math display">\[
-\mathbb{E}[\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)}]= \mathbb{V}[\boldsymbol{f}_i|_{(t)}]+ \mathbb{E}[\boldsymbol{f}_i|_{(t)}]\mathbb{E}[\boldsymbol{f}_i|_{(t)}]^\top.
-\]</span> where <span class="math inline">\(\mathbb{V}[\boldsymbol{f}_i|_{(t)}]\)</span> is the variance of conditional distribution. To deal with this, wed need the following lemma.</p>
+\mathbb{E}[\mathbf{f}_i\mathbf{f}_i^\top|_{(t)}]= \mathbb{V}[\mathbf{f}_i|_{(t)}]+ \mathbb{E}[\mathbf{f}_i|_{(t)}]\mathbb{E}[\mathbf{f}_i|_{(t)}]^\top.
+\]</span> where <span class="math inline">\(\mathbb{V}[\mathbf{f}_i|_{(t)}]\)</span> is the variance of conditional distribution. To deal with this, wed need the following lemma.</p>
 <p>In our scenario, using <a href="appendix.html#lem-cond" class="quarto-xref">Lemma&nbsp;<span>5.1</span></a>, we have</p>
 <p><span class="math display">\[
 \begin{align*}
-&amp; \boldsymbol{\mu}_{\boldsymbol{f}_i}= \boldsymbol{0}_k, \boldsymbol{\Sigma}_{\boldsymbol{f}_{i}}=\boldsymbol{I}_k\\
-&amp; \boldsymbol{\mu}_{\boldsymbol{y}_i}= \boldsymbol{0}_p, \boldsymbol{\Sigma}_{\boldsymbol{y}_i}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
+&amp; \boldsymbol{\mu}_{\mathbf{f}_i}= \boldsymbol{0}_k, \boldsymbol{\Sigma}_{\mathbf{f}_{i}}=\boldsymbol{I}_k\\
+&amp; \boldsymbol{\mu}_{\mathbf{y}_i}= \boldsymbol{0}_p, \boldsymbol{\Sigma}_{\mathbf{y}_i}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
 \end{align*}
 \]</span></p>
 <p>and also</p>
 <p><span class="math display">\[
-\text{Cov}(\boldsymbol{y}_i,\boldsymbol{f}_i)=\text{Cov}(\boldsymbol{\Lambda f}_i+\boldsymbol{\epsilon}_i,\boldsymbol{f}_i)=\boldsymbol{\Lambda}^\top.
+\text{Cov}(\mathbf{y}_i,\mathbf{f}_i)=\text{Cov}(\boldsymbol{\Lambda f}_i+\boldsymbol{\epsilon}_i,\mathbf{f}_i)=\boldsymbol{\Lambda}^\top.
 \]</span></p>
 <p>Therefore we have</p>
 <p><span class="math display">\[
 \begin{align*}
-&amp;\mathbb{E}(\boldsymbol{f}_i|_{(t)})=\boldsymbol{\mu}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{\Lambda}_{(t)}^\top(\boldsymbol{\Lambda}_{(t)}\boldsymbol{\Lambda}_{(t)}^\top+\boldsymbol{\Psi}_{(t)})^{-1}\boldsymbol{y}_i\\
-&amp;\mathbb{V}(\boldsymbol{f}_i|_{(t)})=\boldsymbol{\Sigma}_{\boldsymbol{f}_i|\boldsymbol{y}_i}=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(t)}^\top(\boldsymbol{\Lambda}_{(t)}\boldsymbol{\Lambda}_{(t)}^\top+\boldsymbol{\Psi}_{(t)})^{-1}\boldsymbol{\Lambda}_{(t)}.\\
+&amp;\mathbb{E}(\mathbf{f}_i|_{(t)})=\boldsymbol{\mu}_{\mathbf{f}_i|\mathbf{y}_i}=\boldsymbol{\Lambda}_{(t)}^\top(\boldsymbol{\Lambda}_{(t)}\boldsymbol{\Lambda}_{(t)}^\top+\boldsymbol{\Psi}_{(t)})^{-1}\mathbf{y}_i\\
+&amp;\mathbb{V}(\mathbf{f}_i|_{(t)})=\boldsymbol{\Sigma}_{\mathbf{f}_i|\mathbf{y}_i}=\boldsymbol{I}_k-\boldsymbol{\Lambda}_{(t)}^\top(\boldsymbol{\Lambda}_{(t)}\boldsymbol{\Lambda}_{(t)}^\top+\boldsymbol{\Psi}_{(t)})^{-1}\boldsymbol{\Lambda}_{(t)}.\\
 \end{align*}
 \]</span></p>
 <p>For simplification, let us denote</p>
@@ -316,17 +316,17 @@ window.Quarto = {
 <p>we will get</p>
 <p><span class="math display">\[
 \begin{align*}
-&amp;\mathbb{E}(\boldsymbol{f}_i|_{(t)})= \boldsymbol{A}\boldsymbol{y}_i\\
-&amp;\mathbb{E}(\boldsymbol{f}_i\boldsymbol{f}_i^\top|_{(t)})= \boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top.
+&amp;\mathbb{E}(\mathbf{f}_i|_{(t)})= \boldsymbol{A}\mathbf{y}_i\\
+&amp;\mathbb{E}(\mathbf{f}_i\mathbf{f}_i^\top|_{(t)})= \boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top.
 \end{align*}
 \]</span></p>
 <p>Our expectation will finally be confirmed by</p>
 <p><span id="eq-expectation"><span class="math display">\[
 \begin{align*}
 \mathbb{E}\left(\ell(\boldsymbol{\theta}_{(t)})|_{(t)}\right)= &amp; -\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj}}\\
-&amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj}}\\
-&amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj}}+\text{constant}\\
-=&amp; -\frac{n}{2}\log(\det(\boldsymbol{\Psi}))-\frac{1}{2}\text{tr}(\boldsymbol{Y}\boldsymbol{\Psi}^{-1}\boldsymbol{Y}^\top)+\text{tr}(\boldsymbol{\Lambda}\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{\Psi}^{-1})-\frac{1}{2}\text{tr}(\boldsymbol{\Lambda}(\boldsymbol{n\boldsymbol{B}}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}^\top\boldsymbol{\Psi}^{-1})
+&amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\mathbf{y}_i}{\psi_{jj}}\\
+&amp; -\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj}}+\text{constant}\\
+=&amp; -\frac{n}{2}\log(\det(\boldsymbol{\Psi}))-\frac{1}{2}\text{tr}(\mathbf{y}\boldsymbol{\Psi}^{-1}\mathbf{y}^\top)+\text{tr}(\boldsymbol{\Lambda}\boldsymbol{A}\mathbf{y}^\top\mathbf{y}\boldsymbol{\Psi}^{-1})-\frac{1}{2}\text{tr}(\boldsymbol{\Lambda}(\boldsymbol{n\boldsymbol{B}}+\boldsymbol{A}\mathbf{y}^\top\mathbf{y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}^\top\boldsymbol{\Psi}^{-1})
 \end{align*}
 \tag{3.1}\]</span></span></p>
 </section>
@@ -352,15 +352,15 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 \begin{align*}
 \frac{\partial}{\partial \psi_{jj}}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})=
 &amp;-\frac{n}{2}\frac{1}{\psi_{jj}}+\frac{1}{2}\sum_{i=1}^n
-\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj}^2} \\
-&amp;+ \frac{1}{2}\sum_{i=1}^n\frac{\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top}{\psi_{jj}^2}.\\
+\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\mathbf{y}_i}{\psi_{jj}^2} \\
+&amp;+ \frac{1}{2}\sum_{i=1}^n\frac{\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top}{\psi_{jj}^2}.\\
 \end{align*}
 \]</span></p>
 <p>Thus the update of <span class="math inline">\(\boldsymbol{\Psi}\)</span> will be elementwisely given by</p>
 <p><span id="eq-psiupdate"><span class="math display">\[
 \begin{align*}
-\psi_{jj,(t+1)} &amp;= \frac{1}{n} \sum_{i=1}^n y_{ij}^2 - \frac{2}{n} \sum_{i=1}^n y_{ij} \boldsymbol{\Lambda}_{(t)}(j,) \boldsymbol{A} \boldsymbol{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(t)}(j,) (\boldsymbol{B} + \boldsymbol{A} \boldsymbol{y}_i \boldsymbol{y}_i^\top \boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}(j,)^\top \\
-&amp;= \frac{1}{n} \boldsymbol{Y}[,j]^\top \boldsymbol{Y}[,j] - \frac{2}{n} \boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}[\cdot,j] + \frac{1}{n} \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top
+\psi_{jj,(t+1)} &amp;= \frac{1}{n} \sum_{i=1}^n y_{ij}^2 - \frac{2}{n} \sum_{i=1}^n y_{ij} \boldsymbol{\Lambda}_{(t)}(j,) \boldsymbol{A} \mathbf{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(t)}(j,) (\boldsymbol{B} + \boldsymbol{A} \mathbf{y}_i \mathbf{y}_i^\top \boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}(j,)^\top \\
+&amp;= \frac{1}{n} \mathbf{y}[,j]^\top \mathbf{y}[,j] - \frac{2}{n} \boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \mathbf{y}^\top \mathbf{y}[\cdot,j] + \frac{1}{n} \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \mathbf{y}^\top \mathbf{y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top
 \end{align*}.
 \tag{3.2}\]</span></span></p>
 <p>But notice that the <span class="math inline">\(Q\)</span>-function is not concave globally, therefore we may update <span class="math inline">\(\boldsymbol{\Psi}\)</span> selectively. More specifically, we only update <span class="math inline">\(\psi_{jj}\)</span> when it satisfies</p>
@@ -370,16 +370,16 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 <p>i.e.</p>
 <p><span id="eq-psiselect"><span class="math display">\[
 \begin{align*}
-\psi_{jj} &amp;\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\boldsymbol{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top]\\
-&amp;= \frac{2}{n}( \boldsymbol{Y}[,j]^\top \boldsymbol{Y}[,j] -  2\boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}[\cdot,j] + \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \boldsymbol{Y}^\top \boldsymbol{Y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top)
+\psi_{jj} &amp;\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\mathbf{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top]\\
+&amp;= \frac{2}{n}( \mathbf{y}[,j]^\top \mathbf{y}[,j] -  2\boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \mathbf{y}^\top \mathbf{y}[\cdot,j] + \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \mathbf{y}^\top \mathbf{y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top)
 \end{align*}
 \tag{3.3}\]</span></span></p>
 <p>For step 2, let us revise the update formula, we have</p>
 <p><span class="math display">\[
 \begin{align*}
 \boldsymbol{\Lambda}_{(t+1)}=&amp;\arg \max_{\boldsymbol{\Lambda}} (Q(\boldsymbol{\Lambda,\boldsymbol{\Psi}})|\boldsymbol{\Psi}=\boldsymbol{\Psi}_{(t+1)})\\
-=&amp;\arg \max_{\boldsymbol{\Lambda}} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
-&amp;-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}}\\
+=&amp;\arg \max_{\boldsymbol{\Lambda}} \{\frac{1}{2} \sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\mathbf{y}_i}{\psi_{jj,(t+1)}}\\
+&amp;-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}}\\
 &amp;-\frac{n}{2}\sum_{j=1}^p\log{\psi_{jj,(t+1)}}-\frac{1}{2}\sum_{i=1}^n\sum_{j=1}^p\frac{y_{ij}^2}{\psi_{jj,(t+1)}}+\text{constant}\}.\\
 \end{align*}
 \]</span></p>
@@ -387,16 +387,16 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 <p>$$ <span class="math display">\[\begin{align*}
 \boldsymbol{\Lambda}_{(t+1)}
 
-=&amp; \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
+=&amp; \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\mathbf{y}_i}{\psi_{jj,(t+1)}}\\
 
-&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} \}
+&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} \}
 \end{align*}\]</span> $$</p>
 <p>The objective function, denoted as <span class="math inline">\(G(\boldsymbol{\Lambda})\)</span> enjoys a nice convexity property given by the following lemma:</p>
 <div id="lem-mstep-covexity" class="theorem lemma">
 <p><span class="theorem-title"><strong>Lemma 3.2</strong></span> The objective function is convex with respective to <span class="math inline">\(\boldsymbol{\Lambda}_{q\cdot}\)</span> for any given <span class="math inline">\(q=1,2,\dots,p\)</span>.</p>
 </div>
 <div class="proof">
-<p><span class="proof-title"><em>Proof</em>. </span>To show <a href="#lem-mstep-covexity" class="quarto-xref">Lemma&nbsp;<span>3.2</span></a>, we only need to show <span class="math inline">\(\sum_{i=1}^n (\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)=n\boldsymbol{B}+\boldsymbol{AY}^\top\boldsymbol{YA}^\top\)</span> is positive semi-definite. Consider an arbitrary vector <span class="math inline">\(\boldsymbol{\eta}\in\mathbb{R}^k\)</span>, we have <span class="math display">\[
+<p><span class="proof-title"><em>Proof</em>. </span>To show <a href="#lem-mstep-covexity" class="quarto-xref">Lemma&nbsp;<span>3.2</span></a>, we only need to show <span class="math inline">\(\sum_{i=1}^n (\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)=n\boldsymbol{B}+\boldsymbol{AY}^\top\boldsymbol{YA}^\top\)</span> is positive semi-definite. Consider an arbitrary vector <span class="math inline">\(\boldsymbol{\eta}\in\mathbb{R}^k\)</span>, we have <span class="math display">\[
 \begin{align*}
 \boldsymbol{\eta}^\top (n \boldsymbol{B} + \boldsymbol{AY}^\top \boldsymbol{YA}^\top) \boldsymbol{\eta}&amp; = n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} + \boldsymbol{\eta}^\top \boldsymbol{AY}^\top  \boldsymbol{YA}^\top \boldsymbol{\eta}\\
 &amp; = n \boldsymbol{\eta}^\top \boldsymbol{B} \boldsymbol{\eta} + || \boldsymbol{YA}^\top \boldsymbol{\eta} ||_2^2
@@ -414,12 +414,12 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 <p>Therefore we can update <span class="math inline">\(\boldsymbol{\Lambda}\)</span> rowwisely using the critical points. Mathematically, the gradient of the object function with respect of the <span class="math inline">\(q\)</span>-th row is given by</p>
 <p><span id="eq-gradient"><span class="math display">\[
 \begin{align*}
-\nabla G(\boldsymbol{\Lambda}(q,)) &amp;= \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(t+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(t+1)}}\\
-&amp;= \frac{2}{\psi_{qq}}(n\boldsymbol{B}+\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}[q,]^\top - \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}[,q])
+\nabla G(\boldsymbol{\Lambda}(q,)) &amp;= \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(t+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\mathbf{y}_i}{\psi_{qq,(t+1)}}\\
+&amp;= \frac{2}{\psi_{qq}}(n\boldsymbol{B}+\boldsymbol{A}\mathbf{y}^\top\mathbf{y}\boldsymbol{A}^\top)\boldsymbol{\Lambda}[q,]^\top - \boldsymbol{A}\mathbf{y}^\top\mathbf{y}[,q])
 \end{align*}.
 \tag{3.4}\]</span></span> Let <span class="math inline">\(\nabla G(\boldsymbol{\Lambda}(q,))=0\)</span>, we have the formula to update <span class="math inline">\(\boldsymbol{\Lambda}\)</span> as</p>
 <p><span id="eq-nplambdaupdate"><span class="math display">\[
-\boldsymbol{\Lambda}_{(t+1)}(q,) =  ((n\boldsymbol{B} + \boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}\boldsymbol{A}^\top)^{-1}\boldsymbol{A}\boldsymbol{Y}^\top\boldsymbol{Y}[,q])^\top.
+\boldsymbol{\Lambda}_{(t+1)}(q,) =  ((n\boldsymbol{B} + \boldsymbol{A}\mathbf{y}^\top\mathbf{y}\boldsymbol{A}^\top)^{-1}\boldsymbol{A}\mathbf{y}^\top\mathbf{y}[,q])^\top.
 \tag{3.5}\]</span></span></p>
 </section>
 <section id="m-step-penalized-em-algorithm" class="level2" data-number="3.3">
@@ -432,14 +432,14 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 <p>$$ <span class="math display">\[\begin{align*}
 \boldsymbol{\Lambda}_{(t+1)} &amp;= \arg \max_{\boldsymbol{\Lambda}}\{Q(\boldsymbol{\Lambda},\boldsymbol{\Psi})| \boldsymbol{\Psi} = \boldsymbol{\Psi}_{t+1} \} \\
 
-=&amp; \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}}\\
+=&amp; \arg \min_{\boldsymbol{\Lambda}}\{-\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\mathbf{y}_i}{\psi_{jj,(t+1)}}\\
 
-&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
+&amp; + \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} + \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
   \}
 \end{align*}\]</span> $$</p>
 <p>Due to the convexity proved before and non-differentiablity of the <span class="math inline">\(L_1\)</span>-norm at certain points, a proximal gradient method can be necessary to optimize <span class="math inline">\(\boldsymbol{\Lambda}\)</span> row by row.</p>
 <p>Denote the differentiable part (w.r.t. the <span class="math inline">\(q\)</span>-th row of <span class="math inline">\(\boldsymbol{\Lambda}\)</span>) of the objective function as <span class="math display">\[
-G(\boldsymbol{\Lambda}):= \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} -\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\boldsymbol{y}_i}{\psi_{jj,(t+1)}},
+G(\boldsymbol{\Lambda}):= \sum_{i=1}^n\sum_{j=1}^p\frac{\boldsymbol{\Lambda}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(j,)^\top}{\psi_{jj,(t+1)}} -\sum_{i=1}^n \sum_{j=1}^p \frac{2y_{ij}\boldsymbol{\Lambda}(j,)\boldsymbol{A}\mathbf{y}_i}{\psi_{jj,(t+1)}},
 \]</span> while the non-differentiable part is denoted as <span class="math display">\[
 H(\boldsymbol{\Lambda}) := \rho \sum_{j=1}^p||\boldsymbol{\Lambda}(j,)^\top||_1
 \]</span> We will have a nice form for the objective function, under which a proximal gradient method can be applied for rowwisely upgrade the loading matrix.</p>
@@ -473,7 +473,7 @@ Proximal method for updating loading matrix
 \tag{3.7}\]</span></span> <span id="eq-plambdaupdate"><span class="math display">\[
 \boldsymbol{\Lambda}(q,)_{(t+1)}:=\text{sign}(\boldsymbol{\xi}_k) \cdot \max(|\boldsymbol{\xi}_k|-\rho,0)
 \tag{3.8}\]</span></span> where <span class="math inline">\(|\cdot|\)</span> is the elementwise absolute value and <span class="math inline">\(\nabla G(\boldsymbol{\Lambda}(q,))\)</span> can be calculated by <span id="eq-gradient"><span class="math display">\[
-\nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\boldsymbol{y}_i\boldsymbol{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\boldsymbol{y}_i}{\psi_{qq,(k+1)}}.
+\nabla G(\boldsymbol{\Lambda}(q,)) = \sum_{i=1}^n\frac{(2\boldsymbol{B}+2\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}(q,)^\top}{\psi_{qq,(k+1)}}-\sum_{i=1}^n\frac{2y_{iq}\boldsymbol{A}\mathbf{y}_i}{\psi_{qq,(k+1)}}.
 \tag{3.9}\]</span></span></p>
 </div>
 </div>
