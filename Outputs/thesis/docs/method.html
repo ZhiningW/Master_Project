@@ -291,13 +291,13 @@ window.Quarto = {
 <p>In our scenario, using <a href="appendix.html#lem-cond" class="quarto-xref">Lemma&nbsp;<span>5.1</span></a>, we have</p>
 <p><span class="math display">\[
 \begin{align*}
-&amp; \boldsymbol{\mu}_{\mathbf{f}_i}= \boldsymbol{0}_k, \boldsymbol{\Sigma}_{\mathbf{f}_{i}}=\boldsymbol{I}_k\\
-&amp; \boldsymbol{\mu}_{\mathbf{y}_i}= \boldsymbol{0}_p, \boldsymbol{\Sigma}_{\mathbf{y}_i}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
+&amp; \boldsymbol{\mu}_{\mathbf{f}_k}= \boldsymbol{0}_k, \boldsymbol{\Sigma}_{\mathbf{f}_{i}}=\boldsymbol{I}_k\\
+&amp; \boldsymbol{\mu}_{\mathbf{y}_k}= \boldsymbol{0}_p, \boldsymbol{\Sigma}_{\mathbf{y}_k}=\boldsymbol{\Lambda}\boldsymbol{\Lambda}^\top+\boldsymbol{\Psi}
 \end{align*}
 \]</span></p>
 <p>and also</p>
 <p><span class="math display">\[
-\text{Cov}(\mathbf{y}_i,\mathbf{f}_i)=\text{Cov}(\boldsymbol{\Lambda f}_i+\boldsymbol{\epsilon}_i,\mathbf{f}_i)=\boldsymbol{\Lambda}^\top.
+\text{Cov}(\mathbf{y}_i,\mathbf{f}_i)=\text{Cov}(\boldsymbol{\Lambda }\mathbf{f}_i+\boldsymbol{\epsilon}_i,\mathbf{f}_i)=\boldsymbol{\Lambda}^\top.
 \]</span></p>
 <p>Therefore we have</p>
 <p><span class="math display">\[
@@ -352,14 +352,14 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 \begin{align*}
 \frac{\partial}{\partial \psi_{jj}}Q((\boldsymbol{\Lambda},\boldsymbol{\Psi})|\boldsymbol{\Lambda}=\boldsymbol{\Lambda}_{(t)})=
 &amp;-\frac{n}{2}\frac{1}{\psi_{jj}}+\frac{1}{2}\sum_{i=1}^n
-\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\mathbf{y}_i}{\psi_{jj}^2} \\
-&amp;+ \frac{1}{2}\sum_{i=1}^n\frac{\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top}{\psi_{jj}^2}.\\
+\frac{y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}^{(t)}[j,:]\boldsymbol{A}\mathbf{y}_i}{\psi_{jj}^2} \\
+&amp;+ \frac{1}{2}\sum_{i=1}^n\frac{\boldsymbol{\Lambda}^{(t)}[j,:](\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}^{(t)}[j,:]^\top}{\psi_{jj}^2}.\\
 \end{align*}
 \]</span></p>
 <p>Thus the update of <span class="math inline">\(\boldsymbol{\Psi}\)</span> will be elementwisely given by</p>
 <p><span id="eq-psiupdate"><span class="math display">\[
 \begin{align*}
-\psi_{jj,(t+1)} &amp;= \frac{1}{n} \sum_{i=1}^n y_{ij}^2 - \frac{2}{n} \sum_{i=1}^n y_{ij} \boldsymbol{\Lambda}_{(t)}(j,) \boldsymbol{A} \mathbf{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}_{(t)}(j,) (\boldsymbol{B} + \boldsymbol{A} \mathbf{y}_i \mathbf{y}_i^\top \boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}(j,)^\top \\
+\psi_{jj,(t+1)} &amp;= \frac{1}{n} \sum_{i=1}^n y_{ij}^2 - \frac{2}{n} \sum_{i=1}^n y_{ij} \boldsymbol{\Lambda}^{(t)}[j,:] \boldsymbol{A} \mathbf{y}_i + \frac{1}{n}\sum_{i=1}^n \boldsymbol{\Lambda}^{(t)}[j,:] (\boldsymbol{B} + \boldsymbol{A} \mathbf{y}_i \mathbf{y}_i^\top \boldsymbol{A}^\top) \boldsymbol{\Lambda}^{(t)}[j,:]^\top \\
 &amp;= \frac{1}{n} \mathbf{y}[,j]^\top \mathbf{y}[,j] - \frac{2}{n} \boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \mathbf{y}^\top \mathbf{y}[\cdot,j] + \frac{1}{n} \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \mathbf{y}^\top \mathbf{y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top
 \end{align*}.
 \tag{3.2}\]</span></span></p>
@@ -370,7 +370,7 @@ Q(\boldsymbol{\Lambda},\boldsymbol{\Psi}) = \mathbb{E}\left(\ell(\boldsymbol{\th
 <p>i.e.</p>
 <p><span id="eq-psiselect"><span class="math display">\[
 \begin{align*}
-\psi_{jj} &amp;\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}_{(t)}(j,)\boldsymbol{A}\mathbf{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}_{(t)}(j,)(\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}_{(t)}(j,)^\top]\\
+\psi_{jj} &amp;\leq \frac{2}{n}[\sum_{i=1}^n(y_{ij}^2-2y_{ij}\boldsymbol{\Lambda}^{(t)}[j,:]\boldsymbol{A}\mathbf{y}_i)+\sum_{i=1}^n\boldsymbol{\Lambda}^{(t)}[j,:](\boldsymbol{B}+\boldsymbol{A}\mathbf{y}_i\mathbf{y}_i^\top\boldsymbol{A}^\top)\boldsymbol{\Lambda}^{(t)}[j,:]^\top]\\
 &amp;= \frac{2}{n}( \mathbf{y}[,j]^\top \mathbf{y}[,j] -  2\boldsymbol{\Lambda}_{(t)}[j,] \boldsymbol{A} \mathbf{y}^\top \mathbf{y}[\cdot,j] + \boldsymbol{\Lambda}_{(t)}[j,] (n\boldsymbol{B} + \boldsymbol{A} \mathbf{y}^\top \mathbf{y}\boldsymbol{A}^\top) \boldsymbol{\Lambda}_{(t)}[j,]^\top)
 \end{align*}
 \tag{3.3}\]</span></span></p>

@@ -24,7 +24,7 @@ tr <- function(M){
   return(sum(diag(M)))
 }
 
-E_step <- function(Y,lambda,psi){
+E_step <- function(Y,lambda,psi,rho){
   # Input: Y: the sample matrix of size n*p
   #        lambda: loading matrix of size p*k in current iteration
   #        psi: the common variance matrix of size p*p in current iteration
@@ -33,9 +33,10 @@ E_step <- function(Y,lambda,psi){
   mat_A <- A(lambda, psi)
   mat_B <- B(lambda, psi)
   result <- - n/2 * log(det(psi)) - 1/2 * tr(Y %*% solve(psi) %*% t(Y)) 
-                            + tr(lambda %*% mat_A %*% t(Y) %*% Y %*% solve(psi)) 
-                            - 1/2 * tr(lambda %*% ( n * mat_B + mat_A %*% t(Y) 
-                                                       %*% Y %*% t(mat_A)) %*% t(lambda) %*% solve(psi))
+            + tr(lambda %*% mat_A %*% t(Y) %*% Y %*% solve(psi)) 
+            - 1/2 * tr(lambda %*% ( n * mat_B + mat_A %*% t(Y) 
+                          %*% Y %*% t(mat_A)) %*% t(lambda) %*% solve(psi))
+            - rho * (sum(lambda))
   return(result)
 }
 
@@ -84,32 +85,37 @@ psi_valid <- function(lambda,psi,Y){
   return(diag(psi)<=constraint)
 }
 
-
-
-lambda_update <- function(Y, lambda, psi, q){
-  # Input: lambda: loading matrix of size p*k we have now
-  #        psi: the variance matrix of size p*p of common factor we have now
-  #        Y: the response matrix of size n*p
-  #        q: the objective row of lambda to update
-  # Output: Updated lambda[q, ]
+gradient <- function(Y, lambda, lambda.q, psi, q){
+  # lambda.q: q-th row of the lambda
+  # To calculate the gradient of q-th row of lambda
   n <- nrow(Y)
   mat_A <- A(lambda,psi)
-  mat_B <- B(lambda,psi)
-  Y.q <- Y[ , q, drop = FALSE]
-  result <- t(solve(n * mat_B + mat_A %*% t(Y) %*% Y %*% t(mat_A)) %*% mat_A %*% t(Y) %*% Y.q)
+  mat_B <- B(lambda, psi)
+  coe <- 2/psi[q,q]
+  result <- coe * ((n * mat_B + mat_A %*% t(Y) %*% Y %*% t(mat_A)) %*% t(lambda.q) 
+                   - mat_A %*% t(Y) %*% Y[ , q, drop = FALSE])
   return(result)
 }
 
-Standard_EM_update <- function(real_lambda, real_psi, N, initial_lambda, initial_psi){
-  #### Input:
-  ###    real_lambda: the real loading matrix
-  ###    N: the sample size
-  ###    initial_loading: the initialization of the loading matrix used for the algorithm
-  ###    initial_psi: the initialization of the psi-matrix used for the algorithm
-  #### Output:
-  ###    expectation: the expectation during updating
-  ###    loading_result: the loading matrix after updating
-  ###    psi_result: the psi-matrix after updating
+proximal_method <- function(Y, lambda, psi, q, rho = 1){
+  s <- 0.01 # the step size
+  epsilon <- 0.01 # tolerance
+  updated_lambda_q <- lambda[q, , drop = FALSE]
+  error <- 10^5
+  N_max <- 10^3
+  i <- 1
+  while (error > epsilon && i < N_max){
+    grad <- gradient(Y, lambda, updated_lambda_q, psi, q)
+    xi <- updated_lambda_q - s * t(grad)
+    new_lambda.q <- sign(xi) * pmax(abs(xi) - rho, 0)
+    error <- norm(new_lambda.q - updated_lambda_q, type = "2")
+    updated_lambda_q <- new_lambda.q
+    i <- i + 1
+  }
+  return <- updated_lambda_q
+}
+
+penalized_EM_algorithm <- function(N, real_lambda, real_psi, initial_lambda, initial_psi, rho){
   
   p <- nrow(real_lambda)
   m <- ncol(real_lambda)
@@ -131,7 +137,7 @@ Standard_EM_update <- function(real_lambda, real_psi, N, initial_lambda, initial
   
   while(loading_diff >= epsilon){
     step <- step + 1
-    expectation[step] <- E_step(Y,lambda,psi)
+    expectation[step] <- E_step(Y, lambda, psi, rho)
     
     ## Update psi elementwisely
     psi_update_position <- which(psi_valid(lambda,psi,Y))
@@ -140,45 +146,27 @@ Standard_EM_update <- function(real_lambda, real_psi, N, initial_lambda, initial
     }
     #print(diag(psi))
     
-    
-    ## Update loading matrix using current psi rowwisely
+    ## Update lambda rowwisely
     lambda_new <- matrix(0, nrow = p, ncol = m)
-    for (j in 1:p){
-      lambda_new[j,] <- lambda_update(Y, lambda, psi,j)
+    for (q in 1:p){
+      lambda_new[q,] <- proximal_method(Y, lambda, psi, q, rho)
     }
-    lambda_new[upper.tri(lambda_new)] <- 0
-    #print(lambda_new)
     loading_diff <- norm(lambda_new - lambda, type = 'F')
-    
-    ## Update parameters
-    lambda <- lambda_new
-    
-    if (step > n_max_iter){
-      cli::cli_alert_warning('Failed to converge!')
-      break
-    }
   }
-  plot(expectation[which(expectation != 0)])
   result <- list(expectation[which(expectation != 0)], lambda, psi)
   return(result)
 }
-################################################################################
-
+#################################################################################
 n <- 200
 p <- 6
 m <- 2
-
+rho <- 1
 # true_lambda <- matrix(rep(1,12), nrow = p, ncol = k, byrow = TRUE)
-true_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = p, ncol = m, byrow = TRUE)
+real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = p, ncol = m, byrow = TRUE)
 # true_lambda <- matrix(c(0.9,0,0.9,0,0.8,0,0,0.8,0,0.7,0,0.7), nrow= p, ncol =m, byrow = TRUE)
 
-true_psi <- diag(diag(diag(rep(1,p)) - true_lambda %*% t(true_lambda)))
+real_psi <- diag(diag(diag(rep(1,p)) - true_lambda %*% t(true_lambda)))
 
 initial_lambda <- matrix(rep(1,p*m),nrow = p, ncol = m)
 initial_psi <- diag(rep(1,p))
-
-
-Standard_EM_update(true_lambda, true_psi, n, initial_lambda, initial_psi)
-
-true_psi
-true_lambda
+penalized_EM_algorithm(n, real_lambda, real_psi, initial_lambda, initial_psi, rho)
