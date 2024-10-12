@@ -100,10 +100,10 @@ lambda_update <- function(Y, lambda, psi, q){
   return(result)
 }
 
-Standard_EM_update <- function(real_lambda, real_psi, N, initial_lambda, initial_psi){
+Standard_EM_update <- function(Y, m, initial_lambda, initial_psi){
   #### Input:
-  ###    real_lambda: the real loading matrix
-  ###    N: the sample size
+  ###    Y: nxp sample matrix
+  ###    m: the order of the factor model
   ###    initial_loading: the initialization of the loading matrix used for the algorithm
   ###    initial_psi: the initialization of the psi-matrix used for the algorithm
   #### Output:
@@ -111,11 +111,9 @@ Standard_EM_update <- function(real_lambda, real_psi, N, initial_lambda, initial
   ###    loading_result: the loading matrix after updating
   ###    psi_result: the psi-matrix after updating
   
-  p <- nrow(real_lambda)
-  m <- ncol(real_lambda)
-  Y <- MASS::mvrnorm(n = N, mu = rep(0,p), Sigma = real_lambda %*% t(real_lambda) + real_psi) 
+  p <- ncol(Y)
   
-  epsilon <- 0.00001 # error tolerance
+  epsilon <- 0.001 # error tolerance
   n_max_iter <- 1000 # maximum iteration number
   
   
@@ -158,27 +156,128 @@ Standard_EM_update <- function(real_lambda, real_psi, N, initial_lambda, initial
       break
     }
   }
+  lambda[abs(lambda) < 0.05] = 0
   plot(expectation[which(expectation != 0)])
-  result <- list(expectation[which(expectation != 0)], lambda, psi)
+  iter_to_converge <- length(expectation[which(expectation != 0)])
+  result <- list(expectation[which(expectation != 0)], lambda, psi, iter_to_converge)
+  return(result)
+}
+
+generate_sample <- function(n, p, real_lambda, real_psi){
+  Y <- MASS::mvrnorm(n = n, mu = rep(0,p), Sigma = real_lambda %*% t(real_lambda) + real_psi) 
+  return(Y)
+}
+
+display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = TRUE, iterations){
+  p <- nrow(real_lambda)
+  m <- ncol(real_lambda)
+  if (p < m){
+    print('Bad model')
+    return(0)
+  }
+  # Compute the sparsity of the est_lambda
+  if (upper_triangle){
+    sparsity <- (sum(est_lambda == 0) - (1/2) * (m - 1)^2) / (p * m)
+  }
+  
+  # Compute MSE
+  MSE <- (norm(est_lambda - real_lambda, type = "F") + norm(est_psi - real_psi, type = "F"))/(p + sum(real_lambda != 0))
+  
+  # Compute TPR
+  real_zero_positions <- real_lambda == 0
+  est_zero_positions <- est_lambda == 0
+  true_positives <- real_zero_positions & est_zero_positions
+  total_zeros_in_real <- sum(real_zero_positions)
+  correctly_predicted_zeros <- sum(true_positives)
+  if (upper_triangle){
+    # If we enforce the est_lambda to be upper triangle
+    TPR <- (correctly_predicted_zeros - (1/2) * (m - 1)^2) / (total_zeros_in_real - - (1/2) * (m - 1)^2)
+  }
+  else{
+    TPR <- correctly_predicted_zeros / total_zeros_in_real
+  }
+  
+  # Compute FPR
+  false_positives <- (!real_zero_positions) & est_zero_positions
+  total_non_zeros_in_real <- sum(!real_zero_positions)  
+  false_positive_count <- sum(false_positives)
+  FPR <- false_positive_count / total_non_zeros_in_real
+  
+  # summarize the result
+  result <- c(n, p, m, sparsity, MSE, TPR, FPR, iterations)
   return(result)
 }
 ################################################################################
+N <- c(50,100,200,400,1000)
 
-n <- 200
-p <- 6
-m <- 2
+# loading 1
+#p <- 6
+#m <- 2
+#real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = p, ncol = m, byrow = TRUE)
+#real_psi <- diag(diag(diag(rep(1,p)) - real_lambda %*% t(real_lambda)))
 
-# true_lambda <- matrix(rep(1,12), nrow = p, ncol = k, byrow = TRUE)
-true_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = p, ncol = m, byrow = TRUE)
-# true_lambda <- matrix(c(0.9,0,0.9,0,0.8,0,0,0.8,0,0.7,0,0.7), nrow= p, ncol =m, byrow = TRUE)
+p <- 12
+m <- 4
+real_lambda <- matrix(c(
+  0.8, 0, 0, 0,
+  0.8, 0, 0, 0,
+  0.8, 0, 0, 0,
+  0, 0.7, 0.7, 0,
+  0, 0.7, 0.7, 0,
+  0, 0.7, 0.7, 0,
+  0.6, 0.6, 0, 0,
+  0.6, 0.6, 0, 0,
+  0.6, 0.6, 0, 0,
+  0, 0, 0.5, 0.5,
+  0, 0, 0.5, 0.5,
+  0, 0, 0.5, 0.5
+), nrow = 12, ncol = 4, byrow = TRUE)
+real_psi <- diag(c(0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.5, 0.5, 0.5))
 
-true_psi <- diag(diag(diag(rep(1,p)) - true_lambda %*% t(true_lambda)))
 
 initial_lambda <- matrix(rep(1,p*m),nrow = p, ncol = m)
 initial_psi <- diag(rep(1,p))
+samples <- generate_sample(max(N),p, real_lambda, real_psi)
+
+# Create an empty data frame with the specified column names
+result.dataframe <- data.frame(
+  n = numeric(),
+  p = numeric(),
+  m = numeric(),
+  sparsity = numeric(),
+  MSE = numeric(),
+  TPR = numeric(),
+  FPR = numeric(),
+  iter_to_coverge = numeric()
+)
+
+# Display the empty data frame
+print(df)
 
 
-Standard_EM_update(true_lambda, true_psi, n, initial_lambda, initial_psi)
+for (n in N){
+  simulation_times <- 50
+  M <- matrix(0, nrow = simulation_times, ncol = 8) # a matrix to store the simulation result and to calculate the mean
+  for (i in 1:50){
+    rows_to_extract <- sample(1:nrow(samples), n)
+    Y <- samples[rows_to_extract, ,drop = FALSE]
+    est_lambda <- Standard_EM_update(Y, m, initial_lambda, initial_psi)[[2]]
+    est_psi <- Standard_EM_update(Y, m, initial_lambda, initial_psi)[[3]]
+    iter_to_coverge <- Standard_EM_update(Y, m, initial_lambda, initial_psi)[[4]]
+    Standard_EM_update(Y, m, initial_lambda, initial_psi)
+    M[i,] <- display_result(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = TRUE, iter_to_coverge)
+  }
+  aver_result <- colMeans(M)
+  result.dataframe <- rbind(result.dataframe, data.frame(
+    n = aver_result[1],
+    p = aver_result[2],
+    m = aver_result[3],
+    sparsity = aver_result[4],
+    MSE = aver_result[5],
+    TPR = aver_result[6],
+    FPR = aver_result[7],
+    iter_to_coverge = aver_result[8]
+  ))
+}
+saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading2.rds")
 
-true_psi
-true_lambda
