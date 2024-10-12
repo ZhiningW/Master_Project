@@ -208,6 +208,7 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   return(result)
 }
 ################################################################################
+set.seed(123)
 N <- c(50,100,200,400,1000)
 
 # loading 1
@@ -232,7 +233,7 @@ real_lambda <- matrix(c(
   0, 0, 0.5, 0.5,
   0, 0, 0.5, 0.5
 ), nrow = 12, ncol = 4, byrow = TRUE)
-real_psi <- diag(c(0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.5, 0.5, 0.5))
+real_psi <- diag(c(0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.3, 0.2, 0.3))
 
 
 initial_lambda <- matrix(rep(1,p*m),nrow = p, ncol = m)
