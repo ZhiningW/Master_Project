@@ -7,7 +7,6 @@ hypo_TS <- function(Y,lambda,psi){
   ### Input: Y: Sample matrix
   ###       lambda: the estimated loading matrix
   ###       psi: the estimated psi matrix
-  ###       test_level: the level to make first type error, 0.05 is widely used
   ### Output: 
   ###       Test statistics
   n <- nrow(Y)
@@ -17,32 +16,32 @@ hypo_TS <- function(Y,lambda,psi){
   print(dim(S))
   Sigma <- lambda %*% t(lambda) + psi
   print(Sigma)
-  TS <- sum(diag(solve(Sigma) %*% S)) - log(det(solve(Sigma) %*% S)) - p
+  TS <- n*(sum(diag(MASS::ginv(Sigma) %*% S)) - log(det(MASS::ginv(Sigma) %*% S)) - p)
   return(TS)
 }
 
 ################################################################################
 set.seed(123)
 
-n <- 200
+n <- 2000
 p <- 12
 m <- 4
 real_lambda <- matrix(c(
-  0.8, 0, 0, 0,
-  0.8, 0, 0, 0,
-  0.8, 0, 0, 0,
-  0, 0.7, 0.7, 0,
-  0, 0.7, 0.7, 0,
-  0, 0.7, 0.7, 0,
-  0.6, 0.6, 0, 0,
-  0.6, 0.6, 0, 0,
-  0.6, 0.6, 0, 0,
-  0, 0, 0.5, 0.5,
-  0, 0, 0.5, 0.5,
-  0, 0, 0.5, 0.5
+  1.8, 0, 0, 0,
+  1.8, 0, 0, 0,
+  1.8, 0, 0, 0,
+  0, 1.7, 0, 0,
+  0, 1.7, 0, 0,
+  0, 1.7, 0, 0,
+  0, 0, 1.6, 0,
+  0, 0, 1.6, 0,
+  0, 0, 1.6, 0,
+  0, 0, 0, 1.5,
+  0, 0, 0, 1.5,
+  0, 0, 0, 1.5
 ), nrow = 12, ncol = 4, byrow = TRUE)
 s <- 1/2 * (p - m)^2 - 1/2 * (p + m)
-real_psi <- diag(c(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2))
+real_psi <- diag(c(1.27, 0.61, 0.74, 0.88, 0.65, 0.81, 0.74, 1.3, 1.35, 0.74, 0.92, 1.32))
 Y <- generate_sample(n, p, real_lambda, real_psi)
 TS_collection <- numeric(p/2 - 1)
 for (k in 2:p/2){

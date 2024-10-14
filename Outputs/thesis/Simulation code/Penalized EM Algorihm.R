@@ -156,6 +156,38 @@ penalized_EM_algorithm <- function(N, real_lambda, real_psi, initial_lambda, ini
   result <- list(expectation[which(expectation != 0)], lambda, psi)
   return(result)
 }
+
+find_optimal_permutation <- function(M, N) {
+  
+  # M: The real matrix to compare to
+  # N: The matrix need to be permutated
+  
+  
+  p <- nrow(M)
+  q <- ncol(M)
+  
+  # Generate all permutations of column indices
+  perm <- gtools::permutations(q, q)
+  
+  min_mse <- Inf
+  optimal_N <- N
+  
+  # Iterate over all permutations of columns of N
+  for (i in 1:nrow(perm)) {
+    permuted_N <- N[, perm[i, ]] # Permute columns of N
+    
+    # Calculate Mean Squared Error
+    mse <- sum((M - permuted_N)^2) / (p * q)
+    
+    # Update minimum MSE and optimal N if necessary
+    if (mse < min_mse) {
+      min_mse <- mse
+      optimal_N <- permuted_N
+    }
+  }
+  
+  return(list(min_mse = min_mse, optimal_N = optimal_N))
+}
 #################################################################################
 n <- 200
 p <- 6

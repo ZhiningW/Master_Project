@@ -31,7 +31,7 @@ real_lambda <- matrix(c(
   0, 0, 0.5, 0.5,
   0, 0, 0.5, 0.5
 ), nrow = 12, ncol = 4, byrow = TRUE)
-real_psi <- diag(c(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2))
+real_psi <- diag(c(0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15))
 sample <- generate_sample(max(N), p, real_lambda, real_psi)
 par(mfrow = c(3,2))
 
