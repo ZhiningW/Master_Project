@@ -1,3 +1,4 @@
+rm(list = ls())
 ########## Functions to be used in the simulation ################
 
 A <- function(lambda, psi) {
@@ -156,7 +157,7 @@ Standard_EM_update <- function(Y, m, initial_lambda, initial_psi){
       break
     }
   }
-  lambda[abs(lambda) < 0.05] = 0
+  lambda[abs(lambda) < 0.1] <- 0
   plot(expectation[which(expectation != 0)])
   iter_to_converge <- length(expectation[which(expectation != 0)])
   result <- list(expectation[which(expectation != 0)], lambda, psi, iter_to_converge)
@@ -168,7 +169,7 @@ generate_sample <- function(n, p, real_lambda, real_psi){
   return(Y)
 }
 
-display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = TRUE, iterations){
+display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = TRUE, time_to_run){
   p <- nrow(real_lambda)
   m <- ncol(real_lambda)
   if (p < m){
@@ -204,7 +205,7 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   FPR <- false_positive_count / total_non_zeros_in_real
   
   # summarize the result
-  result <- c(n, p, m, sparsity, MSE, TPR, FPR, iterations)
+  result <- c(n, p, m, sparsity, MSE, TPR, FPR, time_to_run)
   return(result)
 }
 ################################################################################
@@ -212,13 +213,10 @@ set.seed(123)
 N <- c(50,100,200,400,1000)
 
 # loading 1
-#p <- 6
-#m <- 2
-#real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = p, ncol = m, byrow = TRUE)
-#real_psi <- diag(diag(diag(rep(1,p)) - real_lambda %*% t(real_lambda)))
+#real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = 6, ncol = 2, byrow = TRUE)
+#real_psi <- diag(diag(diag(rep(1,6)) - real_lambda %*% t(real_lambda)))
 
-p <- 12
-m <- 4
+
 real_lambda <- matrix(c(
   0.8, 0, 0, 0,
   0.8, 0, 0, 0,
@@ -235,6 +233,8 @@ real_lambda <- matrix(c(
 ), nrow = 12, ncol = 4, byrow = TRUE)
 real_psi <- diag(c(0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.3, 0.2, 0.3))
 
+p <- nrow(real_lambda)
+m <- ncol(real_lambda)
 
 initial_lambda <- matrix(rep(1,p*m),nrow = p, ncol = m)
 initial_psi <- diag(rep(1,p))
@@ -249,24 +249,24 @@ result.dataframe <- data.frame(
   MSE = numeric(),
   TPR = numeric(),
   FPR = numeric(),
-  iter_to_coverge = numeric()
+  timetorun = numeric()
 )
 
-# Display the empty data frame
-print(df)
 
 
 for (n in N){
   simulation_times <- 50
   M <- matrix(0, nrow = simulation_times, ncol = 8) # a matrix to store the simulation result and to calculate the mean
-  for (i in 1:50){
+  for (i in 1:simulation_times){
     rows_to_extract <- sample(1:nrow(samples), n)
     Y <- samples[rows_to_extract, ,drop = FALSE]
-    est_lambda <- Standard_EM_update(Y, m, initial_lambda, initial_psi)[[2]]
-    est_psi <- Standard_EM_update(Y, m, initial_lambda, initial_psi)[[3]]
-    iter_to_coverge <- Standard_EM_update(Y, m, initial_lambda, initial_psi)[[4]]
+    tictoc::tic()
+    SEM_result <- Standard_EM_update(Y, m, initial_lambda, initial_psi)
+    est_lambda <- SEM_result[[2]]
+    est_psi <- SEM_result[[3]]
+    time_to_run <- tictoc::toc()
     Standard_EM_update(Y, m, initial_lambda, initial_psi)
-    M[i,] <- display_result(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = TRUE, iter_to_coverge)
+    M[i,] <- display_result(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = TRUE, time_to_run[[2]] - time_to_run[[1]])
   }
   aver_result <- colMeans(M)
   result.dataframe <- rbind(result.dataframe, data.frame(
@@ -277,7 +277,7 @@ for (n in N){
     MSE = aver_result[5],
     TPR = aver_result[6],
     FPR = aver_result[7],
-    iter_to_coverge = aver_result[8]
+    timetorun = aver_result[8]
   ))
 }
 saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading2.rds")

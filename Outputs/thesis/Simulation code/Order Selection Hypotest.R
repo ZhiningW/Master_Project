@@ -23,9 +23,7 @@ hypo_TS <- function(Y,lambda,psi){
 ################################################################################
 set.seed(123)
 
-n <- 2000
-p <- 12
-m <- 4
+n <- 100
 real_lambda <- matrix(c(
   1.8, 0, 0, 0,
   1.8, 0, 0, 0,
@@ -40,9 +38,13 @@ real_lambda <- matrix(c(
   0, 0, 0, 1.5,
   0, 0, 0, 1.5
 ), nrow = 12, ncol = 4, byrow = TRUE)
-s <- 1/2 * (p - m)^2 - 1/2 * (p + m)
 real_psi <- diag(c(1.27, 0.61, 0.74, 0.88, 0.65, 0.81, 0.74, 1.3, 1.35, 0.74, 0.92, 1.32))
+
+p <- nrow(real_lambda)
+m <- ncol(real_lambda)
+
 Y <- generate_sample(n, p, real_lambda, real_psi)
+s <- 1/2 * (p - m)^2 - 1/2 * (p + m)
 TS_collection <- numeric(p/2 - 1)
 for (k in 2:p/2){
   mle_result <- factanal(factors = k, covmat = cor(Y), rotation = 'varimax')
