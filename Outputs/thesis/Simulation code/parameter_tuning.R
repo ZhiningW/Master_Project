@@ -34,7 +34,6 @@ generate_sample <- function(n, p, real_lambda, real_psi){
 }
 
 #################################################################################
-# Loading 1
 
 real_lambda <- loading2()[[1]]
 real_psi <- loading2()[[2]]
@@ -42,26 +41,28 @@ real_psi <- loading2()[[2]]
 
 p <- nrow(real_lambda)
 m <- ncol(real_lambda)
-n <- 1000
+N <- c(5000)
 
-Y <- generate_sample(n, p, real_lambda, real_psi)
-rho <- seq(0,0.1,length.out = 200)
-AIC_tuning <- numeric(length(rho))
-BIC_tuning <- numeric(length(rho))
-index <- 1
-for(i in rho){
-  PFA <- fanc::fanc(Y, m, rho = i, gamma = Inf)
-  out <- fanc::out(PFA, rho = i, gamma = Inf)
-  AIC_tuning[index] <- out$criteria[1]
-  BIC_tuning[index] <- out$criteria[2]
-  index <- index + 1
-  print(index)
+for (n in N) {
+  Y <- generate_sample(n, p, real_lambda, real_psi)
+  rho <- seq(0,0.1,length.out = 200)
+  AIC_tuning <- numeric(length(rho))
+  BIC_tuning <- numeric(length(rho))
+  index <- 1
+  for(i in rho){
+    PFA <- fanc::fanc(Y, m, rho = i, gamma = Inf)
+    out <- fanc::out(PFA, rho = i, gamma = Inf)
+    AIC_tuning[index] <- out$criteria[1]
+    BIC_tuning[index] <- out$criteria[2]
+    index <- index + 1
+    print(index)
+  }
+  print(AIC_tuning)
+  print(BIC_tuning)
+  par(mfrow = c(2,1))
+  plot(rho,AIC_tuning, ylab = "AIC", main = paste(" Parameter Tuning Procedure by AIC (Model1, n = ", n,")"))
+  plot(rho,BIC_tuning, ylab = "BIC", main = paste(" Parameter Tuning Procedure by BIC (Model1, n = ", n,")"))
+  cat("the minimum AIC suggests rho = ", rho[which(AIC_tuning == min(AIC_tuning))], "\n")
+  cat("the minimum BIC suggests rho = ", rho[which(BIC_tuning == min(BIC_tuning))], "\n")
 }
-print(AIC_tuning)
-print(BIC_tuning)
-par(mfrow = c(2,1))
-plot(rho,AIC_tuning, ylab = "AIC")
-plot(rho,BIC_tuning, ylab = "BIC")
-cat("the minimum AIC suggests rho = ", rho[which(AIC_tuning == min(AIC_tuning))], "\n")
-cat("the minimum BIC suggests rho = ", rho[which(BIC_tuning == min(BIC_tuning))], "\n")
 
