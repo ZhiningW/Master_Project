@@ -1,3 +1,4 @@
+rm(list = ls())
 ########## Functions to be used in the simulation ################
 
 A <- function(lambda, psi) {
@@ -107,7 +108,7 @@ proximal_method <- function(Y, lambda, psi, q, rho = 1){
   while (error > epsilon && i < N_max){
     grad <- gradient(Y, lambda, updated_lambda_q, psi, q)
     xi <- updated_lambda_q - s * t(grad)
-    new_lambda.q <- sign(xi) * pmax(abs(xi) - rho, 0)
+    new_lambda.q <- sign(xi) * pmax(abs(xi) - rho * s, 0)
     error <- norm(new_lambda.q - updated_lambda_q, type = "2")
     updated_lambda_q <- new_lambda.q
     i <- i + 1
@@ -197,7 +198,7 @@ rho <- 1
 real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = p, ncol = m, byrow = TRUE)
 # true_lambda <- matrix(c(0.9,0,0.9,0,0.8,0,0,0.8,0,0.7,0,0.7), nrow= p, ncol =m, byrow = TRUE)
 
-real_psi <- diag(diag(diag(rep(1,p)) - true_lambda %*% t(true_lambda)))
+real_psi <- diag(diag(diag(rep(1,p)) - real_lambda %*% t(real_lambda)))
 
 initial_lambda <- matrix(rep(1,p*m),nrow = p, ncol = m)
 initial_psi <- diag(rep(1,p))

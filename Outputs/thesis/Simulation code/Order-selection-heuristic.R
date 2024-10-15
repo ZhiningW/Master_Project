@@ -28,7 +28,7 @@ real_lambda <- matrix(c(
   0, 0, 0.5, 0.5,
   0, 0, 0.5, 0.5
 ), nrow = 12, ncol = 4, byrow = TRUE)
-real_psi <- diag(c(0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15))
+real_psi <- diag(rep(0.3, 12))
 
 
 
