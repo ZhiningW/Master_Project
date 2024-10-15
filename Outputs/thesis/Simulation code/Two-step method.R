@@ -15,7 +15,7 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   est_lambda <- after_perm$optimal_N
   
   # MSE
-  MSE <- after_perm$min_mse
+  MSE <- after_perm$min_mse + norm(real_psi - est_psi, type = "F")/(p + sum(real_lambda != 0))
   
   # Compute the sparsity of the est_lambda
   if (upper_triangle){
@@ -70,7 +70,7 @@ find_optimal_permutation <- function(M, N) {
     permuted_N <- N[, perm[i, ]] # Permute columns of N
     
     # Calculate Mean Squared Error
-    mse <- sum((M - permuted_N)^2) / (p * q)
+    mse <- sum((M - permuted_N)^2) / (sum(M != 0) + nrow(M))
     
     # Update minimum MSE and optimal N if necessary
     if (mse < min_mse) {
@@ -154,7 +154,7 @@ for (n in N){
     tictoc::tic()
     two_step <- factanal(factors = m, covmat = cor(Y), rotation = 'varimax')
     est_lambda <- two_step$loadings
-    est_lambda[which(abs(est_lambda) <= 0.1)] = 0
+    est_lambda[which(abs(est_lambda) <= 0.05)] = 0
     est_psi <- two_step$uniquenesses
     time_to_run <- tictoc::toc()
     M[i,] <- display_result(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = FALSE, time_to_run[[2]] - time_to_run[[1]])

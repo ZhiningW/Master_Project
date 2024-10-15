@@ -157,7 +157,6 @@ Standard_EM_update <- function(Y, m, initial_lambda, initial_psi){
       break
     }
   }
-  lambda[abs(lambda) < 0.1] <- 0
   plot(expectation[which(expectation != 0)])
   iter_to_converge <- length(expectation[which(expectation != 0)])
   result <- list(expectation[which(expectation != 0)], lambda, psi, iter_to_converge)
@@ -178,7 +177,7 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   }
   # Compute the sparsity of the est_lambda
   if (upper_triangle){
-    sparsity <- (sum(est_lambda == 0) - (1/2) * (m - 1)^2) / (p * m)
+    sparsity <- (sum(est_lambda == 0))  / (p * m)
   }
   
   # Compute MSE
@@ -240,8 +239,8 @@ set.seed(123)
 N <- c(50,100,200,400,1000)
 
 # loading 1
-real_lambda <- loading2()[[1]]
-real_psi <- loading2()[[2]]
+real_lambda <- loading1()[[1]]
+real_psi <- loading1()[[2]]
 
 p <- nrow(real_lambda)
 m <- ncol(real_lambda)
@@ -273,9 +272,9 @@ for (n in N){
     tictoc::tic()
     SEM_result <- Standard_EM_update(Y, m, initial_lambda, initial_psi)
     est_lambda <- SEM_result[[2]]
+    est_lambda[which(abs(est_lambda)<=0.05)] <- 0
     est_psi <- SEM_result[[3]]
     time_to_run <- tictoc::toc()
-    Standard_EM_update(Y, m, initial_lambda, initial_psi)
     M[i,] <- display_result(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = TRUE, time_to_run[[2]] - time_to_run[[1]])
   }
   aver_result <- colMeans(M)
@@ -290,5 +289,5 @@ for (n in N){
     timetorun = aver_result[8]
   ))
 }
-saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading2.rds")
-
+saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading1.rds")
+readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading1.rds")
