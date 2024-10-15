@@ -13,7 +13,6 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   # Permutation optimization
   after_perm <- find_optimal_permutation(real_lambda, est_lambda)
   est_lambda <- after_perm$optimal_N
-  est_lambda[which(abs(est_lambda) <= 0.1)] <- 0
   
   # MSE
   MSE <- after_perm$min_mse
@@ -34,7 +33,7 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   correctly_predicted_zeros <- sum(true_positives)
   if (upper_triangle){
     # If we enforce the est_lambda to be upper triangle
-    TPR <- (correctly_predicted_zeros - (1/2) * (m - 1)^2) / (total_zeros_in_real - - (1/2) * (m - 1)^2)
+    TPR <- (correctly_predicted_zeros - (1/2) * m * (m-1)) / (total_zeros_in_real - (1/2) * m * (m-1))
   }
   else{
     TPR <- correctly_predicted_zeros / total_zeros_in_real
@@ -88,36 +87,45 @@ generate_sample <- function(n, p, real_lambda, real_psi){
   return(Y)
 }
 
+loading1 <- function(){
+  real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = 6, ncol = 2, byrow = TRUE)
+  real_psi <- diag(diag(diag(rep(1,6)) - real_lambda %*% t(real_lambda)))
+  result <- list(real_lambda,real_psi)
+  return(result)
+}
+
+loading2 <- function(){
+  real_lambda <- matrix(c(
+    0.8, 0, 0, 0,
+    0.8, 0, 0, 0,
+    0.8, 0, 0, 0,
+    0, 0.7, 0.7, 0,
+    0, 0.7, 0.7, 0,
+    0, 0.7, 0.7, 0,
+    0.6, 0.6, 0, 0.7,
+    0.6, 0.6, 0, 0.7,
+    0.6, 0.6, 0, 0.7,
+    0, 0, 0.5, 0.7,
+    0, 0, 0.5, 0.7,
+    0, 0, 0.5, 0.7
+  ), nrow = 12, ncol = 4, byrow = TRUE)
+  real_psi <- diag(c(0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.3, 0.2, 0.3))
+  result <- list(real_lambda,real_psi)
+  return(result)
+}
 ########################################################################
 
 N <- c(50,100,200,400,1000)
 
-# loading 1
 
-real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = 6, ncol = 2, byrow = TRUE)
-real_psi <- diag(diag(diag(rep(1,6)) - real_lambda %*% t(real_lambda)))
 
-# loading 2
-#p <- 12
-#m <- 4
-#real_lambda <- matrix(c(
-#  0.8, 0, 0, 0,
-#  0.8, 0, 0, 0,
-#  0.8, 0, 0, 0,
-#  0, 0.7, 0.7, 0,
-#  0, 0.7, 0.7, 0,
-#  0, 0.7, 0.7, 0,
-#  0.6, 0.6, 0, 0,
-#  0.6, 0.6, 0, 0,
-#  0.6, 0.6, 0, 0,
-#  0, 0, 0.5, 0.5,
-#  0, 0, 0.5, 0.5,
-#  0, 0, 0.5, 0.5
-#), nrow = 12, ncol = 4, byrow = TRUE)
-#real_psi <- diag(c(0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.3, 0.2, 0.3))
+real_lambda <- loading1()[[1]]
+real_psi <- loading1()[[2]]
+
+
 
 p <- nrow(real_lambda)
-m <- col(real_lambda)
+m <- ncol(real_lambda)
 
 samples <- generate_sample(max(N),p, real_lambda, real_psi)
 
@@ -144,8 +152,9 @@ for (n in N){
     rows_to_extract <- sample(1:nrow(samples), n)
     Y <- samples[rows_to_extract, ,drop = FALSE]
     tictoc::tic()
-    two_step <- factanal(factors = 2, covmat = cor(Y), rotation = 'varimax')
+    two_step <- factanal(factors = m, covmat = cor(Y), rotation = 'varimax')
     est_lambda <- two_step$loadings
+    est_lambda[which(abs(est_lambda) <= 0.1)] = 0
     est_psi <- two_step$uniquenesses
     time_to_run <- tictoc::toc()
     M[i,] <- display_result(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = FALSE, time_to_run[[2]] - time_to_run[[1]])
@@ -162,4 +171,4 @@ for (n in N){
     timetorun = aver_result[8]
   ))
 }
-#saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading1.rds")
+saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading1.rds")

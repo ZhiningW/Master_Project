@@ -192,7 +192,7 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   correctly_predicted_zeros <- sum(true_positives)
   if (upper_triangle){
     # If we enforce the est_lambda to be upper triangle
-    TPR <- (correctly_predicted_zeros - (1/2) * (m - 1)^2) / (total_zeros_in_real - - (1/2) * (m - 1)^2)
+    TPR <- (correctly_predicted_zeros - (1/2) * m * (m-1)) / (total_zeros_in_real - (1/2) * m * (m-1))
   }
   else{
     TPR <- correctly_predicted_zeros / total_zeros_in_real
@@ -208,30 +208,40 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   result <- c(n, p, m, sparsity, MSE, TPR, FPR, time_to_run)
   return(result)
 }
+
+loading1 <- function(){
+  real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = 6, ncol = 2, byrow = TRUE)
+  real_psi <- diag(diag(diag(rep(1,6)) - real_lambda %*% t(real_lambda)))
+  result <- list(real_lambda,real_psi)
+  return(result)
+}
+
+loading2 <- function(){
+  real_lambda <- matrix(c(
+    0.8, 0, 0, 0,
+    0.8, 0, 0, 0,
+    0.8, 0, 0, 0,
+    0, 0.7, 0.7, 0,
+    0, 0.7, 0.7, 0,
+    0, 0.7, 0.7, 0,
+    0.6, 0.6, 0, 0.7,
+    0.6, 0.6, 0, 0.7,
+    0.6, 0.6, 0, 0.7,
+    0, 0, 0.5, 0.7,
+    0, 0, 0.5, 0.7,
+    0, 0, 0.5, 0.7
+  ), nrow = 12, ncol = 4, byrow = TRUE)
+  real_psi <- diag(c(0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.3, 0.2, 0.3))
+  result <- list(real_lambda,real_psi)
+  return(result)
+}
 ################################################################################
 set.seed(123)
 N <- c(50,100,200,400,1000)
 
 # loading 1
-real_lambda <- matrix(c(0.95,0,0.9,0,0.85,0,0,0.8,0,0.75,0,0.7), nrow = 6, ncol = 2, byrow = TRUE)
-real_psi <- diag(diag(diag(rep(1,6)) - real_lambda %*% t(real_lambda)))
-
-
-#real_lambda <- matrix(c(
-#  0.8, 0, 0, 0,
-#  0.8, 0, 0, 0,
-#  0.8, 0, 0, 0,
-#  0, 0.7, 0.7, 0,
-#  0, 0.7, 0.7, 0,
-#  0, 0.7, 0.7, 0,
-#  0.6, 0.6, 0, 0,
-#  0.6, 0.6, 0, 0,
-#  0.6, 0.6, 0, 0,
-#  0, 0, 0.5, 0.5,
-#  0, 0, 0.5, 0.5,
-#  0, 0, 0.5, 0.5
-#), nrow = 12, ncol = 4, byrow = TRUE)
-#real_psi <- diag(c(0.4, 0.4, 0.4, 0.2, 0.2, 0.2, 0.3, 0.3, 0.3, 0.3, 0.2, 0.3))
+real_lambda <- loading2()[[1]]
+real_psi <- loading2()[[2]]
 
 p <- nrow(real_lambda)
 m <- ncol(real_lambda)
@@ -280,5 +290,5 @@ for (n in N){
     timetorun = aver_result[8]
   ))
 }
-saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading1.rds")
+saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading2.rds")
 
