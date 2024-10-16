@@ -234,13 +234,17 @@ loading2 <- function(){
   result <- list(real_lambda,real_psi)
   return(result)
 }
+
+
 ################################################################################
 set.seed(123)
-N <- c(50,100,200,400,1000)
+N <- c(25,50,100,200,400,1000,2000,5000)
 
-# loading 1
-real_lambda <- loading1()[[1]]
-real_psi <- loading1()[[2]]
+
+real_lambda <- loading2()[[1]]
+real_psi <- loading2()[[2]]
+
+
 
 p <- nrow(real_lambda)
 m <- ncol(real_lambda)
@@ -289,5 +293,5 @@ for (n in N){
     timetorun = aver_result[8]
   ))
 }
-saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading1.rds")
+saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading2.rds")
 readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading2.rds")

@@ -3,6 +3,11 @@ generate_sample <- function(n, p, real_lambda, real_psi){
   return(Y)
 }
 
+tr <- function(M){
+  # Calculate the trace of matrix M
+  return(sum(diag(M)))
+}
+
 hypo_TS <- function(Y,lambda,psi){
   ### Input: Y: Sample matrix
   ###       lambda: the estimated loading matrix
@@ -17,7 +22,7 @@ hypo_TS <- function(Y,lambda,psi){
   Sigma <- lambda %*% t(lambda) + diag(psi)
   print(det(Sigma))
   #print(Sigma)
-  TS <- (sum(diag(solve(Sigma) %*% S)) + log(det(Sigma)) - log(det(S)) - p)
+  TS <- n * (log(det(Sigma)) + tr(solve(Sigma) %*% S) - log(det(S)) - p )
   s <- 1/2 * (p - m)^2 - 1/2 * (p + m)
   p_value <- 1 - pchisq(TS,s)
   return(p_value)
@@ -26,22 +31,22 @@ hypo_TS <- function(Y,lambda,psi){
 ################################################################################
 set.seed(123)
 
-n <- 100
+n <- 1000
 real_lambda <- matrix(c(
-  1.8, 0, 0, 0,
-  1.8, 0, 0, 0,
-  1.8, 0, 0, 0,
-  0, 1.7, 0, 0,
-  0, 1.7, 0, 0,
-  0, 1.7, 0, 0,
-  0, 0, 1.6, 0,
-  0, 0, 1.6, 0,
-  0, 0, 1.6, 0,
-  0, 0, 0, 1.5,
-  0, 0, 0, 1.5,
-  0, 0, 0, 1.5
+  0.8, 0, 0, 0,
+  0.8, 0, 0, 0,
+  0.8, 0, 0, 0,
+  0, 0.7, 0.7, 0,
+  0, 0.7, 0.7, 0,
+  0, 0.7, 0.7, 0,
+  0.6, 0.6, 0, 0,
+  0.6, 0.6, 0, 0,
+  0.6, 0.6, 0, 0,
+  0, 0, 0.5, 0.5,
+  0, 0, 0.5, 0.5,
+  0, 0, 0.5, 0.5
 ), nrow = 12, ncol = 4, byrow = TRUE)
-real_psi <- diag(c(1.27, 0.61, 0.74, 0.88, 0.65, 0.81, 0.74, 1.3, 1.35, 0.74, 0.92, 1.32))
+real_psi <- diag(rep(0.15, 12))
 
 p <- nrow(real_lambda)
 m <- ncol(real_lambda)
@@ -58,4 +63,6 @@ for (k in 2:p/2){
   TS_collection[k-1] <- TS
 }
 plot(c(2,3,4,5,6), TS_collection)
+s <- 1/2 * (p - m)^2 - 1/2 * (p + m)
+abline(h = qchisq(0.95, s))
 abline(h = 0.05, col = "red", lty = 2)

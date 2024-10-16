@@ -48,20 +48,28 @@ for (n in N) {
   rho <- seq(0,0.1,length.out = 200)
   AIC_tuning <- numeric(length(rho))
   BIC_tuning <- numeric(length(rho))
+  Sparsity <- numeric(length(rho))
   index <- 1
   for(i in rho){
     PFA <- fanc::fanc(Y, m, rho = i, gamma = Inf)
     out <- fanc::out(PFA, rho = i, gamma = Inf)
     AIC_tuning[index] <- out$criteria[1]
     BIC_tuning[index] <- out$criteria[2]
+    est_lambda <- out$loadings
+    est_lambda[abs(est_lambda) <= 0.05] <- 0
+    Sparsity[index] <- (m * p - sum(est_lambda != 0))/(m*p)
     index <- index + 1
     print(index)
   }
   print(AIC_tuning)
   print(BIC_tuning)
-  par(mfrow = c(2,1))
-  plot(rho,AIC_tuning, ylab = "AIC", main = paste(" Parameter Tuning Procedure by AIC (Model1, n = ", n,")"))
-  plot(rho,BIC_tuning, ylab = "BIC", main = paste(" Parameter Tuning Procedure by BIC (Model1, n = ", n,")"))
+  par(mfrow = c(2,2))
+  plot(rho,AIC_tuning, ylab = "AIC", 
+       main = paste(" Parameter Tuning Procedure by AIC (Model1, n = ", n,")"))
+  plot(rho, Sparsity, col = "red", ylim = c(0,1), main = "Sparsity visualization")
+  plot(rho,BIC_tuning, ylab = "BIC", 
+       main = paste(" Parameter Tuning Procedure by BIC (Model1, n = ", n,")"))
+  
   cat("the minimum AIC suggests rho = ", rho[which(AIC_tuning == min(AIC_tuning))], "\n")
   cat("the minimum BIC suggests rho = ", rho[which(BIC_tuning == min(BIC_tuning))], "\n")
 }

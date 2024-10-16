@@ -1,4 +1,5 @@
 rm(list = ls())
+set.seed(123)
 ################################################################################
 
 display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = TRUE, time_to_run){
@@ -15,8 +16,8 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   est_lambda <- after_perm$optimal_N
   
   # MSE
-  MSE <- after_perm$min_mse * p*m / (p + sum(real_lambda != 0)) 
-          + norm(real_psi - est_psi, type = "F")/(p + sum(real_lambda != 0))
+  MSE <- after_perm$min_mse * p * m / (p + sum(real_lambda != 0)) 
+  + norm(diag(real_psi) - est_psi, type = "2")/(p + sum(real_lambda != 0))
   
   # Compute the sparsity of the est_lambda
   if (upper_triangle){
@@ -71,7 +72,7 @@ find_optimal_permutation <- function(M, N) {
     permuted_N <- N[, perm[i, ]] # Permute columns of N
     
     # Calculate Mean Squared Error
-    mse <- sum((M - permuted_N)^2) / (p*q)
+    mse <- sum((M - permuted_N)^2) / (p * q)
     
     # Update minimum MSE and optimal N if necessary
     if (mse < min_mse) {
@@ -115,20 +116,17 @@ loading2 <- function(){
   return(result)
 }
 ########################################################################
-set.seed(123)
 N <- c(25,50,100,200,400,1000,2000,5000)
 
 
 
-real_lambda <- loading2()[[1]]
-real_psi <- loading2()[[2]]
+real_lambda <- loading1()[[1]]
+real_psi <- loading1()[[2]]
 
 
 
 p <- nrow(real_lambda)
 m <- ncol(real_lambda)
-
-simulation_times <- 50
 
 samples <- generate_sample(max(N),p, real_lambda, real_psi)
 
@@ -144,18 +142,22 @@ result.dataframe <- data.frame(
   timetorun = numeric()
 )
 
+# Display the empty data frame
+print(df)
 
 
 for (n in N){
+  simulation_times <- 50
   M <- matrix(0, nrow = simulation_times, ncol = 8) # a matrix to store the simulation result and to calculate the mean
-  for (i in 1:simulation_times){
+  for (i in 1:50){
     rows_to_extract <- sample(1:nrow(samples), n)
     Y <- samples[rows_to_extract, ,drop = FALSE]
     tictoc::tic()
-    two_step <- factanal(factors = m, covmat = cor(Y), rotation = 'varimax')
-    est_lambda <- two_step$loadings
-    est_lambda[which(abs(est_lambda) <= 0.05)] = 0
-    est_psi <- two_step$uniquenesses
+    PEM <- fanc::fanc(Y, m, rho = 0.01, gamma = Inf)
+    PEM_result <- fanc::out(PEM, rho = 0.01, gamma = Inf)
+    est_lambda <- PEM_result$loadings
+    est_lambda[abs(est_lambda) <= 0.05] <- 0
+    est_psi <- PEM_result$uniquenesses
     time_to_run <- tictoc::toc()
     M[i,] <- display_result(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = FALSE, time_to_run[[2]] - time_to_run[[1]])
   }
@@ -171,5 +173,5 @@ for (n in N){
     timetorun = aver_result[8]
   ))
 }
-saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading2.rds")
-readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading2.rds")
+saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_PEM_loading1.rds")
+readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_PEM_loading1.rds")
