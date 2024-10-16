@@ -290,4 +290,4 @@ for (n in N){
   ))
 }
 saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading1.rds")
-readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading1.rds")
+readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_standardEM_loading2.rds")

@@ -11,13 +11,16 @@ hypo_TS <- function(Y,lambda,psi){
   ###       Test statistics
   n <- nrow(Y)
   p <- ncol(Y)
-  k <- ncol(lambda)
+  m <- ncol(lambda)
   S <- cov(Y)
-  print(dim(S))
-  Sigma <- lambda %*% t(lambda) + psi
-  print(Sigma)
-  TS <- n*(sum(diag(MASS::ginv(Sigma) %*% S)) - log(det(MASS::ginv(Sigma) %*% S)) - p)
-  return(TS)
+  print(psi)
+  Sigma <- lambda %*% t(lambda) + diag(psi)
+  print(det(Sigma))
+  #print(Sigma)
+  TS <- (sum(diag(solve(Sigma) %*% S)) + log(det(Sigma)) - log(det(S)) - p)
+  s <- 1/2 * (p - m)^2 - 1/2 * (p + m)
+  p_value <- 1 - pchisq(TS,s)
+  return(p_value)
 }
 
 ################################################################################
@@ -44,16 +47,15 @@ p <- nrow(real_lambda)
 m <- ncol(real_lambda)
 
 Y <- generate_sample(n, p, real_lambda, real_psi)
-s <- 1/2 * (p - m)^2 - 1/2 * (p + m)
 TS_collection <- numeric(p/2 - 1)
 for (k in 2:p/2){
   mle_result <- factanal(factors = k, covmat = cor(Y), rotation = 'varimax')
   est_lambda <- mle_result$loadings
   print(est_lambda)
   est_psi <- mle_result$uniquenesses
-  print(est_psi)
+  #print(est_psi)
   TS <- hypo_TS(Y, est_lambda, est_psi)
   TS_collection[k-1] <- TS
 }
 plot(c(2,3,4,5,6), TS_collection)
-abline(h = qchisq(0.95, s), col = "red", lty = 2)
+abline(h = 0.05, col = "red", lty = 2)

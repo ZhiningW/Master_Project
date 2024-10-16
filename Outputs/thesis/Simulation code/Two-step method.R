@@ -114,8 +114,8 @@ loading2 <- function(){
   return(result)
 }
 ########################################################################
-
-N <- c(50,100,200,400,1000)
+set.seed(123)
+N <- c(25,50,100,200,400,1000,2000,5000)
 
 
 
@@ -171,5 +171,5 @@ for (n in N){
     timetorun = aver_result[8]
   ))
 }
-saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading1.rds")
+saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading2.rds")
 readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading2.rds")
