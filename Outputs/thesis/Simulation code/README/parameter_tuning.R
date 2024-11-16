@@ -1,4 +1,3 @@
-rm(list = ls())
 set.seed(123)
 ###############################################################################
 loading1 <- function(){
@@ -41,7 +40,7 @@ real_psi <- loading2()[[2]]
 
 p <- nrow(real_lambda)
 m <- ncol(real_lambda)
-N <- c(5000)
+N <- c(50)
 
 for (n in N) {
   Y <- generate_sample(n, p, real_lambda, real_psi)
@@ -63,14 +62,28 @@ for (n in N) {
   }
   print(AIC_tuning)
   print(BIC_tuning)
-  par(mfrow = c(2,2))
-  plot(rho,AIC_tuning, ylab = "AIC", 
-       main = paste(" Parameter Tuning Procedure by AIC (Model1, n = ", n,")"))
-  plot(rho, Sparsity, col = "red", ylim = c(0,1), main = "Sparsity visualization")
-  plot(rho,BIC_tuning, ylab = "BIC", 
-       main = paste(" Parameter Tuning Procedure by BIC (Model1, n = ", n,")"))
+  par(mfrow = c(2,1))
+  plot(rho,AIC_tuning, ylab = "AIC")
+  plot(rho,BIC_tuning, ylab = "BIC")
   
   cat("the minimum AIC suggests rho = ", rho[which(AIC_tuning == min(AIC_tuning))], "\n")
   cat("the minimum BIC suggests rho = ", rho[which(BIC_tuning == min(BIC_tuning))], "\n")
 }
+data <- data.frame(
+  rho = rep(rho, 2),  # Repeat rho twice, once for AIC and once for BIC
+  value = c(AIC_tuning, BIC_tuning),  # Combine AIC and BIC into a single vector
+  metric = rep(c("AIC", "BIC"), each = length(rho))  # A new column to label AIC and BIC
+)
 
+# Plot using ggplot
+plot2 <- ggplot(data, aes(x = rho, y = value, color = metric)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Setting 2b",
+       x = "rho", 
+       y = "AIC or BIC") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.border = element_rect(colour = "black", fill = NA, size = 1)) +
+  colorspace::scale_color_discrete_qualitative()
+plot2
+ggsave("result_plot/PTresult_50.pdf", height = 4) 

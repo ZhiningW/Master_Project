@@ -175,13 +175,23 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
     print('Bad model')
     return(0)
   }
+  
+  
+  # Permutation optimization
+  after_perm <- find_optimal_permutation(real_lambda, est_lambda)
+  est_lambda <- after_perm$optimal_N
+  
+  # MSE
+  MSE <- after_perm$min_mse * p*m / (p + sum(real_lambda != 0)) 
+  + norm(real_psi - est_psi, type = "F")/(p + sum(real_lambda != 0))
+  
   # Compute the sparsity of the est_lambda
   if (upper_triangle){
-    sparsity <- (sum(est_lambda == 0))  / (p * m)
+    sparsity <- (sum(est_lambda == 0) - (1/2) * (m - 1)^2) / (p * m)
   }
-  
-  # Compute MSE
-  MSE <- (norm(est_lambda - real_lambda, type = "F") + norm(est_psi - real_psi, type = "F"))/(p + sum(real_lambda != 0))
+  else {
+    sparsity <- sum(est_lambda == 0) / (p * m)
+  }
   
   # Compute TPR
   real_zero_positions <- real_lambda == 0
@@ -206,6 +216,38 @@ display_result <- function(est_lambda, est_psi, real_lambda, real_psi, n, upper_
   # summarize the result
   result <- c(n, p, m, sparsity, MSE, TPR, FPR, time_to_run)
   return(result)
+}
+
+find_optimal_permutation <- function(M, N) {
+  
+  # M: The real matrix to compare to
+  # N: The matrix need to be permutated
+  
+  
+  p <- nrow(M)
+  q <- ncol(M)
+  
+  # Generate all permutations of column indices
+  perm <- gtools::permutations(q, q)
+  
+  min_mse <- Inf
+  optimal_N <- N
+  
+  # Iterate over all permutations of columns of N
+  for (i in 1:nrow(perm)) {
+    permuted_N <- N[, perm[i, ]] # Permute columns of N
+    
+    # Calculate Mean Squared Error
+    mse <- sum((M - permuted_N)^2) / (p*q)
+    
+    # Update minimum MSE and optimal N if necessary
+    if (mse < min_mse) {
+      min_mse <- mse
+      optimal_N <- permuted_N
+    }
+  }
+  
+  return(list(min_mse = min_mse, optimal_N = optimal_N))
 }
 
 loading1 <- function(){
@@ -268,7 +310,7 @@ result.dataframe <- data.frame(
 
 
 for (n in N){
-  simulation_times <- 50
+  simulation_times <- 30
   M <- matrix(0, nrow = simulation_times, ncol = 8) # a matrix to store the simulation result and to calculate the mean
   for (i in 1:simulation_times){
     rows_to_extract <- sample(1:nrow(samples), n)

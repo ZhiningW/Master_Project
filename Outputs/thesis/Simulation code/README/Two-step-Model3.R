@@ -24,10 +24,9 @@ loading3 <- function(p, m, sparsity){
     
     # Check if there are any zero rows or zero columns
     if (!any(rowSums(M) == 0) && !any(colSums(M) == 0)) {
-      print("finish generating loading matrix")
       break
     }
-    
+    print("finish generate loading matrix")
   }
   psi <- diag(0.2* rep(1,p))
   return(list(M,psi))
@@ -157,11 +156,14 @@ for (p in P){
         #  next
         #}
         tictoc::tic()
-        PEM <- fanc::fanc(Y, m, rho = 0.01, gamma = Inf)
-        PEM_result <- fanc::out(PEM, rho = 0.01, gamma = Inf)
-        est_lambda <- PEM_result$loadings
-        est_lambda[abs(est_lambda) <= 0.05] <- 0
-        est_psi <- PEM_result$uniquenesses 
+        tryCatch({
+          two_step <- factanal(Y, factors = m, rotation = 'varimax')
+        }, error = function(e){
+          two_step <- factanal(Y, factors = m, rotation = 'varimax', start = rep(1,p))
+        })
+        est_lambda <- two_step$loadings
+        est_lambda[which(abs(est_lambda) <= 0.05)] = 0
+        est_psi <- two_step$uniquenesses
         time_to_run <- tictoc::toc()
         Info[i,] <- display_result(est_lambda, est_psi, real_lambda, real_psi, n, upper_triangle = FALSE, time_to_run[[2]] - time_to_run[[1]])
       }
@@ -182,5 +184,5 @@ for (p in P){
   }
 }
 
-saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_PEM_loading3_0.2sp.rds")
-#readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_PEM_loading3.rds")
+saveRDS(result.dataframe, "C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading3_0.2sp.rds")
+#readRDS("C://Users//zhini//desktop//study material//A. Research Project//Master_Project//Outputs//thesis//Simulation code//result_twostep_loading3.rds")
